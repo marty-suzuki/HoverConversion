@@ -1,0 +1,14 @@
+PODS:
+  - HoverConversion (0.1.0)
+
+DEPENDENCIES:
+  - HoverConversion (from `../`)
+
+EXTERNAL SOURCES:
+  HoverConversion:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  HoverConversion: bf0b397fbeff632143747b456df09b307fdeb6ea
+
+COCOAPODS: 0.39.0
