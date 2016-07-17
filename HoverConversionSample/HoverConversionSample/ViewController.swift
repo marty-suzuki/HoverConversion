@@ -7,14 +7,24 @@
 //
 
 import UIKit
+import HoverConversion
 
-class ViewController: UIViewController {
+class ViewController: HCRootViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+//        let vc = HCPagingViewController()
+//        view.addSubview(vc.view)
     }
 
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        let vc = HCPagingViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -1,0 +1,6 @@
+framework module HoverConversion {
+  umbrella header "HoverConversion-umbrella.h"
+
+  export *
+  module * { export * }
+}

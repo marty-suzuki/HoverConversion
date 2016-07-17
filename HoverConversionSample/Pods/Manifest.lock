@@ -1,5 +1,7 @@
 PODS:
-  - HoverConversion (0.1.0)
+  - HoverConversion (0.1.0):
+    - MisterFusion
+  - MisterFusion (1.2.2)
 
 DEPENDENCIES:
   - HoverConversion (from `../`)
@@ -9,6 +11,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  HoverConversion: bf0b397fbeff632143747b456df09b307fdeb6ea
+  HoverConversion: f93de4e4e077f066a109f1248ab5948abee3c9f4
+  MisterFusion: f979335323ddd5fb13c889e98ce34fe30489b8d7
 
 COCOAPODS: 0.39.0

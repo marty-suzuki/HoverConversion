@@ -20,5 +20,10 @@
     "ios": "8.0"
   },
   "source_files": "HoverConversion/*.{swift}",
-  "frameworks": "UIKit"
+  "frameworks": "UIKit",
+  "dependencies": {
+    "MisterFusion": [
+
+    ]
+  }
 }
