@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="HomeTableViewCell" customModule="HoverConversionSample" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="79.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FXZ-DM-Ur9">
+                        <rect key="frame" x="10" y="10" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="P7M-Eo-cP0"/>
+                            <constraint firstAttribute="width" constant="60" id="RnD-YV-LY6"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfI-M1-VK4">
+                        <rect key="frame" x="78" y="10" width="77" height="19.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@ScreenName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwd-HG-mKy">
+                        <rect key="frame" x="78" y="31" width="83.5" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tweet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEX-cR-12k">
+                        <rect key="frame" x="78" y="55.5" width="34" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="FXZ-DM-Ur9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="2Lh-V3-xco"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="lwd-HG-mKy" secondAttribute="trailing" constant="12" id="2Yt-9F-YjA"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AEX-cR-12k" secondAttribute="trailing" constant="12" id="4QV-vG-jVP"/>
+                    <constraint firstItem="mfI-M1-VK4" firstAttribute="leading" secondItem="FXZ-DM-Ur9" secondAttribute="trailing" constant="8" id="7S9-V7-GsX"/>
+                    <constraint firstItem="mfI-M1-VK4" firstAttribute="top" secondItem="FXZ-DM-Ur9" secondAttribute="top" id="8iv-eM-gwE"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mfI-M1-VK4" secondAttribute="trailing" constant="10" id="CNG-br-XCk"/>
+                    <constraint firstItem="lwd-HG-mKy" firstAttribute="top" secondItem="mfI-M1-VK4" secondAttribute="bottom" constant="2" id="Dz7-ql-1sH"/>
+                    <constraint firstItem="AEX-cR-12k" firstAttribute="bottom" secondItem="FXZ-DM-Ur9" secondAttribute="bottom" id="EPE-vP-UuS"/>
+                    <constraint firstItem="FXZ-DM-Ur9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="T1Q-Gl-IKP"/>
+                    <constraint firstItem="AEX-cR-12k" firstAttribute="leading" secondItem="FXZ-DM-Ur9" secondAttribute="trailing" constant="8" id="jDb-AP-XyI"/>
+                    <constraint firstItem="lwd-HG-mKy" firstAttribute="leading" secondItem="mfI-M1-VK4" secondAttribute="leading" id="xKK-Yt-UDg"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="iconImageView" destination="FXZ-DM-Ur9" id="FvV-nQ-Zqg"/>
+                <outlet property="latestTweetLabel" destination="AEX-cR-12k" id="81e-rX-kC7"/>
+                <outlet property="screenNameLabel" destination="lwd-HG-mKy" id="Z9z-Kb-gms"/>
+                <outlet property="userNameLabel" destination="mfI-M1-VK4" id="3am-YQ-st6"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
