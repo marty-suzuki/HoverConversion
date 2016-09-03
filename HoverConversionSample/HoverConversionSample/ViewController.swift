@@ -23,7 +23,7 @@ class ViewController: HCRootViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         let vc = HCPagingViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        //navigationController?.pushViewController(vc, animated: true)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

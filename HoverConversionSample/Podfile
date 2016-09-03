@@ -5,5 +5,8 @@ use_frameworks!
 
 target 'HoverConversionSample' do
 pod 'HoverConversion', :path => '../'
+pod 'Fabric'
+pod 'TwitterKit'
+pod 'TwitterCore'
 end
 
