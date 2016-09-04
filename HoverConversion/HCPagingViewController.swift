@@ -9,62 +9,74 @@
 import UIKit
 import MisterFusion
 
-public class HCPagingViewController: UIViewController {
-    public enum Position: Int {
-        case Upper = 1, Center = 0, Lower = 2
-    }
-    
-    public var viewControllers: [Position : UIViewController?] = [
+public enum HCPagingPosition: Int {
+    case Upper = 1, Center = 0, Lower = 2
+}
+
+public protocol HCPagingViewControllerDataSource : class {
+    func pagingViewController<T: UIViewController where T: HCViewContentable>(viewController: HCPagingViewController<T>, viewControllerFor index: Int) -> T?
+}
+
+public class HCPagingViewController<T: UIViewController where T: HCViewContentable>: UIViewController {
+    public var viewControllers: [HCPagingPosition : T?] = [
         .Upper : nil,
         .Center : nil,
         .Lower : nil
     ]
 
-    private let containerViews: [Position : UIView] = [
+    private let containerViews: [HCPagingPosition : UIView] = [
         .Upper : UIView(),
         .Center : UIView(),
         .Lower : UIView()
     ]
     
-    public private(set) var centerIndexPath: NSIndexPath? = NSIndexPath(forRow: 1, inSection: 0)
-    public private(set) var contentDataList: [AnyObject] = [0,1,2]
+    private var containerViewsAdded = false
+    private var currentIndex: Int
+    
+    public weak var dataSource: HCPagingViewControllerDataSource? {
+        didSet {
+            addContainerViews()
+            setupViewControllers()
+        }
+    }
+    
+    public init(index: Int) {
+        self.currentIndex = index
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
         addContainerViews()
-        
-        guard let centerIndexPath  = centerIndexPath else { return }
-        
-        if centerIndexPath.row > 0 {
-            let upperView = containerViews[.Upper]!
-            let vc = HCContentViewController()
-            upperView.addLayoutSubview(vc.view, andConstraints:
-                vc.view.Top, vc.view.Right, vc.view.Left, vc.view.Bottom
-            )
-            viewControllers[.Upper] = vc
-        }
-        
-        let centerView = containerViews[.Center]!
-        let vc = HCContentViewController()
-        centerView.addLayoutSubview(vc.view, andConstraints:
+    }
+    
+    private func setupViewControllers() {
+        setupViewController(index: currentIndex - 1, position: .Upper)
+        setupViewController(index: currentIndex, position: .Center)
+        setupViewController(index: currentIndex + 1, position: .Lower)
+    }
+    
+    private func setupViewController(index index: Int, position: HCPagingPosition) {
+        if index < 0 { return }
+        guard
+            let vc = dataSource?.pagingViewController(self, viewControllerFor: index),
+            let containerView = containerViews[position]
+        else { return }
+        containerView.addLayoutSubview(vc.view, andConstraints:
             vc.view.Top, vc.view.Right, vc.view.Left, vc.view.Bottom
         )
-        viewControllers[.Center] = vc
-        
-        if centerIndexPath.row + 1 < contentDataList.count {
-            let lowerView = containerViews[.Lower]!
-            let vc = HCContentViewController()
-            lowerView.addLayoutSubview(vc.view, andConstraints:
-                vc.view.Top, vc.view.Right, vc.view.Left, vc.view.Bottom
-            )
-            viewControllers[.Lower] = vc
-        }
+        viewControllers[position] = vc
     }
     
     private func addContainerViews() {
+        if containerViewsAdded { return }
+        containerViewsAdded = true
         containerViews.sort { $0.0.rawValue < $1.0.rawValue }.forEach {
             let misterFusion: MisterFusion
             switch $0.0 {

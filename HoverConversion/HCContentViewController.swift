@@ -8,19 +8,19 @@
 
 import UIKit
 
-protocol HCContentViewControllerScrollDelegate: class {
+public protocol HCContentViewControllerScrollDelegate: class {
     func contentViewController(viewController: HCContentViewController, scrollViewWillBeginDragging scrollView: UIScrollView)
     func contentViewController(viewController: HCContentViewController, scrollViewDidScroll scrollView: UIScrollView)
     func contentViewController(viewController: HCContentViewController, crollViewDidEndDragging scrollView: UIScrollView, willDecelerate decelerate: Bool)
 }
 
-public class HCContentViewController: UIViewController, HCContentable {
+public class HCContentViewController: UIViewController, HCViewContentable {
     
-    public let tableView: UITableView = .init()
-    public let navigationView: HCNavigationView = .init()
+    public var tableView: UITableView! = UITableView()
+    public var navigationView: HCNavigationView! = HCNavigationView()
     
-    weak var scrollDelegate: HCContentViewControllerScrollDelegate?
-
+    public weak var scrollDelegate: HCContentViewControllerScrollDelegate?
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
 

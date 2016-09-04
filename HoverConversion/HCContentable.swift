@@ -9,13 +9,13 @@
 import UIKit
 import MisterFusion
 
-public protocol HCContentable {
-    var navigationView: HCNavigationView { get }
-    var tableView: UITableView { get }
+public protocol HCViewControllable {
+    var navigationView: HCNavigationView! { get set }
+    var tableView: UITableView! { get set }
     func addViews()
 }
 
-extension HCContentable where Self: UIViewController {
+extension HCViewControllable where Self: UIViewController {
     public func addViews() {
         view.addLayoutSubview(navigationView, andConstraints:
             navigationView.Top,
@@ -31,4 +31,8 @@ extension HCContentable where Self: UIViewController {
             tableView.Bottom
         )
     }
+}
+
+public protocol HCViewContentable: HCViewControllable {
+    weak var scrollDelegate: HCContentViewControllerScrollDelegate? { get set }
 }

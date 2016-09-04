@@ -39,18 +39,26 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bnn-23-jUq">
+                        <rect key="frame" x="285.5" y="10" width="26.5" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="FXZ-DM-Ur9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="2Lh-V3-xco"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="lwd-HG-mKy" secondAttribute="trailing" constant="12" id="2Yt-9F-YjA"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AEX-cR-12k" secondAttribute="trailing" constant="12" id="4QV-vG-jVP"/>
+                    <constraint firstAttribute="trailing" secondItem="bnn-23-jUq" secondAttribute="trailing" constant="8" id="4ci-M4-iaY"/>
                     <constraint firstItem="mfI-M1-VK4" firstAttribute="leading" secondItem="FXZ-DM-Ur9" secondAttribute="trailing" constant="8" id="7S9-V7-GsX"/>
                     <constraint firstItem="mfI-M1-VK4" firstAttribute="top" secondItem="FXZ-DM-Ur9" secondAttribute="top" id="8iv-eM-gwE"/>
-                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mfI-M1-VK4" secondAttribute="trailing" constant="10" id="CNG-br-XCk"/>
                     <constraint firstItem="lwd-HG-mKy" firstAttribute="top" secondItem="mfI-M1-VK4" secondAttribute="bottom" constant="2" id="Dz7-ql-1sH"/>
                     <constraint firstItem="AEX-cR-12k" firstAttribute="bottom" secondItem="FXZ-DM-Ur9" secondAttribute="bottom" id="EPE-vP-UuS"/>
+                    <constraint firstItem="bnn-23-jUq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="SzQ-cD-IQD"/>
                     <constraint firstItem="FXZ-DM-Ur9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="T1Q-Gl-IKP"/>
                     <constraint firstItem="AEX-cR-12k" firstAttribute="leading" secondItem="FXZ-DM-Ur9" secondAttribute="trailing" constant="8" id="jDb-AP-XyI"/>
+                    <constraint firstItem="bnn-23-jUq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="mfI-M1-VK4" secondAttribute="trailing" constant="8" id="wwc-ve-Wto"/>
                     <constraint firstItem="lwd-HG-mKy" firstAttribute="leading" secondItem="mfI-M1-VK4" secondAttribute="leading" id="xKK-Yt-UDg"/>
                 </constraints>
             </tableViewCellContentView>
@@ -58,6 +66,7 @@
                 <outlet property="iconImageView" destination="FXZ-DM-Ur9" id="FvV-nQ-Zqg"/>
                 <outlet property="latestTweetLabel" destination="AEX-cR-12k" id="81e-rX-kC7"/>
                 <outlet property="screenNameLabel" destination="lwd-HG-mKy" id="Z9z-Kb-gms"/>
+                <outlet property="timestampLabel" destination="bnn-23-jUq" id="Cb4-Tp-CsV"/>
                 <outlet property="userNameLabel" destination="mfI-M1-VK4" id="3am-YQ-st6"/>
             </connections>
         </tableViewCell>

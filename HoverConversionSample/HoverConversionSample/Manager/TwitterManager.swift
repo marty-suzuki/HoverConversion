@@ -11,14 +11,28 @@ import TwitterKit
 
 class TwitterManager {
     private let screenNames: [String] = [
+        "tim_cook",
+        "SwiftLang",
         "BacktotheFuture",
-        "realmikefox"
+        "realmikefox",
+        "marty_suzuki"
     ]
     
     private(set) var tweets: [String : [TWTRTweet]] = [:]
     private(set) var users: [TWTRUser] = []
     
     private lazy var client = TWTRAPIClient()
+    
+    func sortUsers() {
+        let result = users.flatMap { user -> (TWTRUser, TWTRTweet)? in
+            guard let tweet = tweets[user.screenName]?.first else {
+                return nil
+            }
+            return (user, tweet)
+        }
+        let sortedResult = result.sort { $0.0.1.createdAt.timeIntervalSince1970 > $0.1.1.createdAt.timeIntervalSince1970 }
+        users = sortedResult.flatMap { $0.0 }
+    }
     
     func fetchUsersTimeline(completion: (() -> ())) {
         let group = dispatch_group_create()
@@ -34,7 +48,7 @@ class TwitterManager {
     }
     
     func fetchUserTimeline(screenName screenName: String, completion: (() -> ())) {
-        client.loadUserTimeline(screenName: screenName, sinceId: nil, count: 1) { (tweets, error) in
+        client.loadUserTimeline(screenName: screenName, maxId: nil, count: 1) { (tweets, error) in
             if let error = error {
                 print(error)
                 completion()

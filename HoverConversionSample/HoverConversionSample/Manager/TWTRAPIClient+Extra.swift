@@ -33,13 +33,13 @@ extension TWTRAPIClient {
         }
     }
     
-    func loadUserTimeline(screenName screenName: String, sinceId: Int?, count: Int?, completion: TWTRLoadTweetsCompletion) {
+    func loadUserTimeline(screenName screenName: String, maxId: String?, count: Int?, completion: TWTRLoadTweetsCompletion) {
         var error: NSError?
         var parameter: [NSObject : AnyObject] = [
             "screen_name" : screenName
         ]
-        if let sinceId = sinceId {
-            parameter["since_id"] = String(sinceId)
+        if let maxId = maxId {
+            parameter["max_id"] = maxId
         }
         if let count = count {
             parameter["count"] = String(count)
@@ -85,9 +85,8 @@ extension TWTRAPIClient {
     
     private func sendTwitterRequest<T: TWTRJSONConvertible>(request: NSURLRequest, completion: (NSURLResponse?, [T]?, NSError?) -> Void) {
         sendTwitterRequest(request) { [weak self] in
-            let result: TWTRResult<[[NSObject : AnyObject]]> = self?.parseData($0.1, error: $0.2)
-                ?? .Failure(NSError(domain: TWTRAPIErrorDomain, code: -9999, userInfo: nil))
-            switch result {
+            let result: TWTRResult<[[NSObject : AnyObject]]>? = self?.parseData($0.1, error: $0.2)
+            switch result ?? .Failure(NSError(domain: TWTRAPIErrorDomain, code: -9999, userInfo: nil)) {
             case .Failure(let error):
                 completion($0.0, nil, error)
             case .Success(let dictionaries):

@@ -8,10 +8,10 @@
 
 import UIKit
 
-public class HCRootViewController: UIViewController, HCContentable {
+public class HCRootViewController: UIViewController, HCViewControllable {
 
-    public let tableView: UITableView = .init()
-    public let navigationView: HCNavigationView = .init()
+    public var tableView: UITableView! = UITableView()
+    public var navigationView: HCNavigationView! = HCNavigationView()
     
     override public func viewDidLoad() {
         super.viewDidLoad()

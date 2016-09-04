@@ -17,10 +17,6 @@ class HomeViewController: HCRootViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-//        let vc = HCPagingViewController()
-//        view.addSubview(vc.view)
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
@@ -29,8 +25,6 @@ class HomeViewController: HCRootViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        //let vc = HCPagingViewController()
-        //navigationController?.pushViewController(vc, animated: true)
         
         let group = dispatch_group_create()
         dispatch_group_enter(group)
@@ -42,12 +36,19 @@ class HomeViewController: HCRootViewController {
             dispatch_group_leave(group)
         }
         dispatch_group_notify(group, dispatch_get_main_queue()) {
+            self.twitterManager.sortUsers()
             self.tableView.reloadData()
         }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func showPagingViewContoller(index index: Int) {
+        let vc = HCPagingViewController<UserTimelineViewController>(index: index)
+        vc.dataSource = self
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -73,5 +74,19 @@ extension HomeViewController: UITableViewDataSource {
 extension HomeViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return HomeTableViewCell.Height
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        showPagingViewContoller(index: indexPath.row)
+    }
+}
+
+extension HomeViewController: HCPagingViewControllerDataSource {
+    func pagingViewController<T : UIViewController where T : HCViewContentable>(viewController: HCPagingViewController<T>, viewControllerFor index: Int) -> T? {
+        guard index < twitterManager.users.count else { return nil }
+        let vc = UserTimelineViewController()
+        vc.user = twitterManager.users[index]
+        return vc as? T
     }
 }

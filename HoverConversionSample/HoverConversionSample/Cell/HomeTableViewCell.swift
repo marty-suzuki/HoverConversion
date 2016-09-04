@@ -16,6 +16,7 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var latestTweetLabel: UILabel!
+    @IBOutlet weak var timestampLabel: UILabel!
     
     var userValue: (TWTRUser, TWTRTweet)? {
         didSet {
@@ -32,13 +33,19 @@ class HomeTableViewCell: UITableViewCell {
             }
             userNameLabel.text = user.name
             screenNameLabel.text = "@" + user.screenName
-            latestTweetLabel.text = value.1.text
+            let tweet = value.1
+            latestTweetLabel.text = tweet.text
+            timestampLabel.text = tweet.createdAt.description
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        iconImageView.layer.cornerRadius = iconImageView.bounds.size.height / 2
+        iconImageView.layer.borderWidth = 1
+        iconImageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        iconImageView.layer.masksToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
