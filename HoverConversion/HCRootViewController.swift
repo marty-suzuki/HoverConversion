@@ -18,6 +18,7 @@ public class HCRootViewController: UIViewController, HCViewControllable {
 
         // Do any additional setup after loading the view.
         addViews()
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
     override public func didReceiveMemoryWarning() {

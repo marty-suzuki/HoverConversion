@@ -11,7 +11,7 @@ import UIKit
 public protocol HCContentViewControllerScrollDelegate: class {
     func contentViewController(viewController: HCContentViewController, scrollViewWillBeginDragging scrollView: UIScrollView)
     func contentViewController(viewController: HCContentViewController, scrollViewDidScroll scrollView: UIScrollView)
-    func contentViewController(viewController: HCContentViewController, crollViewDidEndDragging scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    func contentViewController(viewController: HCContentViewController, scrollViewDidEndDragging scrollView: UIScrollView, willDecelerate decelerate: Bool)
 }
 
 public class HCContentViewController: UIViewController, HCViewContentable {
@@ -27,6 +27,8 @@ public class HCContentViewController: UIViewController, HCViewContentable {
         // Do any additional setup after loading the view.
         addViews()
         tableView.delegate = self
+        tableView.contentInset.bottom = 64
+        tableView.scrollIndicatorInsets.bottom = 64
     }
 
     override public func didReceiveMemoryWarning() {
@@ -57,6 +59,6 @@ extension HCContentViewController: UITableViewDelegate {
     }
     
     public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        scrollDelegate?.contentViewController(self, crollViewDidEndDragging: scrollView, willDecelerate: decelerate)
+        scrollDelegate?.contentViewController(self, scrollViewDidEndDragging: scrollView, willDecelerate: decelerate)
     }
 }

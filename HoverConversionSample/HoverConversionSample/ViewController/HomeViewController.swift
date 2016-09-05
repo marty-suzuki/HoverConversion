@@ -17,12 +17,17 @@ class HomeViewController: HCRootViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        navigationView.backgroundColor = UIColor(red: 85 / 255, green: 172 / 255, blue: 238 / 255, alpha: 1)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         tableView.registerNib(UINib(nibName: "HomeTableViewCell", bundle: nil), forCellReuseIdentifier: "HomeTableViewCell")
     }
 
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -46,7 +51,7 @@ class HomeViewController: HCRootViewController {
     }
     
     private func showPagingViewContoller(index index: Int) {
-        let vc = HCPagingViewController<UserTimelineViewController>(index: index)
+        let vc = HCPagingViewController(index: index)
         vc.dataSource = self
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -83,10 +88,10 @@ extension HomeViewController: UITableViewDelegate {
 }
 
 extension HomeViewController: HCPagingViewControllerDataSource {
-    func pagingViewController<T : UIViewController where T : HCViewContentable>(viewController: HCPagingViewController<T>, viewControllerFor index: Int) -> T? {
+    func pagingViewController(viewController: HCPagingViewController, viewControllerFor index: Int) -> HCContentViewController? {
         guard index < twitterManager.users.count else { return nil }
         let vc = UserTimelineViewController()
         vc.user = twitterManager.users[index]
-        return vc as? T
+        return vc
     }
 }

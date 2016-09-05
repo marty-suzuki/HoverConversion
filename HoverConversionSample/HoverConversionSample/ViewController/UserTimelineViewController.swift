@@ -20,12 +20,18 @@ class UserTimelineViewController: HCContentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        navigationView.backgroundColor = UIColor(red: 85 / 255, green: 172 / 255, blue: 238 / 255, alpha: 1)
+        //navigationView.backgroundColor = .whiteColor()
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         tableView.registerClass(TWTRTweetTableViewCell.self, forCellReuseIdentifier: "TWTRTweetTableViewCell")
         tableView.dataSource = self
         loadTweets()
     }
-
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .Default
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -33,7 +39,7 @@ class UserTimelineViewController: HCContentViewController {
     
     private func loadTweets() {
         guard let user = user where hasNext else { return }
-        let oldestTweetId = tweets.last?.tweetID
+        let oldestTweetId = tweets.first?.tweetID
         client.loadUserTimeline(screenName: user.screenName, maxId: oldestTweetId, count: nil) { [weak self] in
             if let error = $1 {
                 print(error)
@@ -49,8 +55,9 @@ class UserTimelineViewController: HCContentViewController {
                 return
             }
             let filterdTweets = tweets.filter { $0.tweetID != oldestTweetId }
-            let sortedTweets = filterdTweets.sort { $0.0.createdAt.timeIntervalSince1970 > $0.1.createdAt.timeIntervalSince1970 }
-            self?.tweets += sortedTweets
+            let sortedTweets = filterdTweets.sort { $0.0.createdAt.timeIntervalSince1970 < $0.1.createdAt.timeIntervalSince1970 }
+            guard let storedTweets = self?.tweets else { return }
+            self?.tweets = sortedTweets + storedTweets
             self?.tableView.reloadData()
         }
     }
@@ -65,8 +72,8 @@ extension UserTimelineViewController {
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row + 2 == tweets.count {
-            loadTweets()
+        if indexPath.row < 1 {
+            //loadTweets()
         }
     }
 }
