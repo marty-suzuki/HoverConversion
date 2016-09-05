@@ -3,7 +3,7 @@
 //  HoverConversion
 //
 //  Created by Taiki Suzuki on 2016/07/18.
-//
+//  Copyright © 2016年 marty-suzuki. All rights reserved.
 //
 
 import UIKit
@@ -62,13 +62,27 @@ public class HCPagingViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        automaticallyAdjustsScrollViewInsets = false
         addContainerViews()
+    }
+    
+    private func viewController(position: HCPagingPosition) -> HCContentViewController? {
+        guard let nullableViewController = viewControllers[position] else { return nil }
+        return nullableViewController
     }
     
     private func setupViewControllers() {
         setupViewController(index: currentIndex - 1, position: .Upper)
         setupViewController(index: currentIndex, position: .Center)
         setupViewController(index: currentIndex + 1, position: .Lower)
+        let tableView = viewController(.Center)?.tableView
+        if let _ = viewController(.Lower) {
+            tableView?.contentInset.bottom = 64
+            tableView?.scrollIndicatorInsets.bottom = 64
+        } else {
+            tableView?.contentInset.bottom = 0
+            tableView?.scrollIndicatorInsets.bottom = 0
+        }
     }
     
     private func setupViewController(index index: Int, position: HCPagingPosition) {
@@ -116,10 +130,8 @@ public class HCPagingViewController: UIViewController {
     }
     
     func moveToNext(scrollView: UIScrollView, offset: CGPoint) {
-//        if (centerIndexPath.row >= talkList.count - 1) {
-//            return
-//        }
-//        
+        guard let _ = viewController(.Lower) else { return }
+
 //        scrollDirection = .Bottom
         let value = offset.y - (scrollView.contentSize.height - scrollView.bounds.size.height)
         let headerHeight = HCNavigationView.Height
@@ -132,12 +144,15 @@ public class HCPagingViewController: UIViewController {
 //        nextTalkButtonBottomConstraint?.constant = -view.bounds.size.height + (headerHeight * 2)
         
         let relativeDuration = NSTimeInterval(0.25)
+        
+        let lowerViewController = viewController(.Lower)
+        let centerViewController = viewController(.Center)
         UIView.animateKeyframesWithDuration(Const.NextAnimationDuration, delay: 0, options: .CalculationModeLinear, animations: {
             
             UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 1.0 - relativeDuration) {
-                self.viewControllers[.Lower]??.view.frame.origin.y = -self.view.bounds.size.height + headerHeight
-                self.viewControllers[.Center]??.view.frame.origin.y = -self.view.bounds.size.height + value + headerHeight
-                self.viewControllers[.Center]??.navigationView?.frame.origin.y = self.view.bounds.size.height - value - headerHeight
+                lowerViewController?.view.frame.origin.y = -self.view.bounds.size.height + headerHeight
+                centerViewController?.view.frame.origin.y = -self.view.bounds.size.height + value + headerHeight
+                centerViewController?.navigationView?.frame.origin.y = self.view.bounds.size.height - value - headerHeight
                 
 //                self.nextHeaderView?.alpha = 0
 //                
@@ -147,52 +162,131 @@ public class HCPagingViewController: UIViewController {
             }
             
             UIView.addKeyframeWithRelativeStartTime(1.0 - relativeDuration, relativeDuration: relativeDuration) {
-                self.viewControllers[.Lower]??.view.frame.origin.y = -self.view.bounds.size.height
-                self.viewControllers[.Center]??.view.frame.origin.y = -self.view.bounds.size.height + value
+                lowerViewController?.view.frame.origin.y = -self.view.bounds.size.height
+                centerViewController?.view.frame.origin.y = -self.view.bounds.size.height + value
             }
         }) { _ in
-            self.viewControllers[.Upper]??.view.removeFromSuperview()
-            self.viewControllers[.Center]??.view.removeFromSuperview()
-            self.viewControllers[.Lower]??.view.removeFromSuperview()
+            let upperViewController = self.viewController(.Upper)
+            upperViewController?.view.removeFromSuperview()
+            centerViewController?.view.removeFromSuperview()
+            lowerViewController?.view.removeFromSuperview()
             
-            if let lowerView = self.viewControllers[.Lower]??.view {
+            if let lowerView = lowerViewController?.view {
                 self.addView(lowerView, to: .Center)
             }
             
-            if let centerView = self.viewControllers[.Center]??.view {
+            if let centerView = centerViewController?.view {
                 self.addView(centerView, to: .Upper)
             }
             
-            //self.centerViewController?.delegate = nil
+            //centerViewController?.delegate = nil
             
-            self.viewControllers[.Upper]??.willMoveToParentViewController(self)
-            self.viewControllers[.Upper]??.removeFromParentViewController()
+            upperViewController?.willMoveToParentViewController(self)
+            upperViewController?.removeFromParentViewController()
             
-            let exchangeViewController = self.viewControllers[.Center]
-            self.viewControllers[.Center] = self.viewControllers[.Lower]
-            self.viewControllers[.Upper] = exchangeViewController
+            let nextCenterVC = lowerViewController
+            let nextUpperVC = centerViewController
+            self.viewControllers[.Center] = nextCenterVC
+            self.viewControllers[.Upper] = nextUpperVC
             self.viewControllers[.Lower] = nil
             
             self.currentIndex += 1
             if let newViewController = self.dataSource?.pagingViewController(self, viewControllerFor: self.currentIndex + 1) {
                 self.addViewController(newViewController, to: .Lower)
                 self.viewControllers[.Lower] = newViewController
+                nextCenterVC?.tableView.contentInset.bottom = 64
+                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 64
+            } else {
+                nextCenterVC?.tableView.contentInset.bottom = 0
+                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 0
+            }
+            
+//            centerViewController?.delegate = self
+//            centerViewController?.setupViewController()
+//            centerViewController?.view.frame = self.centerContainerView.bounds
+            
+            if nextUpperVC?.tableView?.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height {
+                if scrollView.contentSize.height > scrollView.bounds.size.height {
+                    nextUpperVC?.tableView?.setContentOffset(CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height), animated: false)
+                } else {
+                    nextUpperVC?.tableView?.setContentOffset(.zero, animated: false)
+                }
+            }
+//            upperViewController?.setNavigationContainerViewOffset(.zero)
+//            upperViewController?.resetInputContentViewPosition()
+            nextUpperVC?.tableView?.reloadData()
+            
+//            self.setScrollsTop()
+//            
+//            self.clearAlphaView()
+//            self.clearNextHeaderView()
+//            self.clearNextTalkButton()
+            
+            self.isPaging = false
+        }
+    }
+    
+    func moveToPrevious(scrollView: UIScrollView, offset: CGPoint) {
+        guard let _ = viewController(.Upper) else { return }
+
+        //scrollDirection = .Top
+        isPaging = true
+        
+        scrollView.setContentOffset(scrollView.contentOffset, animated: false)
+        
+        let upperViewController = viewController(.Upper)
+        let centerViewController = viewController(.Center)
+        UIView.animateWithDuration(Const.PreviousAnimationDuration, delay: 0, options: .CurveLinear, animations: {
+            upperViewController?.view.frame.origin.y = self.view.bounds.size.height
+            centerViewController?.view.frame.origin.y = self.view.bounds.size.height + offset.y
+        }) { finished in
+            let lowerViewController = self.viewController(.Lower)
+            upperViewController?.view.removeFromSuperview()
+            centerViewController?.view.removeFromSuperview()
+            lowerViewController?.view.removeFromSuperview()
+            
+            //centerViewController?.clearCommentViewController()
+            
+            if let upperView = upperViewController?.view {
+                self.addView(upperView, to: .Center)
+            }
+            
+            if let centerView = centerViewController?.view {
+                self.addView(centerView, to: .Lower)
+            }
+            
+//            centerViewController?.delegate = nil
+//            centerViewController?.talkController.finishWatching()
+            
+            lowerViewController?.willMoveToParentViewController(self)
+            lowerViewController?.removeFromParentViewController()
+            
+            let nextCenterVC = upperViewController
+            let nextLowerVC = centerViewController
+            self.viewControllers[.Center] = nextCenterVC
+            self.viewControllers[.Lower] = nextLowerVC
+            self.viewControllers[.Upper] = nil
+            
+            self.currentIndex -= 1
+            if let newViewController = self.dataSource?.pagingViewController(self, viewControllerFor: self.currentIndex - 1) {
+                self.addViewController(newViewController, to: .Upper)
+                self.viewControllers[.Upper] = newViewController
+            }
+            if let _ = nextLowerVC {
+                nextCenterVC?.tableView.contentInset.bottom = 64
+                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 64
+            } else {
+                nextCenterVC?.tableView.contentInset.bottom = 0
+                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 0
             }
             
 //            self.centerViewController?.delegate = self
 //            self.centerViewController?.setupViewController()
-//            self.centerViewController?.view.frame = self.centerContainerView.bounds
             
-            if self.viewControllers[.Upper]??.tableView?.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height {
-                if scrollView.contentSize.height > scrollView.bounds.size.height {
-                    self.viewControllers[.Upper]??.tableView?.setContentOffset(CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height), animated: false)
-                } else {
-                    self.viewControllers[.Upper]??.tableView?.setContentOffset(.zero, animated: false)
-                }
-            }
-//            self.upperViewController?.setNavigationContainerViewOffset(.zero)
-//            self.upperViewController?.resetInputContentViewPosition()
-            self.viewControllers[.Upper]??.tableView?.reloadData()
+//            self.centerViewController?.view.frame = self.centerContainerView.bounds
+//            self.lowerViewController?.view.frame = self.lowerContainerView.bounds
+//            self.lowerViewController?.setNavigationContainerViewOffset(.zero)
+            nextLowerVC?.tableView?.reloadData()
             
 //            self.setScrollsTop()
 //            
@@ -206,46 +300,45 @@ public class HCPagingViewController: UIViewController {
 }
 
 extension HCPagingViewController: HCContentViewControllerScrollDelegate {
-    private func isCenterViewController(viewContoller: HCContentViewController) -> Bool {
-        guard let centerViewController = viewControllers[.Center] else { return false }
-        return viewContoller == centerViewController
-    }
-    
     public func contentViewController(viewController: HCContentViewController, scrollViewDidScroll scrollView: UIScrollView) {
-        guard isCenterViewController(viewController) else { return }
+        guard viewController == self.viewController(.Center) else { return }
         
         let offset = scrollView.contentOffset
         let contentSize = scrollView.contentSize
         let scrollViewSize = scrollView.bounds.size
         if contentSize.height - scrollViewSize.height <= offset.y {
-            guard let lowerViewController = viewControllers[.Lower] else { return }
+            guard let lowerViewController = self.viewController(.Lower) else { return }
             let delta = offset.y - (contentSize.height - scrollViewSize.height)
-            lowerViewController?.view.frame.origin.y = min(0, -delta)
+            lowerViewController.view.frame.origin.y = min(0, -delta)
         } else if offset.y < 0 {
-            guard let upperViewController = viewControllers[.Upper] else { return }
+            guard
+                let upperViewController = self.viewController(.Upper),
+                let centerViewController = self.viewController(.Center)
+            else { return }
             let delta = max(0, -offset.y)
-            upperViewController?.view.frame.origin.y = delta
-            viewController.navigationView.frame.origin.y = delta
+            upperViewController.view.frame.origin.y = delta
+            centerViewController.navigationView.frame.origin.y = delta
         } else {
             guard
-                let lowerViewController = viewControllers[.Lower],
-                let upperViewController = viewControllers[.Upper]
+                let lowerViewController = self.viewController(.Lower),
+                let upperViewController = self.viewController(.Upper),
+                let centerViewController = self.viewController(.Center)
             else { return }
-            lowerViewController?.view.frame.origin.y = 0
-            upperViewController?.view.frame.origin.y = 0
-            viewController.navigationView.frame.origin.y = 0
+            lowerViewController.view.frame.origin.y = 0
+            upperViewController.view.frame.origin.y = 0
+            centerViewController.navigationView.frame.origin.y = 0
         }
         
         if isDragging { return }
         if scrollView.contentSize.height > scrollView.bounds.size.height {
             if offset.y < -Const.FireDistance {
-                //moveToPrevious(scrollView, offset: offset)
+                moveToPrevious(scrollView, offset: offset)
             } else if offset.y > (scrollView.contentSize.height + Const.FireDistance) - scrollView.bounds.size.height {
                 moveToNext(scrollView, offset: offset)
             }
         } else {
             if offset.y < -Const.FireDistance {
-                //moveToPrevious(scrollView, offset: offset)
+                moveToPrevious(scrollView, offset: offset)
             } else if offset.y > Const.FireDistance {
                 moveToNext(scrollView, offset: CGPoint(x: offset.x, y: offset.y + (scrollView.contentSize.height - scrollView.bounds.size.height)))
             }
@@ -253,12 +346,12 @@ extension HCPagingViewController: HCContentViewControllerScrollDelegate {
     }
     
     public func contentViewController(viewController: HCContentViewController, scrollViewWillBeginDragging scrollView: UIScrollView) {
-        guard isCenterViewController(viewController) else { return }
+        guard viewController == self.viewController(.Center) else { return }
         isDragging = true
     }
     
     public func contentViewController(viewController: HCContentViewController, scrollViewDidEndDragging scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard isCenterViewController(viewController) else { return }
+        guard viewController == self.viewController(.Center) else { return }
         isDragging = false
     }
 }

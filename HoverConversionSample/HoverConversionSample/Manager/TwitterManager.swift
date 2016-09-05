@@ -2,8 +2,8 @@
 //  TwitterManager.swift
 //  HoverConversionSample
 //
-//  Created by 鈴木大貴 on 2016/09/03.
-//  Copyright © 2016年 szk-atmosphere. All rights reserved.
+//  Created by Taiki Suzuki on 2016/09/03.
+//  Copyright © 2016年 marty-suzuki. All rights reserved.
 //
 
 import Foundation

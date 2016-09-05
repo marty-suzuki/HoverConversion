@@ -19,7 +19,6 @@
 		6764326346339D28284FFE89350899E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AC3B5E243ACE466EA3DB1D808C3CEA /* UIKit.framework */; };
 		6BE1C2182F99921247BC910D1A957B33 /* MisterFusion-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8979FA6EFC6E52F617259971788A6A81 /* MisterFusion-dummy.m */; };
 		920BE56C7394D47C492C32616A8E14E9 /* HCPagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792C633B5AD933B1176430DBA78989ED /* HCPagingViewController.swift */; };
-		ACFA8B54D1722E7121D995C59A74A6C9 /* HoverConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2341B219A3E172F1FD6FA67C4F30D68B /* HoverConvertible.swift */; };
 		BE7F9B9AA1DD2F37726E8B29127FE91F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AC3B5E243ACE466EA3DB1D808C3CEA /* UIKit.framework */; };
 		D8941891966EE85DF176B4E5F0CB133F /* HCContentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACAF3A14001616ACE0AD14D259EDA0F /* HCContentable.swift */; };
 		D92C1A0C10DFB2C2F0D8014A58ACE330 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D75A45B4FD850283392C82B3D89EB9AB /* Foundation.framework */; };
@@ -61,7 +60,6 @@
 		123F836943D0739349BD65A6EA90F199 /* MisterFusion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MisterFusion.swift; path = MisterFusion/MisterFusion.swift; sourceTree = "<group>"; };
 		1763DD217DD9DD82297754EE1C11EF02 /* MisterFusion-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MisterFusion-prefix.pch"; sourceTree = "<group>"; };
 		1C4DFFB24854CCAA6C4348FA9DFF97B7 /* HoverConversion.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = HoverConversion.modulemap; sourceTree = "<group>"; };
-		2341B219A3E172F1FD6FA67C4F30D68B /* HoverConvertible.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HoverConvertible.swift; sourceTree = "<group>"; };
 		27337F5672367861F08E42079106F66D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		359590E38D7C452303204CF8E0EA458B /* Pods-HoverConversionSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HoverConversionSample.release.xcconfig"; sourceTree = "<group>"; };
 		4159D928432EC4ACA326455734A9D094 /* HoverConversion.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HoverConversion.xcconfig; sourceTree = "<group>"; };
@@ -194,7 +192,6 @@
 				5763C6140E67D852DA2D4E4D608C62C9 /* HCNavigationView.swift */,
 				792C633B5AD933B1176430DBA78989ED /* HCPagingViewController.swift */,
 				AF9595A9A12181E45D3CA3E0D6A96205 /* HCRootViewController.swift */,
-				2341B219A3E172F1FD6FA67C4F30D68B /* HoverConvertible.swift */,
 			);
 			path = HoverConversion;
 			sourceTree = "<group>";
@@ -458,7 +455,6 @@
 				920BE56C7394D47C492C32616A8E14E9 /* HCPagingViewController.swift in Sources */,
 				EC60D74D114AD4EE059BF778A9A329EB /* HCRootViewController.swift in Sources */,
 				3212C90A3C470295EFDC80AAE0D29048 /* HoverConversion-dummy.m in Sources */,
-				ACFA8B54D1722E7121D995C59A74A6C9 /* HoverConvertible.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

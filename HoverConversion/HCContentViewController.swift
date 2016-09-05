@@ -3,7 +3,7 @@
 //  HoverConversion
 //
 //  Created by Taiki Suzuki on 2016/07/18.
-//
+//  Copyright © 2016年 marty-suzuki. All rights reserved.
 //
 
 import UIKit
@@ -17,6 +17,7 @@ public protocol HCContentViewControllerScrollDelegate: class {
 public class HCContentViewController: UIViewController, HCViewContentable {
     
     public var tableView: UITableView! = UITableView()
+    public var navigatoinContainerView: UIView! = UIView()
     public var navigationView: HCNavigationView! = HCNavigationView()
     
     public weak var scrollDelegate: HCContentViewControllerScrollDelegate?
@@ -25,28 +26,15 @@ public class HCContentViewController: UIViewController, HCViewContentable {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        automaticallyAdjustsScrollViewInsets = false
         addViews()
         tableView.delegate = self
-        tableView.contentInset.bottom = 64
-        tableView.scrollIndicatorInsets.bottom = 64
     }
 
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension HCContentViewController: UITableViewDelegate {
