@@ -14,6 +14,12 @@ public class HCRootViewController: UIViewController, HCViewControllable {
     public var navigatoinContainerView: UIView! = UIView()
     public var navigationView: HCNavigationView! = HCNavigationView()
     
+    public override var title: String? {
+        didSet {
+            navigationView?.titleLabel.text = title
+        }
+    }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
 

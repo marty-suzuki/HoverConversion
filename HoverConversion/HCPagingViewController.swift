@@ -66,6 +66,10 @@ public class HCPagingViewController: UIViewController {
         addContainerViews()
     }
     
+    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return viewController(.Center)?.preferredStatusBarStyle() ?? .Default
+    }
+    
     private func viewController(position: HCPagingPosition) -> HCContentViewController? {
         guard let nullableViewController = viewControllers[position] else { return nil }
         return nullableViewController
@@ -83,6 +87,7 @@ public class HCPagingViewController: UIViewController {
             tableView?.contentInset.bottom = 0
             tableView?.scrollIndicatorInsets.bottom = 0
         }
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     private func setupViewController(index index: Int, position: HCPagingPosition) {
@@ -215,6 +220,7 @@ public class HCPagingViewController: UIViewController {
 //            upperViewController?.setNavigationContainerViewOffset(.zero)
 //            upperViewController?.resetInputContentViewPosition()
             nextUpperVC?.tableView?.reloadData()
+            self.setNeedsStatusBarAppearanceUpdate()
             
 //            self.setScrollsTop()
 //            
@@ -287,6 +293,7 @@ public class HCPagingViewController: UIViewController {
 //            self.lowerViewController?.view.frame = self.lowerContainerView.bounds
 //            self.lowerViewController?.setNavigationContainerViewOffset(.zero)
             nextLowerVC?.tableView?.reloadData()
+            self.setNeedsStatusBarAppearanceUpdate()
             
 //            self.setScrollsTop()
 //            

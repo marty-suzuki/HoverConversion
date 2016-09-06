@@ -1,5 +1,5 @@
 //
-//  HCContentable.swift
+//  HCViewContentable.swift
 //  HoverConversion
 //
 //  Created by Taiki Suzuki on 2016/07/18.
@@ -9,7 +9,7 @@
 import UIKit
 import MisterFusion
 
-public protocol HCViewControllable {
+public protocol HCViewControllable: HCNavigationViewDelegate {
     var navigationView: HCNavigationView! { get set }
     var navigatoinContainerView: UIView! { get set }
     var tableView: UITableView! { get set }
@@ -18,6 +18,7 @@ public protocol HCViewControllable {
 
 extension HCViewControllable where Self: UIViewController {
     public func addViews() {
+        navigationView.delegate = self
         view.addLayoutSubview(navigatoinContainerView, andConstraints:
             navigatoinContainerView.Top,
             navigatoinContainerView.Right,
@@ -40,6 +41,9 @@ extension HCViewControllable where Self: UIViewController {
         )
         view.bringSubviewToFront(navigatoinContainerView)
     }
+    
+    public func navigationView(navigationView: HCNavigationView, didTapLeftButton button: UIButton) {}
+    public func navigationView(navigationView: HCNavigationView, didTapRightButton button: UIButton) {}
 }
 
 public protocol HCViewContentable: HCViewControllable {

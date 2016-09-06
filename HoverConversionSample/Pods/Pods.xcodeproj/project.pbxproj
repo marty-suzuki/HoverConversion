@@ -20,7 +20,7 @@
 		6BE1C2182F99921247BC910D1A957B33 /* MisterFusion-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8979FA6EFC6E52F617259971788A6A81 /* MisterFusion-dummy.m */; };
 		920BE56C7394D47C492C32616A8E14E9 /* HCPagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792C633B5AD933B1176430DBA78989ED /* HCPagingViewController.swift */; };
 		BE7F9B9AA1DD2F37726E8B29127FE91F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AC3B5E243ACE466EA3DB1D808C3CEA /* UIKit.framework */; };
-		D8941891966EE85DF176B4E5F0CB133F /* HCContentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACAF3A14001616ACE0AD14D259EDA0F /* HCContentable.swift */; };
+		D8941891966EE85DF176B4E5F0CB133F /* HCViewContentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACAF3A14001616ACE0AD14D259EDA0F /* HCViewContentable.swift */; };
 		D92C1A0C10DFB2C2F0D8014A58ACE330 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D75A45B4FD850283392C82B3D89EB9AB /* Foundation.framework */; };
 		E5B10B25F647595C52D697189F092F6D /* MisterFusion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2935E17DC126D987EF4144AFC60EE96 /* MisterFusion.framework */; };
 		EC60D74D114AD4EE059BF778A9A329EB /* HCRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9595A9A12181E45D3CA3E0D6A96205 /* HCRootViewController.swift */; };
@@ -75,7 +75,7 @@
 		792C633B5AD933B1176430DBA78989ED /* HCPagingViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCPagingViewController.swift; sourceTree = "<group>"; };
 		891382AB41A5BCF1B52EDECD86DC2EC5 /* FABAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FABAttributes.h; path = iOS/Fabric.framework/Headers/FABAttributes.h; sourceTree = "<group>"; };
 		8979FA6EFC6E52F617259971788A6A81 /* MisterFusion-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MisterFusion-dummy.m"; sourceTree = "<group>"; };
-		8ACAF3A14001616ACE0AD14D259EDA0F /* HCContentable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCContentable.swift; sourceTree = "<group>"; };
+		8ACAF3A14001616ACE0AD14D259EDA0F /* HCViewContentable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCViewContentable.swift; sourceTree = "<group>"; };
 		8BD198B88230A30BA99525390C993795 /* HCContentViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCContentViewController.swift; sourceTree = "<group>"; };
 		912705423DEF93999F7DA1457B7AAD28 /* HoverConversion-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HoverConversion-umbrella.h"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -187,7 +187,7 @@
 		3B20435082E8F5305E5125A3B3F7C065 /* HoverConversion */ = {
 			isa = PBXGroup;
 			children = (
-				8ACAF3A14001616ACE0AD14D259EDA0F /* HCContentable.swift */,
+				8ACAF3A14001616ACE0AD14D259EDA0F /* HCViewContentable.swift */,
 				8BD198B88230A30BA99525390C993795 /* HCContentViewController.swift */,
 				5763C6140E67D852DA2D4E4D608C62C9 /* HCNavigationView.swift */,
 				792C633B5AD933B1176430DBA78989ED /* HCPagingViewController.swift */,
@@ -449,7 +449,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D8941891966EE85DF176B4E5F0CB133F /* HCContentable.swift in Sources */,
+				D8941891966EE85DF176B4E5F0CB133F /* HCViewContentable.swift in Sources */,
 				525D917D95FC976E0BA5B2F3D00B74E5 /* HCContentViewController.swift in Sources */,
 				480E3A5711D8AF7A2E5985E31362FCFC /* HCNavigationView.swift in Sources */,
 				920BE56C7394D47C492C32616A8E14E9 /* HCPagingViewController.swift in Sources */,

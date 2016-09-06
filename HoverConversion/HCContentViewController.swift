@@ -18,9 +18,15 @@ public class HCContentViewController: UIViewController, HCViewContentable {
     
     public var tableView: UITableView! = UITableView()
     public var navigatoinContainerView: UIView! = UIView()
-    public var navigationView: HCNavigationView! = HCNavigationView()
+    public var navigationView: HCNavigationView! = HCNavigationView(buttonPosition: .Left)
     
     public weak var scrollDelegate: HCContentViewControllerScrollDelegate?
+    
+    public override var title: String? {
+        didSet {
+            navigationView?.titleLabel.text = title
+        }
+    }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +40,10 @@ public class HCContentViewController: UIViewController, HCViewContentable {
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    public func navigationView(navigationView: HCNavigationView, didTapLeftButton button: UIButton) {
+        navigationController?.popViewControllerAnimated(true)
     }
 }
 

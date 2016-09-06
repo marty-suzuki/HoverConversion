@@ -21,16 +21,30 @@ class UserTimelineViewController: HCContentViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         navigationView.backgroundColor = UIColor(red: 85 / 255, green: 172 / 255, blue: 238 / 255, alpha: 1)
-        //navigationView.backgroundColor = .whiteColor()
+        
+        if let user = user {
+            navigationView.titleLabel.numberOfLines = 2
+            let attributedText = NSMutableAttributedString()
+            attributedText.appendAttributedString(NSAttributedString(string: user.name + "\n", attributes: [
+                NSFontAttributeName : UIFont.boldSystemFontOfSize(14),
+                NSForegroundColorAttributeName : UIColor.whiteColor()
+            ]))
+            attributedText.appendAttributedString(NSAttributedString(string: "@" + user.screenName, attributes: [
+                NSFontAttributeName : UIFont.systemFontOfSize(12),
+                NSForegroundColorAttributeName : UIColor(white: 1, alpha: 0.6)
+            ]))
+            navigationView.titleLabel.attributedText = attributedText
+        }
+        
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         tableView.registerClass(TWTRTweetTableViewCell.self, forCellReuseIdentifier: "TWTRTweetTableViewCell")
         tableView.dataSource = self
         loadTweets()
     }
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .Default
-    }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

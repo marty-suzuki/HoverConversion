@@ -18,10 +18,12 @@ class HomeViewController: HCRootViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         navigationView.backgroundColor = UIColor(red: 85 / 255, green: 172 / 255, blue: 238 / 255, alpha: 1)
+        navigationView.titleLabel.textColor = .whiteColor()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
         tableView.registerNib(UINib(nibName: "HomeTableViewCell", bundle: nil), forCellReuseIdentifier: "HomeTableViewCell")
+        title = "Following List"
     }
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
