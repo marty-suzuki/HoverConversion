@@ -48,39 +48,32 @@ class TwitterManager {
     }
     
     func fetchUserTimeline(screenName screenName: String, completion: (() -> ())) {
-        client.loadUserTimeline(screenName: screenName, maxId: nil, count: 1) { (tweets, error) in
-            if let error = error {
+        let request = StatusesUserTimelineRequest(screenName: screenName, maxId: nil, count: 1)
+        client.sendTwitterRequest(request) { [weak self] in
+            switch $0.result {
+            case .Success(let response):
+                guard let userTweets = self?.tweets[screenName] else {
+                    self?.tweets[screenName] = response.tweets
+                    completion()
+                    return
+                }
+                self?.tweets[screenName] = Array([userTweets, response.tweets].flatten())
+            case .Failure(let error):
                 print(error)
-                completion()
-                return
             }
-            guard let tweets = tweets else  {
-                completion()
-                return
-            }
-            
-            guard let userTweets = self.tweets[screenName] else {
-                self.tweets[screenName] = tweets
-                completion()
-                return
-            }
-            self.tweets[screenName] = Array([userTweets, tweets].flatten())
             completion()
         }
     }
     
     func fetchUsers(completion: (() -> ())) {
-        client.loadUsers(screenNames: screenNames) { (users, error) in
-            if let error = error {
+        let request = UsersLookUpRequest(screenNames: screenNames)
+        client.sendTwitterRequest(request) { [weak self] in
+            switch $0.result {
+            case .Success(let response):
+                self?.users = response.users
+            case .Failure(let error):
                 print(error)
-                completion()
-                return
             }
-            guard let users = users else  {
-                completion()
-                return
-            }
-            self.users = users
             completion()
         }
     }

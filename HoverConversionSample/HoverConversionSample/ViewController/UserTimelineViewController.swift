@@ -54,25 +54,28 @@ class UserTimelineViewController: HCContentViewController {
     private func loadTweets() {
         guard let user = user where hasNext else { return }
         let oldestTweetId = tweets.first?.tweetID
-        client.loadUserTimeline(screenName: user.screenName, maxId: oldestTweetId, count: nil) { [weak self] in
-            if let error = $1 {
+        let request = StatusesUserTimelineRequest(screenName: user.screenName, maxId: oldestTweetId, count: nil)
+        client.sendTwitterRequest(request) { [weak self] in
+            switch $0.result {
+            case .Success(let response):
+                let tweets = response.tweets
+                if tweets.count < 1 {
+                    self?.hasNext = false
+                    return
+                }
+                let filterdTweets = tweets.filter { $0.tweetID != oldestTweetId }
+                let sortedTweets = filterdTweets.sort { $0.0.createdAt.timeIntervalSince1970 < $0.1.createdAt.timeIntervalSince1970 }
+                guard let storedTweets = self?.tweets else { return }
+                self?.tweets = sortedTweets + storedTweets
+                self?.tableView.reloadData()
+                if let tweets = self?.tweets {
+                    let indexPath = NSIndexPath(forRow: tweets.count - 1, inSection: 0)
+                    self?.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: false)
+                }
+            case .Failure(let error):
                 print(error)
                 self?.hasNext = false
-                return
             }
-            guard let tweets = $0 else {
-                self?.hasNext = false
-                return
-            }
-            if tweets.count < 1 {
-                self?.hasNext = false
-                return
-            }
-            let filterdTweets = tweets.filter { $0.tweetID != oldestTweetId }
-            let sortedTweets = filterdTweets.sort { $0.0.createdAt.timeIntervalSince1970 < $0.1.createdAt.timeIntervalSince1970 }
-            guard let storedTweets = self?.tweets else { return }
-            self?.tweets = sortedTweets + storedTweets
-            self?.tableView.reloadData()
         }
     }
 }

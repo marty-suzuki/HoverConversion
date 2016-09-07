@@ -91,7 +91,7 @@ extension HomeViewController: UITableViewDelegate {
 
 extension HomeViewController: HCPagingViewControllerDataSource {
     func pagingViewController(viewController: HCPagingViewController, viewControllerFor index: Int) -> HCContentViewController? {
-        guard index < twitterManager.users.count else { return nil }
+        guard 0 <= index && index < twitterManager.users.count else { return nil }
         let vc = UserTimelineViewController()
         vc.user = twitterManager.users[index]
         return vc

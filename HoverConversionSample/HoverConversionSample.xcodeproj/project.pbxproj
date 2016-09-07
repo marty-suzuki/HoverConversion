@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		376B9FC61D7C72B90009CC07 /* UserTimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376B9FC51D7C72B90009CC07 /* UserTimelineViewController.swift */; };
+		376B9FC91D80752B0009CC07 /* TWTRAPIClient+Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376B9FC81D80752B0009CC07 /* TWTRAPIClient+Extra.swift */; };
+		376B9FCB1D80755A0009CC07 /* UsersLookUpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376B9FCA1D80755A0009CC07 /* UsersLookUpRequest.swift */; };
+		376B9FCD1D8076A10009CC07 /* TWTRRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376B9FCC1D8076A10009CC07 /* TWTRRequestable.swift */; };
+		376B9FCF1D808B250009CC07 /* StatusesUserTimelineRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376B9FCE1D808B250009CC07 /* StatusesUserTimelineRequest.swift */; };
 		377008E71D3BDAC7007606E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377008E61D3BDAC7007606E8 /* AppDelegate.swift */; };
 		377008EC1D3BDAC7007606E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 377008EA1D3BDAC7007606E8 /* Main.storyboard */; };
 		377008EE1D3BDAC7007606E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 377008ED1D3BDAC7007606E8 /* Assets.xcassets */; };
 		377008F11D3BDAC7007606E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 377008EF1D3BDAC7007606E8 /* LaunchScreen.storyboard */; };
 		3799D0D81D7B462400CD339B /* TwitterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3799D0D31D7B462400CD339B /* TwitterManager.swift */; };
-		3799D0D91D7B462400CD339B /* TWTRAPIClient+Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3799D0D41D7B462400CD339B /* TWTRAPIClient+Extra.swift */; };
 		3799D0DA1D7B462400CD339B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3799D0D71D7B462400CD339B /* HomeViewController.swift */; };
 		3799D0DD1D7B468600CD339B /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3799D0DB1D7B468600CD339B /* HomeTableViewCell.swift */; };
 		3799D0DE1D7B468600CD339B /* HomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3799D0DC1D7B468600CD339B /* HomeTableViewCell.xib */; };
@@ -23,6 +26,10 @@
 /* Begin PBXFileReference section */
 		178E9201DDD007E86236711A /* Pods-HoverConversionSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HoverConversionSample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HoverConversionSample/Pods-HoverConversionSample.debug.xcconfig"; sourceTree = "<group>"; };
 		376B9FC51D7C72B90009CC07 /* UserTimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTimelineViewController.swift; sourceTree = "<group>"; };
+		376B9FC81D80752B0009CC07 /* TWTRAPIClient+Extra.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TWTRAPIClient+Extra.swift"; sourceTree = "<group>"; };
+		376B9FCA1D80755A0009CC07 /* UsersLookUpRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersLookUpRequest.swift; sourceTree = "<group>"; };
+		376B9FCC1D8076A10009CC07 /* TWTRRequestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWTRRequestable.swift; sourceTree = "<group>"; };
+		376B9FCE1D808B250009CC07 /* StatusesUserTimelineRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusesUserTimelineRequest.swift; sourceTree = "<group>"; };
 		377008E31D3BDAC6007606E8 /* HoverConversionSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoverConversionSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		377008E61D3BDAC7007606E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		377008EB1D3BDAC7007606E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -30,7 +37,6 @@
 		377008F01D3BDAC7007606E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		377008F21D3BDAC7007606E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3799D0D31D7B462400CD339B /* TwitterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterManager.swift; sourceTree = "<group>"; };
-		3799D0D41D7B462400CD339B /* TWTRAPIClient+Extra.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TWTRAPIClient+Extra.swift"; sourceTree = "<group>"; };
 		3799D0D71D7B462400CD339B /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		3799D0DB1D7B468600CD339B /* HomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		3799D0DC1D7B468600CD339B /* HomeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTableViewCell.xib; sourceTree = "<group>"; };
@@ -50,6 +56,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		376B9FC71D80752B0009CC07 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				376B9FC81D80752B0009CC07 /* TWTRAPIClient+Extra.swift */,
+				376B9FCC1D8076A10009CC07 /* TWTRRequestable.swift */,
+				376B9FCA1D80755A0009CC07 /* UsersLookUpRequest.swift */,
+				376B9FCE1D808B250009CC07 /* StatusesUserTimelineRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
 		377008DA1D3BDAC6007606E8 = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +92,7 @@
 				377008EA1D3BDAC7007606E8 /* Main.storyboard */,
 				3799D0D11D7B462400CD339B /* Cell */,
 				3799D0D21D7B462400CD339B /* Manager */,
+				376B9FC71D80752B0009CC07 /* Request */,
 				3799D0D51D7B462400CD339B /* View */,
 				3799D0D61D7B462400CD339B /* ViewController */,
 				377008ED1D3BDAC7007606E8 /* Assets.xcassets */,
@@ -97,7 +115,6 @@
 			isa = PBXGroup;
 			children = (
 				3799D0D31D7B462400CD339B /* TwitterManager.swift */,
-				3799D0D41D7B462400CD339B /* TWTRAPIClient+Extra.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -272,11 +289,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				376B9FCF1D808B250009CC07 /* StatusesUserTimelineRequest.swift in Sources */,
 				376B9FC61D7C72B90009CC07 /* UserTimelineViewController.swift in Sources */,
-				3799D0D91D7B462400CD339B /* TWTRAPIClient+Extra.swift in Sources */,
+				376B9FC91D80752B0009CC07 /* TWTRAPIClient+Extra.swift in Sources */,
 				3799D0DD1D7B468600CD339B /* HomeTableViewCell.swift in Sources */,
 				3799D0DA1D7B462400CD339B /* HomeViewController.swift in Sources */,
+				376B9FCB1D80755A0009CC07 /* UsersLookUpRequest.swift in Sources */,
 				377008E71D3BDAC7007606E8 /* AppDelegate.swift in Sources */,
+				376B9FCD1D8076A10009CC07 /* TWTRRequestable.swift in Sources */,
 				3799D0D81D7B462400CD339B /* TwitterManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
