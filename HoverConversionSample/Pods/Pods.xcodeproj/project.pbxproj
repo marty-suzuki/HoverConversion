@@ -13,6 +13,7 @@
 		2ADBE026AE587CC8A5A40ED7AF7809E0 /* Pods-HoverConversionSample-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A417BFAE497797D428799A205A9E73D2 /* Pods-HoverConversionSample-dummy.m */; };
 		3212C90A3C470295EFDC80AAE0D29048 /* HoverConversion-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B1187E9D3073A2984E59958E2C1512EF /* HoverConversion-dummy.m */; };
 		3496D2235B6D2F3D9B716E27C61AA336 /* MisterFusion-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6BAD19D6C365AF4BBE449336C3EE6872 /* MisterFusion-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		376B9FD11D8094960009CC07 /* UITableViewCell+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376B9FD01D8094960009CC07 /* UITableViewCell+Screenshot.swift */; };
 		480E3A5711D8AF7A2E5985E31362FCFC /* HCNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5763C6140E67D852DA2D4E4D608C62C9 /* HCNavigationView.swift */; };
 		523C2E934713320375AD5A89EABF4D06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D75A45B4FD850283392C82B3D89EB9AB /* Foundation.framework */; };
 		525D917D95FC976E0BA5B2F3D00B74E5 /* HCContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD198B88230A30BA99525390C993795 /* HCContentViewController.swift */; };
@@ -62,6 +63,7 @@
 		1C4DFFB24854CCAA6C4348FA9DFF97B7 /* HoverConversion.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = HoverConversion.modulemap; sourceTree = "<group>"; };
 		27337F5672367861F08E42079106F66D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		359590E38D7C452303204CF8E0EA458B /* Pods-HoverConversionSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HoverConversionSample.release.xcconfig"; sourceTree = "<group>"; };
+		376B9FD01D8094960009CC07 /* UITableViewCell+Screenshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Screenshot.swift"; sourceTree = "<group>"; };
 		4159D928432EC4ACA326455734A9D094 /* HoverConversion.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HoverConversion.xcconfig; sourceTree = "<group>"; };
 		4EC64CC0E7FFACD07C00ADFF9D81BA06 /* Pods-HoverConversionSample-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HoverConversionSample-acknowledgements.markdown"; sourceTree = "<group>"; };
 		56380C3F0F9B3E5113DD468721DB9A82 /* HoverConversion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HoverConversion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -192,6 +194,7 @@
 				5763C6140E67D852DA2D4E4D608C62C9 /* HCNavigationView.swift */,
 				792C633B5AD933B1176430DBA78989ED /* HCPagingViewController.swift */,
 				AF9595A9A12181E45D3CA3E0D6A96205 /* HCRootViewController.swift */,
+				376B9FD01D8094960009CC07 /* UITableViewCell+Screenshot.swift */,
 			);
 			path = HoverConversion;
 			sourceTree = "<group>";
@@ -450,6 +453,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8941891966EE85DF176B4E5F0CB133F /* HCViewContentable.swift in Sources */,
+				376B9FD11D8094960009CC07 /* UITableViewCell+Screenshot.swift in Sources */,
 				525D917D95FC976E0BA5B2F3D00B74E5 /* HCContentViewController.swift in Sources */,
 				480E3A5711D8AF7A2E5985E31362FCFC /* HCNavigationView.swift in Sources */,
 				920BE56C7394D47C492C32616A8E14E9 /* HCPagingViewController.swift in Sources */,
