@@ -10,7 +10,8 @@ import Foundation
 import TwitterKit
 
 struct UsersLookUpRequest: TWTRGetRequestable {
-    typealias ResponseType = UsersLookUpResponse
+    typealias ResponseType = [TWTRUser]
+    typealias ParseResultType = [[String : NSObject]]
     
     let path: String = "/1.1/users/lookup.json"
     
@@ -24,17 +25,13 @@ struct UsersLookUpRequest: TWTRGetRequestable {
         ]
         return parameters
     }
-}
-
-struct UsersLookUpResponse: TWTRResponsable {
-    typealias ParseResultType = [[String : NSObject]]
     
-    let users: [TWTRUser]
-    
-    static func decode(data: NSData) -> UsersLookUpResponse? {
-        guard let array = parseData(data) else {
-            return nil
+    static func decode(data: NSData) -> TWTRResult<ResponseType> {
+        switch UsersLookUpRequest.parseData(data) {
+        case .Success(let parsedData):
+            return .Success(parsedData.flatMap { TWTRUser(JSONDictionary: $0) })
+        case .Failure(let error):
+            return .Failure(error)
         }
-        return UsersLookUpResponse(users: array.flatMap { TWTRUser(JSONDictionary: $0) })
     }
 }

@@ -10,7 +10,8 @@ import Foundation
 import TwitterKit
 
 struct StatusesUserTimelineRequest: TWTRGetRequestable {
-    typealias ResponseType = StatusesUserTimelineResponse
+    typealias ResponseType = [TWTRTweet]
+    typealias ParseResultType = [[String : NSObject]]
     
     let path: String = "/1.1/statuses/user_timeline.json"
     
@@ -30,17 +31,13 @@ struct StatusesUserTimelineRequest: TWTRGetRequestable {
         }
         return parameters
     }
-}
-
-struct StatusesUserTimelineResponse: TWTRResponsable {
-    typealias ParseResultType = [[String : NSObject]]
     
-    let tweets: [TWTRTweet]
-    
-    static func decode(data: NSData) -> StatusesUserTimelineResponse? {
-        guard let array = parseData(data) else {
-            return nil
+    static func decode(data: NSData) -> TWTRResult<ResponseType> {
+        switch UsersLookUpRequest.parseData(data) {
+        case .Success(let parsedData):
+            return .Success(parsedData.flatMap { TWTRTweet(JSONDictionary: $0) })
+        case .Failure(let error):
+            return .Failure(error)
         }
-        return StatusesUserTimelineResponse(tweets: array.flatMap { TWTRTweet(JSONDictionary: $0) })
     }
 }

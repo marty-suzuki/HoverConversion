@@ -10,20 +10,36 @@ import Foundation
 import TwitterKit
 
 protocol TWTRRequestable {
-    associatedtype ResponseType: TWTRResponsable
+    associatedtype ResponseType
+    associatedtype ParseResultType
     var method: TWTRHTTPMethod { get }
     var baseURL: NSURL? { get }
     var path: String { get }
     var URL: NSURL? { get }
     var parameters: [NSObject : AnyObject]? { get }
+    static func parseData(data: NSData) -> TWTRResult<ParseResultType>
+    static func decode(data: NSData) -> TWTRResult<ResponseType>
 }
 
 extension TWTRRequestable {
     var baseURL: NSURL? {
         return NSURL(string: "https://api.twitter.com")
     }
+    
     var URL: NSURL? {
         return NSURL(string: path, relativeToURL: baseURL)
+    }
+    
+    static func parseData(data: NSData) -> TWTRResult<ParseResultType> {
+        do {
+            let anyObject = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            guard let object = anyObject as? ParseResultType else {
+                return .Failure(NSError(domain: TWTRAPIErrorDomain, code: -9999, userInfo: nil))
+            }
+            return .Success(object)
+        } catch let error as NSError {
+            return .Failure(error)
+        }
     }
 }
 
@@ -31,27 +47,5 @@ protocol TWTRGetRequestable: TWTRRequestable {}
 extension TWTRGetRequestable {
     var method: TWTRHTTPMethod {
         return .GET
-    }
-}
-
-protocol TWTRResponsable {
-    associatedtype ParseResultType
-    static func decode(data: NSData) -> Self?
-    static func parseData(data: NSData) -> ParseResultType?
-}
-
-extension TWTRResponsable {
-    static func parseData(data: NSData) -> ParseResultType? {
-        do {
-            let anyObject = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
-            guard let object = anyObject as? ParseResultType else {
-                print("failed cast")
-                return nil
-            }
-            return object
-        } catch {
-            print("catch")
-            return nil
-        }
     }
 }

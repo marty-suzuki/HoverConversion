@@ -51,13 +51,13 @@ class TwitterManager {
         let request = StatusesUserTimelineRequest(screenName: screenName, maxId: nil, count: 1)
         client.sendTwitterRequest(request) { [weak self] in
             switch $0.result {
-            case .Success(let response):
+            case .Success(let tweets):
                 guard let userTweets = self?.tweets[screenName] else {
-                    self?.tweets[screenName] = response.tweets
+                    self?.tweets[screenName] = tweets
                     completion()
                     return
                 }
-                self?.tweets[screenName] = Array([userTweets, response.tweets].flatten())
+                self?.tweets[screenName] = Array([userTweets, tweets].flatten())
             case .Failure(let error):
                 print(error)
             }
@@ -69,8 +69,8 @@ class TwitterManager {
         let request = UsersLookUpRequest(screenNames: screenNames)
         client.sendTwitterRequest(request) { [weak self] in
             switch $0.result {
-            case .Success(let response):
-                self?.users = response.users
+            case .Success(let users):
+                self?.users = users
             case .Failure(let error):
                 print(error)
             }

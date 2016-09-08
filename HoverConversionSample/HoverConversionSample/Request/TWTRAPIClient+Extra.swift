@@ -42,8 +42,13 @@ extension TWTRAPIClient {
             let result: TWTRResult<T.ResponseType>
             if let error = $0.2 {
                 result = .Failure(error)
-            } else if let data = $0.1, decodedData = T.ResponseType.decode(data) {
-                result = .Success(decodedData)
+            } else if let data = $0.1 {
+                switch T.decode(data) {
+                case .Success(let decodeData):
+                    result = .Success(decodeData)
+                case .Failure(let error):
+                    result = .Failure(error)
+                }
             } else {
                 result = .Failure(NSError(domain: TWTRAPIErrorDomain, code: -9999, userInfo: nil))
             }

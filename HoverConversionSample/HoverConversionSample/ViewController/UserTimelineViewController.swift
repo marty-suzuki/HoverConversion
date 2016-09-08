@@ -57,8 +57,7 @@ class UserTimelineViewController: HCContentViewController {
         let request = StatusesUserTimelineRequest(screenName: user.screenName, maxId: oldestTweetId, count: nil)
         client.sendTwitterRequest(request) { [weak self] in
             switch $0.result {
-            case .Success(let response):
-                let tweets = response.tweets
+            case .Success(let tweets):
                 if tweets.count < 1 {
                     self?.hasNext = false
                     return
