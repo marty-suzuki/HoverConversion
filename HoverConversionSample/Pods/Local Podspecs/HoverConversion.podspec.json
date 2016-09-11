@@ -1,0 +1,29 @@
+{
+  "name": "HoverConversion",
+  "version": "0.1.0",
+  "summary": "A short description of HoverConversion.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/szk-atmosphere/HoverConversion",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "szk-atmosphere": "s1180183@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/szk-atmosphere/HoverConversion.git",
+    "tag": "0.1.0"
+  },
+  "social_media_url": "https://twitter.com/SzkAtmosphere",
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "HoverConversion/*.{swift}",
+  "frameworks": "UIKit",
+  "dependencies": {
+    "MisterFusion": [
+
+    ]
+  }
+}

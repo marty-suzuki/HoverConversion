@@ -1,0 +1,778 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03A9AC28ACD10C9A672756C69FF5F8B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D75A45B4FD850283392C82B3D89EB9AB /* Foundation.framework */; };
+		140246187C6DA63AE850E9328060FA16 /* MisterFusion-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 875FB32E7571C9F7C0CFDFC326F001D9 /* MisterFusion-dummy.m */; };
+		20569E3DFC840CC90CDD47C09A72C4F7 /* HCViewContentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13D748AA19305FCBC87D25E2F2E777D /* HCViewContentable.swift */; };
+		24E63EB46573CD4329DAEAE826B073A3 /* HoverConversion-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C94232AE4851364E9D2EF7FC65C6D5 /* HoverConversion-dummy.m */; };
+		256082DD12AF9BC24611776455D61881 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D75A45B4FD850283392C82B3D89EB9AB /* Foundation.framework */; };
+		2A886E6C3B05A0738ED56C089C6BBC47 /* Pods-HoverConversionSample-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BD0434A2B9405A75F5EAE3957A9AA53D /* Pods-HoverConversionSample-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2ADBE026AE587CC8A5A40ED7AF7809E0 /* Pods-HoverConversionSample-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A417BFAE497797D428799A205A9E73D2 /* Pods-HoverConversionSample-dummy.m */; };
+		2EA4ABA7E00EE7BB1A7DCD5E9FD4719B /* HoverConversion-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 14B88C7FB92F8804520E29411EE0B824 /* HoverConversion-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3B6E9EC012FACE288E4E882E6296F756 /* HCRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805738FB8927CBE0BE051B2D9571177F /* HCRootViewController.swift */; };
+		3E95ABD77ADF5E9E9812F666879750DE /* HCPagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5D5381DB9534426F04386A21B05479 /* HCPagingViewController.swift */; };
+		526F9040EDAC09BCC64611E9FF343510 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AC3B5E243ACE466EA3DB1D808C3CEA /* UIKit.framework */; };
+		53E3AE69BBB42F22C212B1A78C48D891 /* Array+MisterFusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE503BB9FA087B4D1044E89C0F02C1DA /* Array+MisterFusion.swift */; };
+		5F5E5E456EE18718FDBE549525BD5A6A /* HCNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D69B759BBA87D373668B3D2D85EA3F08 /* HCNavigationView.swift */; };
+		80963B300560863AD06FCFF17D9211D5 /* UITableViewCell+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F28EAF9335F670CF685E6A29E1A2CD3 /* UITableViewCell+Screenshot.swift */; };
+		8BC88E6D43217174172EE94C0F9458EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7AC3B5E243ACE466EA3DB1D808C3CEA /* UIKit.framework */; };
+		92DBDE780898081D8A2A6CDC1B375105 /* MisterFusion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2935E17DC126D987EF4144AFC60EE96 /* MisterFusion.framework */; };
+		973D5E0EE7E1AC1B617EF6B84C55900B /* NSIndexPath+Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C0F918516541632A554604D381049C /* NSIndexPath+Row.swift */; };
+		9E81E8186BD3E24EB66393E25568F8C4 /* HCNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15181A15CF31A76FD4FB36984D246C02 /* HCNavigationController.swift */; };
+		CD7324ED09A1EF31D3244825DAD40C07 /* MisterFusion-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D0028AD92BEB6711AE873F6A24F06FF7 /* MisterFusion-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CED7F3E4A72AC3FDB2196F1DE661138A /* HCContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2051557F40F41AF786057041D257C10 /* HCContentViewController.swift */; };
+		DD2F21C4CA20CA2A74B4021B19D0B2B4 /* MisterFusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD92E11A3E6901130A5BC1931244D3B /* MisterFusion.swift */; };
+		E696D5B1694711177972E020A57D8D9D /* HCRootAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DD2FD4B087A30B9740DD13E80B47EF /* HCRootAnimatedTransitioning.swift */; };
+		F95FECC3857A3C069FB36C595D43733B /* HCDefaultAnimatedTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 017C06239A311CAB6860407297D54E25 /* HCDefaultAnimatedTransitioning.swift */; };
+		FF6D0201430F757E2C1C74EF9F4E2A3A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D75A45B4FD850283392C82B3D89EB9AB /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0388DE6C221921DE7715CA3928348122 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5307B4AC83AA95FC1F5FED361BA097C;
+			remoteInfo = HoverConversion;
+		};
+		8C9886A1392A6350E0F9C9DDD3728E27 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7319AC6406A75D1DF12D1965E1A685E0;
+			remoteInfo = MisterFusion;
+		};
+		C720067F9D76AF2E096B5FB2EFF01332 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7319AC6406A75D1DF12D1965E1A685E0;
+			remoteInfo = MisterFusion;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		017C06239A311CAB6860407297D54E25 /* HCDefaultAnimatedTransitioning.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCDefaultAnimatedTransitioning.swift; sourceTree = "<group>"; };
+		019C8C32A57C32CF17DD0FDDB6475804 /* Pods_HoverConversionSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HoverConversionSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		03E3FE02E6B23F6359A53225B433B444 /* MisterFusion.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MisterFusion.xcconfig; sourceTree = "<group>"; };
+		047588BBF29567B4383D934F305894BF /* Pods-HoverConversionSample-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-HoverConversionSample-acknowledgements.plist"; sourceTree = "<group>"; };
+		0A45EE9E94F235BF7E4D132C415D6B60 /* Pods-HoverConversionSample-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HoverConversionSample-frameworks.sh"; sourceTree = "<group>"; };
+		126CE3B69EBB85A016EFEAEB3369A4F2 /* MisterFusion.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = MisterFusion.modulemap; sourceTree = "<group>"; };
+		14B88C7FB92F8804520E29411EE0B824 /* HoverConversion-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HoverConversion-umbrella.h"; sourceTree = "<group>"; };
+		15181A15CF31A76FD4FB36984D246C02 /* HCNavigationController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCNavigationController.swift; sourceTree = "<group>"; };
+		195169FBC49D758F0150B1D33DFFD020 /* HoverConversion.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = HoverConversion.modulemap; sourceTree = "<group>"; };
+		29DD2FD4B087A30B9740DD13E80B47EF /* HCRootAnimatedTransitioning.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCRootAnimatedTransitioning.swift; sourceTree = "<group>"; };
+		2AC40650B44C139814AA90EEBB3C6A6B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		359590E38D7C452303204CF8E0EA458B /* Pods-HoverConversionSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HoverConversionSample.release.xcconfig"; sourceTree = "<group>"; };
+		4EC64CC0E7FFACD07C00ADFF9D81BA06 /* Pods-HoverConversionSample-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-HoverConversionSample-acknowledgements.markdown"; sourceTree = "<group>"; };
+		56380C3F0F9B3E5113DD468721DB9A82 /* HoverConversion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HoverConversion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F28EAF9335F670CF685E6A29E1A2CD3 /* UITableViewCell+Screenshot.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Screenshot.swift"; sourceTree = "<group>"; };
+		716AA92246F5AADC133AB786BC15FE50 /* Pods-HoverConversionSample.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-HoverConversionSample.modulemap"; sourceTree = "<group>"; };
+		7BD92E11A3E6901130A5BC1931244D3B /* MisterFusion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MisterFusion.swift; path = MisterFusion/MisterFusion.swift; sourceTree = "<group>"; };
+		805738FB8927CBE0BE051B2D9571177F /* HCRootViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCRootViewController.swift; sourceTree = "<group>"; };
+		832F7BE9B8709182F6BE85849558166F /* HoverConversion-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HoverConversion-prefix.pch"; sourceTree = "<group>"; };
+		861792DF97F9A4C1DB705DEC1FEA9606 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		875FB32E7571C9F7C0CFDFC326F001D9 /* MisterFusion-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MisterFusion-dummy.m"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		A417BFAE497797D428799A205A9E73D2 /* Pods-HoverConversionSample-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-HoverConversionSample-dummy.m"; sourceTree = "<group>"; };
+		A882DF96682A4B3602D92241F30F87EC /* Pods-HoverConversionSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-HoverConversionSample.debug.xcconfig"; sourceTree = "<group>"; };
+		AB5AF0C04329EB798CD7A8F9D0960B3A /* MisterFusion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MisterFusion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC9DCBCE3B728645914D6B24C150EDD1 /* Pods-HoverConversionSample-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-HoverConversionSample-resources.sh"; sourceTree = "<group>"; };
+		B2935E17DC126D987EF4144AFC60EE96 /* MisterFusion.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MisterFusion.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5C0F918516541632A554604D381049C /* NSIndexPath+Row.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "NSIndexPath+Row.swift"; sourceTree = "<group>"; };
+		BD0434A2B9405A75F5EAE3957A9AA53D /* Pods-HoverConversionSample-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-HoverConversionSample-umbrella.h"; sourceTree = "<group>"; };
+		C13D748AA19305FCBC87D25E2F2E777D /* HCViewContentable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCViewContentable.swift; sourceTree = "<group>"; };
+		C2051557F40F41AF786057041D257C10 /* HCContentViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCContentViewController.swift; sourceTree = "<group>"; };
+		CB8F35776A19C59AD2A38DF684EF5C04 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0028AD92BEB6711AE873F6A24F06FF7 /* MisterFusion-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MisterFusion-umbrella.h"; sourceTree = "<group>"; };
+		D3C52C5218DE84D3E2F2EC7774B45D6C /* HoverConversion.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HoverConversion.xcconfig; sourceTree = "<group>"; };
+		D69B759BBA87D373668B3D2D85EA3F08 /* HCNavigationView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCNavigationView.swift; sourceTree = "<group>"; };
+		D75A45B4FD850283392C82B3D89EB9AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		DE503BB9FA087B4D1044E89C0F02C1DA /* Array+MisterFusion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+MisterFusion.swift"; path = "MisterFusion/Array+MisterFusion.swift"; sourceTree = "<group>"; };
+		EF5D5381DB9534426F04386A21B05479 /* HCPagingViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HCPagingViewController.swift; sourceTree = "<group>"; };
+		F5F0646FCB22A73B26B5AABE857713BF /* MisterFusion-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MisterFusion-prefix.pch"; sourceTree = "<group>"; };
+		F6C94232AE4851364E9D2EF7FC65C6D5 /* HoverConversion-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HoverConversion-dummy.m"; sourceTree = "<group>"; };
+		F7AC3B5E243ACE466EA3DB1D808C3CEA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0EBE482C8CAB666D6400142EC403BF74 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				256082DD12AF9BC24611776455D61881 /* Foundation.framework in Frameworks */,
+				92DBDE780898081D8A2A6CDC1B375105 /* MisterFusion.framework in Frameworks */,
+				8BC88E6D43217174172EE94C0F9458EC /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		876A91BE28E0E271648B16AFFEF9AD9D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF6D0201430F757E2C1C74EF9F4E2A3A /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ECA77BEABCCF702DE7E1545F9EE414F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03A9AC28ACD10C9A672756C69FF5F8B1 /* Foundation.framework in Frameworks */,
+				526F9040EDAC09BCC64611E9FF343510 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		002342B7DE8DB44252768E37A73A76FD /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EDADBB4E5A6DD141348D72C7366C325F /* HoverConversion */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		13E1AB2A4F4AD20A152248BB5BB594AD /* HoverConversion */ = {
+			isa = PBXGroup;
+			children = (
+				C2051557F40F41AF786057041D257C10 /* HCContentViewController.swift */,
+				017C06239A311CAB6860407297D54E25 /* HCDefaultAnimatedTransitioning.swift */,
+				15181A15CF31A76FD4FB36984D246C02 /* HCNavigationController.swift */,
+				D69B759BBA87D373668B3D2D85EA3F08 /* HCNavigationView.swift */,
+				EF5D5381DB9534426F04386A21B05479 /* HCPagingViewController.swift */,
+				29DD2FD4B087A30B9740DD13E80B47EF /* HCRootAnimatedTransitioning.swift */,
+				805738FB8927CBE0BE051B2D9571177F /* HCRootViewController.swift */,
+				C13D748AA19305FCBC87D25E2F2E777D /* HCViewContentable.swift */,
+				B5C0F918516541632A554604D381049C /* NSIndexPath+Row.swift */,
+				6F28EAF9335F670CF685E6A29E1A2CD3 /* UITableViewCell+Screenshot.swift */,
+			);
+			path = HoverConversion;
+			sourceTree = "<group>";
+		};
+		3A9B4C26EE3CAB45A2C6719ABEF8893D /* Pods-HoverConversionSample */ = {
+			isa = PBXGroup;
+			children = (
+				CB8F35776A19C59AD2A38DF684EF5C04 /* Info.plist */,
+				716AA92246F5AADC133AB786BC15FE50 /* Pods-HoverConversionSample.modulemap */,
+				4EC64CC0E7FFACD07C00ADFF9D81BA06 /* Pods-HoverConversionSample-acknowledgements.markdown */,
+				047588BBF29567B4383D934F305894BF /* Pods-HoverConversionSample-acknowledgements.plist */,
+				A417BFAE497797D428799A205A9E73D2 /* Pods-HoverConversionSample-dummy.m */,
+				0A45EE9E94F235BF7E4D132C415D6B60 /* Pods-HoverConversionSample-frameworks.sh */,
+				AC9DCBCE3B728645914D6B24C150EDD1 /* Pods-HoverConversionSample-resources.sh */,
+				BD0434A2B9405A75F5EAE3957A9AA53D /* Pods-HoverConversionSample-umbrella.h */,
+				A882DF96682A4B3602D92241F30F87EC /* Pods-HoverConversionSample.debug.xcconfig */,
+				359590E38D7C452303204CF8E0EA458B /* Pods-HoverConversionSample.release.xcconfig */,
+			);
+			name = "Pods-HoverConversionSample";
+			path = "Target Support Files/Pods-HoverConversionSample";
+			sourceTree = "<group>";
+		};
+		613F8D15E1855D11E077D6C819D6FB28 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				93FFBBA278706E5415D7ACB78FCDC391 /* MisterFusion */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				002342B7DE8DB44252768E37A73A76FD /* Development Pods */,
+				A9775E712DD7E2C2663D3A2A0E1DE428 /* Frameworks */,
+				613F8D15E1855D11E077D6C819D6FB28 /* Pods */,
+				FAB03FEC9CDFC742CEA41FB53EBFD366 /* Products */,
+				AF000D6396D5C24999B870557C3B1450 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		93FFBBA278706E5415D7ACB78FCDC391 /* MisterFusion */ = {
+			isa = PBXGroup;
+			children = (
+				DE503BB9FA087B4D1044E89C0F02C1DA /* Array+MisterFusion.swift */,
+				7BD92E11A3E6901130A5BC1931244D3B /* MisterFusion.swift */,
+				9F629509159A70A48A47704FE4A4D3BA /* Support Files */,
+			);
+			path = MisterFusion;
+			sourceTree = "<group>";
+		};
+		9F629509159A70A48A47704FE4A4D3BA /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				861792DF97F9A4C1DB705DEC1FEA9606 /* Info.plist */,
+				126CE3B69EBB85A016EFEAEB3369A4F2 /* MisterFusion.modulemap */,
+				03E3FE02E6B23F6359A53225B433B444 /* MisterFusion.xcconfig */,
+				875FB32E7571C9F7C0CFDFC326F001D9 /* MisterFusion-dummy.m */,
+				F5F0646FCB22A73B26B5AABE857713BF /* MisterFusion-prefix.pch */,
+				D0028AD92BEB6711AE873F6A24F06FF7 /* MisterFusion-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/MisterFusion";
+			sourceTree = "<group>";
+		};
+		A9775E712DD7E2C2663D3A2A0E1DE428 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B2935E17DC126D987EF4144AFC60EE96 /* MisterFusion.framework */,
+				D325136A145EBA19A5DE53481E4E8E50 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AF000D6396D5C24999B870557C3B1450 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3A9B4C26EE3CAB45A2C6719ABEF8893D /* Pods-HoverConversionSample */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		D145D563525908C53F4D7E3EAC70CBC2 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				195169FBC49D758F0150B1D33DFFD020 /* HoverConversion.modulemap */,
+				D3C52C5218DE84D3E2F2EC7774B45D6C /* HoverConversion.xcconfig */,
+				F6C94232AE4851364E9D2EF7FC65C6D5 /* HoverConversion-dummy.m */,
+				832F7BE9B8709182F6BE85849558166F /* HoverConversion-prefix.pch */,
+				14B88C7FB92F8804520E29411EE0B824 /* HoverConversion-umbrella.h */,
+				2AC40650B44C139814AA90EEBB3C6A6B /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "HoverConversionSample/Pods/Target Support Files/HoverConversion";
+			sourceTree = "<group>";
+		};
+		D325136A145EBA19A5DE53481E4E8E50 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				D75A45B4FD850283392C82B3D89EB9AB /* Foundation.framework */,
+				F7AC3B5E243ACE466EA3DB1D808C3CEA /* UIKit.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		EDADBB4E5A6DD141348D72C7366C325F /* HoverConversion */ = {
+			isa = PBXGroup;
+			children = (
+				13E1AB2A4F4AD20A152248BB5BB594AD /* HoverConversion */,
+				D145D563525908C53F4D7E3EAC70CBC2 /* Support Files */,
+			);
+			name = HoverConversion;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		FAB03FEC9CDFC742CEA41FB53EBFD366 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				56380C3F0F9B3E5113DD468721DB9A82 /* HoverConversion.framework */,
+				AB5AF0C04329EB798CD7A8F9D0960B3A /* MisterFusion.framework */,
+				019C8C32A57C32CF17DD0FDDB6475804 /* Pods_HoverConversionSample.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		731B58290B05F2698FCFA557CAAAC0F7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A886E6C3B05A0738ED56C089C6BBC47 /* Pods-HoverConversionSample-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8F6D056193DE91996BC65206992355C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD7324ED09A1EF31D3244825DAD40C07 /* MisterFusion-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9DEE97A802976845B50C630008AA61B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EA4ABA7E00EE7BB1A7DCD5E9FD4719B /* HoverConversion-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		362EFF462B23AD5EF8831F5654BBD7A5 /* Pods-HoverConversionSample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 07DF3264BF03DC275914B9DB9B3F2502 /* Build configuration list for PBXNativeTarget "Pods-HoverConversionSample" */;
+			buildPhases = (
+				C5B968E6B039A1F0EF01CBDB44F3D52D /* Sources */,
+				876A91BE28E0E271648B16AFFEF9AD9D /* Frameworks */,
+				731B58290B05F2698FCFA557CAAAC0F7 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B3B16505597A74B6FF779E6373AC7DD1 /* PBXTargetDependency */,
+				7C143992668646EB5FF87C733FD420A5 /* PBXTargetDependency */,
+			);
+			name = "Pods-HoverConversionSample";
+			productName = "Pods-HoverConversionSample";
+			productReference = 019C8C32A57C32CF17DD0FDDB6475804 /* Pods_HoverConversionSample.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		7319AC6406A75D1DF12D1965E1A685E0 /* MisterFusion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BB67302A4E1097977422D8BF2C086CE /* Build configuration list for PBXNativeTarget "MisterFusion" */;
+			buildPhases = (
+				57AC740F92335004C9A3A7E47D4A1B30 /* Sources */,
+				ECA77BEABCCF702DE7E1545F9EE414F6 /* Frameworks */,
+				F8F6D056193DE91996BC65206992355C /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MisterFusion;
+			productName = MisterFusion;
+			productReference = AB5AF0C04329EB798CD7A8F9D0960B3A /* MisterFusion.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E5307B4AC83AA95FC1F5FED361BA097C /* HoverConversion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 94BC6CC4AB41D0A6B7B9148E8F25CF98 /* Build configuration list for PBXNativeTarget "HoverConversion" */;
+			buildPhases = (
+				DA88ED3A54C591D4FF58E221EF430BA5 /* Sources */,
+				0EBE482C8CAB666D6400142EC403BF74 /* Frameworks */,
+				F9DEE97A802976845B50C630008AA61B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				11F83F7459FB19786C6675832C291E7B /* PBXTargetDependency */,
+			);
+			name = HoverConversion;
+			productName = HoverConversion;
+			productReference = 56380C3F0F9B3E5113DD468721DB9A82 /* HoverConversion.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = FAB03FEC9CDFC742CEA41FB53EBFD366 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E5307B4AC83AA95FC1F5FED361BA097C /* HoverConversion */,
+				7319AC6406A75D1DF12D1965E1A685E0 /* MisterFusion */,
+				362EFF462B23AD5EF8831F5654BBD7A5 /* Pods-HoverConversionSample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		57AC740F92335004C9A3A7E47D4A1B30 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53E3AE69BBB42F22C212B1A78C48D891 /* Array+MisterFusion.swift in Sources */,
+				140246187C6DA63AE850E9328060FA16 /* MisterFusion-dummy.m in Sources */,
+				DD2F21C4CA20CA2A74B4021B19D0B2B4 /* MisterFusion.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5B968E6B039A1F0EF01CBDB44F3D52D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2ADBE026AE587CC8A5A40ED7AF7809E0 /* Pods-HoverConversionSample-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA88ED3A54C591D4FF58E221EF430BA5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CED7F3E4A72AC3FDB2196F1DE661138A /* HCContentViewController.swift in Sources */,
+				F95FECC3857A3C069FB36C595D43733B /* HCDefaultAnimatedTransitioning.swift in Sources */,
+				9E81E8186BD3E24EB66393E25568F8C4 /* HCNavigationController.swift in Sources */,
+				5F5E5E456EE18718FDBE549525BD5A6A /* HCNavigationView.swift in Sources */,
+				3E95ABD77ADF5E9E9812F666879750DE /* HCPagingViewController.swift in Sources */,
+				E696D5B1694711177972E020A57D8D9D /* HCRootAnimatedTransitioning.swift in Sources */,
+				3B6E9EC012FACE288E4E882E6296F756 /* HCRootViewController.swift in Sources */,
+				20569E3DFC840CC90CDD47C09A72C4F7 /* HCViewContentable.swift in Sources */,
+				24E63EB46573CD4329DAEAE826B073A3 /* HoverConversion-dummy.m in Sources */,
+				973D5E0EE7E1AC1B617EF6B84C55900B /* NSIndexPath+Row.swift in Sources */,
+				80963B300560863AD06FCFF17D9211D5 /* UITableViewCell+Screenshot.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		11F83F7459FB19786C6675832C291E7B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MisterFusion;
+			target = 7319AC6406A75D1DF12D1965E1A685E0 /* MisterFusion */;
+			targetProxy = 8C9886A1392A6350E0F9C9DDD3728E27 /* PBXContainerItemProxy */;
+		};
+		7C143992668646EB5FF87C733FD420A5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MisterFusion;
+			target = 7319AC6406A75D1DF12D1965E1A685E0 /* MisterFusion */;
+			targetProxy = C720067F9D76AF2E096B5FB2EFF01332 /* PBXContainerItemProxy */;
+		};
+		B3B16505597A74B6FF779E6373AC7DD1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HoverConversion;
+			target = E5307B4AC83AA95FC1F5FED361BA097C /* HoverConversion */;
+			targetProxy = 0388DE6C221921DE7715CA3928348122 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		015A368F878AC3E2CEAE21DDE8026304 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		3343CB89419BEA73D6D3E443BD4CFE30 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03E3FE02E6B23F6359A53225B433B444 /* MisterFusion.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MisterFusion/MisterFusion-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MisterFusion/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MisterFusion/MisterFusion.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = MisterFusion;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		44CDBB6D11DE06DB64D6268622BDC47E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5BD54520C69D114B8B0C21485524A870 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3C52C5218DE84D3E2F2EC7774B45D6C /* HoverConversion.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/HoverConversion/HoverConversion-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/HoverConversion/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/HoverConversion/HoverConversion.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = HoverConversion;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5F737B668A3B3F7F3AF9FCF9C7C12B94 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03E3FE02E6B23F6359A53225B433B444 /* MisterFusion.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MisterFusion/MisterFusion-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/MisterFusion/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/MisterFusion/MisterFusion.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = MisterFusion;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		8B774953FA25DA10627C0990BD25C318 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3C52C5218DE84D3E2F2EC7774B45D6C /* HoverConversion.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/HoverConversion/HoverConversion-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/HoverConversion/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/HoverConversion/HoverConversion.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = HoverConversion;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E89C801E5FB3C5348CD076434766B2D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 359590E38D7C452303204CF8E0EA458B /* Pods-HoverConversionSample.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-HoverConversionSample/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-HoverConversionSample/Pods-HoverConversionSample.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_HoverConversionSample;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		F501996F030409D9030C46FD0ED69869 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A882DF96682A4B3602D92241F30F87EC /* Pods-HoverConversionSample.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-HoverConversionSample/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-HoverConversionSample/Pods-HoverConversionSample.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_HoverConversionSample;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		07DF3264BF03DC275914B9DB9B3F2502 /* Build configuration list for PBXNativeTarget "Pods-HoverConversionSample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F501996F030409D9030C46FD0ED69869 /* Debug */,
+				E89C801E5FB3C5348CD076434766B2D0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				015A368F878AC3E2CEAE21DDE8026304 /* Debug */,
+				44CDBB6D11DE06DB64D6268622BDC47E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8BB67302A4E1097977422D8BF2C086CE /* Build configuration list for PBXNativeTarget "MisterFusion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F737B668A3B3F7F3AF9FCF9C7C12B94 /* Debug */,
+				3343CB89419BEA73D6D3E443BD4CFE30 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		94BC6CC4AB41D0A6B7B9148E8F25CF98 /* Build configuration list for PBXNativeTarget "HoverConversion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5BD54520C69D114B8B0C21485524A870 /* Debug */,
+				8B774953FA25DA10627C0990BD25C318 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}
