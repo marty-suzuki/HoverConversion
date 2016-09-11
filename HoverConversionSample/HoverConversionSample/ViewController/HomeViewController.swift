@@ -52,8 +52,8 @@ class HomeViewController: HCRootViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private func showPagingViewContoller(index index: Int) {
-        let vc = HCPagingViewController(index: index)
+    private func showPagingViewContoller(indexPath indexPath: NSIndexPath) {
+        let vc = HCPagingViewController(indexPath: indexPath)
         vc.dataSource = self
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -85,15 +85,15 @@ extension HomeViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
-        showPagingViewContoller(index: indexPath.row)
+        showPagingViewContoller(indexPath: indexPath)
     }
 }
 
 extension HomeViewController: HCPagingViewControllerDataSource {
-    func pagingViewController(viewController: HCPagingViewController, viewControllerFor index: Int) -> HCContentViewController? {
-        guard 0 <= index && index < twitterManager.users.count else { return nil }
+    func pagingViewController(viewController: HCPagingViewController, viewControllerFor indexPath: NSIndexPath) -> HCContentViewController? {
+        guard 0 <= indexPath.row && indexPath.row < twitterManager.users.count else { return nil }
         let vc = UserTimelineViewController()
-        vc.user = twitterManager.users[index]
+        vc.user = twitterManager.users[indexPath.row]
         return vc
     }
 }

@@ -19,6 +19,7 @@ public class HCContentViewController: UIViewController, HCViewContentable {
     public var tableView: UITableView! = UITableView()
     public var navigatoinContainerView: UIView! = UIView()
     public var navigationView: HCNavigationView! = HCNavigationView(buttonPosition: .Left)
+    let cellImageView = UIImageView(frame: .zero)
     
     public weak var scrollDelegate: HCContentViewControllerScrollDelegate?
     
@@ -35,6 +36,7 @@ public class HCContentViewController: UIViewController, HCViewContentable {
         automaticallyAdjustsScrollViewInsets = false
         addViews()
         tableView.delegate = self
+        view.addSubview(cellImageView)
     }
 
     override public func didReceiveMemoryWarning() {

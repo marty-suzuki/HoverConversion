@@ -14,7 +14,7 @@ public enum HCPagingPosition: Int {
 }
 
 public protocol HCPagingViewControllerDataSource : class {
-    func pagingViewController(viewController: HCPagingViewController, viewControllerFor index: Int) -> HCContentViewController?
+    func pagingViewController(viewController: HCPagingViewController, viewControllerFor indexPath: NSIndexPath) -> HCContentViewController?
 }
 
 public class HCPagingViewController: UIViewController {
@@ -30,14 +30,14 @@ public class HCPagingViewController: UIViewController {
         .Lower : nil
     ]
 
-    private let containerViews: [HCPagingPosition : UIView] = [
+    let containerViews: [HCPagingPosition : UIView] = [
         .Upper : UIView(),
         .Center : UIView(),
         .Lower : UIView()
     ]
     
     private var containerViewsAdded: Bool = false
-    private var currentIndex: Int
+    var currentIndexPath: NSIndexPath
     private var isDragging: Bool = false
     public private(set) var isPaging: Bool = false
     
@@ -49,8 +49,8 @@ public class HCPagingViewController: UIViewController {
         }
     }
     
-    public init(index: Int) {
-        self.currentIndex = index
+    public init(indexPath: NSIndexPath) {
+        self.currentIndexPath = indexPath
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -76,9 +76,9 @@ public class HCPagingViewController: UIViewController {
     }
     
     private func setupViewControllers() {
-        setupViewController(index: currentIndex - 1, position: .Upper)
-        setupViewController(index: currentIndex, position: .Center)
-        setupViewController(index: currentIndex + 1, position: .Lower)
+        setupViewController(indexPath: currentIndexPath.rowPlus(-1), position: .Upper)
+        setupViewController(indexPath: currentIndexPath, position: .Center)
+        setupViewController(indexPath: currentIndexPath.rowPlus(1), position: .Lower)
         let tableView = viewController(.Center)?.tableView
         if let _ = viewController(.Lower) {
             tableView?.contentInset.bottom = 64
@@ -90,10 +90,10 @@ public class HCPagingViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
     }
     
-    private func setupViewController(index index: Int, position: HCPagingPosition) {
-        if index < 0 { return }
+    private func setupViewController(indexPath indexPath: NSIndexPath, position: HCPagingPosition) {
+        if indexPath.row < 0 || indexPath.section < 0 { return }
         guard
-            var vc = dataSource?.pagingViewController(self, viewControllerFor: index)
+            var vc = dataSource?.pagingViewController(self, viewControllerFor: indexPath)
         else { return }
         addViewController(vc, to: position)
     }
@@ -195,8 +195,8 @@ public class HCPagingViewController: UIViewController {
             self.viewControllers[.Upper] = nextUpperVC
             self.viewControllers[.Lower] = nil
             
-            self.currentIndex += 1
-            if let newViewController = self.dataSource?.pagingViewController(self, viewControllerFor: self.currentIndex + 1) {
+            self.currentIndexPath = self.currentIndexPath.rowPlus(1)
+            if let newViewController = self.dataSource?.pagingViewController(self, viewControllerFor: self.currentIndexPath.rowPlus(1)) {
                 self.addViewController(newViewController, to: .Lower)
                 self.viewControllers[.Lower] = newViewController
                 nextCenterVC?.tableView.contentInset.bottom = 64
@@ -273,8 +273,8 @@ public class HCPagingViewController: UIViewController {
             self.viewControllers[.Lower] = nextLowerVC
             self.viewControllers[.Upper] = nil
             
-            self.currentIndex -= 1
-            if let newViewController = self.dataSource?.pagingViewController(self, viewControllerFor: self.currentIndex - 1) {
+            self.currentIndexPath = self.currentIndexPath.rowPlus(-1)
+            if let newViewController = self.dataSource?.pagingViewController(self, viewControllerFor: self.currentIndexPath.rowPlus(-1)) {
                 self.addViewController(newViewController, to: .Upper)
                 self.viewControllers[.Upper] = newViewController
             }
