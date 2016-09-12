@@ -96,4 +96,11 @@ extension HomeViewController: HCPagingViewControllerDataSource {
         vc.user = twitterManager.users[indexPath.row]
         return vc
     }
+    
+    func pagingViewController(viewController: HCPagingViewController, nextHeaderViewFor indexPath: NSIndexPath) -> HCNextHeaderView? {
+        guard 0 <= indexPath.row && indexPath.row < twitterManager.users.count else { return nil }
+        let view = NextHeaderView()
+        view.user = twitterManager.users[indexPath.row]
+        return view
+    }
 }

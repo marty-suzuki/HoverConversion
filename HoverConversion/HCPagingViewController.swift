@@ -15,6 +15,7 @@ public enum HCPagingPosition: Int {
 
 public protocol HCPagingViewControllerDataSource : class {
     func pagingViewController(viewController: HCPagingViewController, viewControllerFor indexPath: NSIndexPath) -> HCContentViewController?
+    func pagingViewController(viewController: HCPagingViewController, nextHeaderViewFor indexPath: NSIndexPath) -> HCNextHeaderView?
 }
 
 public class HCPagingViewController: UIViewController {
@@ -46,6 +47,7 @@ public class HCPagingViewController: UIViewController {
     private var isDragging: Bool = false
     private var isPanning = false
     private var beginningContentOffset: CGPoint = .zero
+    private(set) var scrollDirection: UITableViewScrollPosition = .None
     
     private var _alphaView: UIView?
     private var alphaView: UIView {
@@ -58,6 +60,8 @@ public class HCPagingViewController: UIViewController {
         }
         return alphaView
     }
+    
+    private var nextHeaderView: HCNextHeaderView?
     
     public weak var dataSource: HCPagingViewControllerDataSource? {
         didSet {
@@ -103,6 +107,15 @@ public class HCPagingViewController: UIViewController {
         _alphaView = nil
     }
     
+    private func clearNextHeaderView() {
+        nextHeaderView?.removeFromSuperview()
+        nextHeaderView = nil
+    }
+    
+    private func setScrollsTop() {
+        viewControllers.forEach { $0.1?.tableView?.scrollsToTop = $0.0 == .Center }
+    }
+    
     private func viewController(position: HCPagingPosition) -> HCContentViewController? {
         guard let nullableViewController = viewControllers[position] else { return nil }
         return nullableViewController
@@ -112,6 +125,7 @@ public class HCPagingViewController: UIViewController {
         setupViewController(indexPath: currentIndexPath.rowPlus(-1), position: .Upper)
         setupViewController(indexPath: currentIndexPath, position: .Center)
         setupViewController(indexPath: currentIndexPath.rowPlus(1), position: .Lower)
+        setScrollsTop()
         let tableView = viewController(.Center)?.tableView
         if let _ = viewController(.Lower) {
             tableView?.contentInset.bottom = Const.BottomTotalSpace
@@ -170,19 +184,14 @@ public class HCPagingViewController: UIViewController {
     func moveToNext(scrollView: UIScrollView, offset: CGPoint) {
         guard let _ = viewController(.Lower) else { return }
 
-//        scrollDirection = .Bottom
+        scrollDirection = .Bottom
         let value = offset.y - (scrollView.contentSize.height - scrollView.bounds.size.height)
         let headerHeight = HCNavigationView.Height
         
         isPaging = true
         scrollView.setContentOffset(scrollView.contentOffset, animated: false)
         
-//        nextTalkButton?.setNeedsLayout()
-//        nextTalkButton?.layoutIfNeeded()
-//        nextTalkButtonBottomConstraint?.constant = -view.bounds.size.height + (headerHeight * 2)
-        
         let relativeDuration = NSTimeInterval(0.25)
-        
         let lowerViewController = viewController(.Lower)
         let centerViewController = viewController(.Center)
         UIView.animateKeyframesWithDuration(Const.NextAnimationDuration, delay: 0, options: .CalculationModeLinear, animations: {
@@ -191,12 +200,7 @@ public class HCPagingViewController: UIViewController {
                 lowerViewController?.view.frame.origin.y = -self.view.bounds.size.height + headerHeight
                 centerViewController?.view.frame.origin.y = -self.view.bounds.size.height + value + headerHeight
                 centerViewController?.navigationView?.frame.origin.y = self.view.bounds.size.height - value - headerHeight
-                
-//                self.nextHeaderView?.alpha = 0
-//                
-//                self.nextTalkButton?.setNeedsLayout()
-//                self.nextTalkButton?.layoutIfNeeded()
-//                self.nextTalkButton?.alpha = 0
+                self.nextHeaderView?.alpha = 0
             }
             
             UIView.addKeyframeWithRelativeStartTime(1.0 - relativeDuration, relativeDuration: relativeDuration) {
@@ -217,7 +221,7 @@ public class HCPagingViewController: UIViewController {
                 self.addView(centerView, to: .Upper)
             }
             
-            //centerViewController?.delegate = nil
+            centerViewController?.scrollDelegate = nil
             
             upperViewController?.willMoveToParentViewController(self)
             upperViewController?.removeFromParentViewController()
@@ -239,9 +243,7 @@ public class HCPagingViewController: UIViewController {
                 nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 0
             }
             
-//            centerViewController?.delegate = self
-//            centerViewController?.setupViewController()
-//            centerViewController?.view.frame = self.centerContainerView.bounds
+            nextCenterVC?.scrollDelegate = self
             
             if nextUpperVC?.tableView?.contentOffset.y >= scrollView.contentSize.height - scrollView.bounds.size.height {
                 if scrollView.contentSize.height > scrollView.bounds.size.height {
@@ -250,16 +252,13 @@ public class HCPagingViewController: UIViewController {
                     nextUpperVC?.tableView?.setContentOffset(.zero, animated: false)
                 }
             }
-//            upperViewController?.setNavigationContainerViewOffset(.zero)
-//            upperViewController?.resetInputContentViewPosition()
+
             nextUpperVC?.tableView?.reloadData()
             self.setNeedsStatusBarAppearanceUpdate()
             
-//            self.setScrollsTop()
-        
+            self.setScrollsTop()
             self.clearAlphaView()
-//            self.clearNextHeaderView()
-//            self.clearNextTalkButton()
+            self.clearNextHeaderView()
             
             self.isPaging = false
         }
@@ -268,7 +267,7 @@ public class HCPagingViewController: UIViewController {
     func moveToPrevious(scrollView: UIScrollView, offset: CGPoint) {
         guard let _ = viewController(.Upper) else { return }
 
-        //scrollDirection = .Top
+        scrollDirection = .Top
         isPaging = true
         
         scrollView.setContentOffset(scrollView.contentOffset, animated: false)
@@ -284,8 +283,6 @@ public class HCPagingViewController: UIViewController {
             centerViewController?.view.removeFromSuperview()
             lowerViewController?.view.removeFromSuperview()
             
-            //centerViewController?.clearCommentViewController()
-            
             if let upperView = upperViewController?.view {
                 self.addView(upperView, to: .Center)
             }
@@ -294,8 +291,7 @@ public class HCPagingViewController: UIViewController {
                 self.addView(centerView, to: .Lower)
             }
             
-//            centerViewController?.delegate = nil
-//            centerViewController?.talkController.finishWatching()
+            centerViewController?.scrollDelegate = nil
             
             lowerViewController?.willMoveToParentViewController(self)
             lowerViewController?.removeFromParentViewController()
@@ -319,20 +315,13 @@ public class HCPagingViewController: UIViewController {
                 nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 0
             }
             
-//            self.centerViewController?.delegate = self
-//            self.centerViewController?.setupViewController()
-            
-//            self.centerViewController?.view.frame = self.centerContainerView.bounds
-//            self.lowerViewController?.view.frame = self.lowerContainerView.bounds
-//            self.lowerViewController?.setNavigationContainerViewOffset(.zero)
+            nextCenterVC?.scrollDelegate = self
             nextLowerVC?.tableView?.reloadData()
             self.setNeedsStatusBarAppearanceUpdate()
             
-//            self.setScrollsTop()
-
+            self.setScrollsTop()
             self.clearAlphaView()
-//            self.clearNextHeaderView()
-//            self.clearNextTalkButton()
+            self.clearNextHeaderView()
             
             self.isPaging = false
         }
@@ -357,6 +346,15 @@ extension HCPagingViewController: HCContentViewControllerScrollDelegate {
                 let alpha = min(1, max(0, (value - Const.BottomTotalSpace) / Const.FireDistance))
                 alphaView.alpha = alpha
             }
+            
+            if let _ = self.nextHeaderView {
+            } else if let view = self.viewController(.Lower)?.view,
+                      let nhv = dataSource?.pagingViewController(self, nextHeaderViewFor: currentIndexPath.rowPlus(1)) {
+                view.addLayoutSubview(nhv, andConstraints:
+                    nhv.Top, nhv.Right, nhv.Left, nhv.Height |==| HCNavigationView.Height
+                )
+                self.nextHeaderView = nhv
+            }
         } else if offset.y < 0 {
             guard
                 let upperViewController = self.viewController(.Upper),
@@ -367,6 +365,7 @@ extension HCPagingViewController: HCContentViewControllerScrollDelegate {
                 let alpha = min(1, max(0, -offset.y / Const.FireDistance))
                 alphaView.alpha = alpha
             }
+            clearNextHeaderView()
             upperViewController.view.frame.origin.y = delta
             centerViewController.navigationView.frame.origin.y = delta
         } else {
@@ -375,6 +374,7 @@ extension HCPagingViewController: HCContentViewControllerScrollDelegate {
             viewControllers[.Center]??.navigationView.frame.origin.y = 0
             
             clearAlphaView()
+            clearNextHeaderView()
         }
         
         if isDragging { return }

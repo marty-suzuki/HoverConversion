@@ -57,7 +57,7 @@ class HCRootAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioni
         if let rootVC = toVC as? HCRootViewController, pagingVC = fromVC as? HCPagingViewController {
             let indexPath = pagingVC.currentIndexPath
             if rootVC.tableView?.cellForRowAtIndexPath(indexPath) == nil {
-                //mytalkVC.tableView?.scrollToRowAtIndexPath(indexPath, atScrollPosition: pagingVC.scrollDirection, animated: false)
+                rootVC.tableView?.scrollToRowAtIndexPath(indexPath, atScrollPosition: pagingVC.scrollDirection, animated: false)
             }
             
             if let cell = rootVC.tableView?.cellForRowAtIndexPath(indexPath) {
