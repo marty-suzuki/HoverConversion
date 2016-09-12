@@ -182,7 +182,7 @@ public class HCPagingViewController: UIViewController {
     }
     
     func moveToNext(scrollView: UIScrollView, offset: CGPoint) {
-        guard let _ = viewController(.Lower) else { return }
+        guard let _ = viewController(.Lower) where viewController(.Center)?.canPaging == true else { return }
 
         scrollDirection = .Bottom
         let value = offset.y - (scrollView.contentSize.height - scrollView.bounds.size.height)
@@ -265,7 +265,7 @@ public class HCPagingViewController: UIViewController {
     }
     
     func moveToPrevious(scrollView: UIScrollView, offset: CGPoint) {
-        guard let _ = viewController(.Upper) else { return }
+        guard let _ = viewController(.Upper) where viewController(.Center)?.canPaging == true else { return }
 
         scrollDirection = .Top
         isPaging = true
@@ -405,7 +405,7 @@ extension HCPagingViewController: HCContentViewControllerScrollDelegate {
     
     public func contentViewController(viewController: HCContentViewController, handlePanGesture gesture: UIPanGestureRecognizer) {
         guard let centerViewController = self.viewController(.Center)
-        where centerViewController == viewController && currentIndexPath.row > 0
+        where centerViewController == viewController && currentIndexPath.row > 0 && viewController.canPaging
         else { return }
         
         let translation = gesture.translationInView(view)

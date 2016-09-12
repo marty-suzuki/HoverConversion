@@ -5,11 +5,18 @@
 [![License](https://img.shields.io/cocoapods/l/HoverConversion.svg?style=flat)](http://cocoapods.org/pods/HoverConversion)
 [![Platform](https://img.shields.io/cocoapods/p/HoverConversion.svg?style=flat)](http://cocoapods.org/pods/HoverConversion)
 
-## Example
+![](./Images/sample1.gif) ![](./Images/sample2.gif)
+
+HoverConversion realized vertical paging with UITableView. UIViewController will be paging when reaching top or bottom of UITableView's contentOffset.
+
+## Featrue
+
+- [x] Vertical paging with UITableView
+- [x] Seamless transitioning
+- [x] Transitioning with navigationView pan gesture
+- [x] Selected cell that related to UIViewController is highlighting
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
 
 ## Installation
 
@@ -20,9 +27,22 @@ it, simply add the following line to your Podfile:
 pod "HoverConversion"
 ```
 
+## Requirements
+
+- Xcode 7.3 or greater
+- iOS 8.0 or greater
+- [MisterFusion](https://github.com/marty-suzuki/MisterFusion) - Swift DSL for AutoLayout
+
+## Special Thanks
+
+Those OSS are used in sample project!
+
+- [TouchVisualizer](https://github.com/morizotter/TouchVisualizer) (Created by [@morizotter](https://github.com/morizotter))
+- [TwitterKit](https://docs.fabric.io/apple/twitter/overview.html#)
+
 ## Author
 
-szk-atmosphere, s1180183@gmail.com
+marty-suzuki, s1180183@gmail.com
 
 ## License
 

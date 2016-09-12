@@ -3,6 +3,7 @@ PODS:
   - HoverConversion (0.1.0):
     - MisterFusion
   - MisterFusion (1.4.0)
+  - TouchVisualizer (1.4.0)
   - TwitterCore (2.4.0):
     - Fabric
   - TwitterKit (2.4.0):
@@ -11,6 +12,7 @@ PODS:
 DEPENDENCIES:
   - Fabric
   - HoverConversion (from `../`)
+  - TouchVisualizer (~> 1.4.0)
   - TwitterCore
   - TwitterKit
 
@@ -22,9 +24,10 @@ SPEC CHECKSUMS:
   Fabric: 5755268d0171435ab167e3d0878a28a777deaf10
   HoverConversion: f93de4e4e077f066a109f1248ab5948abee3c9f4
   MisterFusion: ccb69d87569a4acaabda051d3c8db7ab4be2d5db
+  TouchVisualizer: 44c1a7a6e1b6526df7673f68400072363ecd3bf6
   TwitterCore: a139904c80805ad3dde9eef1100704f96f646d1d
   TwitterKit: 1cf9742edf9d182c1518cfdd6aaac0dfe313b38b
 
-PODFILE CHECKSUM: 1a1f5bd61deb88f89576cdb781accde592bf444e
+PODFILE CHECKSUM: fb64e946cfc8eb874630080e52fbc4a38e3bacb3
 
 COCOAPODS: 1.1.0.beta.2

@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'HoverConversion'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of HoverConversion.'
+  s.summary          = 'HoverConversion realized vertical paging with UITableView. UIViewController will be paging when reaching top or bottom of UITableView's contentOffset.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -17,16 +17,16 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+#  s.description      = <<-DESC
+# TODO: Add long description of the pod here.
+#                       DESC
 
-  s.homepage         = 'https://github.com/szk-atmosphere/HoverConversion'
+  s.homepage         = 'https://github.com/marty-suzuki/HoverConversion'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'szk-atmosphere' => 's1180183@gmail.com' }
-  s.source           = { :git => 'https://github.com/szk-atmosphere/HoverConversion.git', :tag => s.version.to_s }
-  s.social_media_url = 'https://twitter.com/SzkAtmosphere'
+  s.author           = { 'marty-suzuki' => 's1180183@gmail.com' }
+  s.source           = { :git => 'https://github.com/marty-suzuki/HoverConversion.git', :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/marty_suzuki'
 
   s.ios.deployment_target = '8.0'
 

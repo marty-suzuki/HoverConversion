@@ -23,6 +23,7 @@ public class HCContentViewController: UIViewController, HCViewContentable {
     let cellImageView = UIImageView(frame: .zero)
     
     public weak var scrollDelegate: HCContentViewControllerScrollDelegate?
+    public var canPaging: Bool = true
     
     public override var title: String? {
         didSet {
