@@ -20,8 +20,12 @@ public protocol HCPagingViewControllerDataSource : class {
 public class HCPagingViewController: UIViewController {
     private struct Const {
         static let FireDistance: CGFloat = 180
+        static let BottomTotalSpace = HCNavigationView.Height
         static let NextAnimationDuration: NSTimeInterval = 0.4
         static let PreviousAnimationDuration: NSTimeInterval = 0.3
+        static private func calculateRudderBanding(distance: CGFloat, constant: CGFloat, dimension: CGFloat) -> CGFloat {
+            return (1 - (1 / ((distance * constant / dimension) + 1))) * dimension
+        }
     }
     
     public private(set) var viewControllers: [HCPagingPosition : HCContentViewController?] = [
@@ -38,9 +42,22 @@ public class HCPagingViewController: UIViewController {
     
     private var containerViewsAdded: Bool = false
     var currentIndexPath: NSIndexPath
-    private var isDragging: Bool = false
     public private(set) var isPaging: Bool = false
+    private var isDragging: Bool = false
+    private var isPanning = false
+    private var beginningContentOffset: CGPoint = .zero
     
+    private var _alphaView: UIView?
+    private var alphaView: UIView {
+        let alphaView: UIView
+        if let _alphaView = _alphaView {
+            alphaView = _alphaView
+        } else {
+            alphaView = createAlphaViewAndAddSubview(containerViews[.Center])
+            _alphaView = alphaView
+        }
+        return alphaView
+    }
     
     public weak var dataSource: HCPagingViewControllerDataSource? {
         didSet {
@@ -70,6 +87,22 @@ public class HCPagingViewController: UIViewController {
         return viewController(.Center)?.preferredStatusBarStyle() ?? .Default
     }
     
+    private func createAlphaViewAndAddSubview(view: UIView?) -> UIView {
+        let alphaView = UIView()
+        alphaView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)
+        view?.addLayoutSubview(alphaView, andConstraints:
+            alphaView.Top, alphaView.Left, alphaView.Bottom, alphaView.Right
+        )
+        alphaView.userInteractionEnabled = false
+        alphaView.alpha = 0
+        return alphaView
+    }
+    
+    private func clearAlphaView() {
+        _alphaView?.removeFromSuperview()
+        _alphaView = nil
+    }
+    
     private func viewController(position: HCPagingPosition) -> HCContentViewController? {
         guard let nullableViewController = viewControllers[position] else { return nil }
         return nullableViewController
@@ -81,8 +114,8 @@ public class HCPagingViewController: UIViewController {
         setupViewController(indexPath: currentIndexPath.rowPlus(1), position: .Lower)
         let tableView = viewController(.Center)?.tableView
         if let _ = viewController(.Lower) {
-            tableView?.contentInset.bottom = 64
-            tableView?.scrollIndicatorInsets.bottom = 64
+            tableView?.contentInset.bottom = Const.BottomTotalSpace
+            tableView?.scrollIndicatorInsets.bottom = Const.BottomTotalSpace
         } else {
             tableView?.contentInset.bottom = 0
             tableView?.scrollIndicatorInsets.bottom = 0
@@ -199,8 +232,8 @@ public class HCPagingViewController: UIViewController {
             if let newViewController = self.dataSource?.pagingViewController(self, viewControllerFor: self.currentIndexPath.rowPlus(1)) {
                 self.addViewController(newViewController, to: .Lower)
                 self.viewControllers[.Lower] = newViewController
-                nextCenterVC?.tableView.contentInset.bottom = 64
-                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 64
+                nextCenterVC?.tableView.contentInset.bottom = Const.BottomTotalSpace
+                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = Const.BottomTotalSpace
             } else {
                 nextCenterVC?.tableView.contentInset.bottom = 0
                 nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 0
@@ -223,8 +256,8 @@ public class HCPagingViewController: UIViewController {
             self.setNeedsStatusBarAppearanceUpdate()
             
 //            self.setScrollsTop()
-//            
-//            self.clearAlphaView()
+        
+            self.clearAlphaView()
 //            self.clearNextHeaderView()
 //            self.clearNextTalkButton()
             
@@ -279,8 +312,8 @@ public class HCPagingViewController: UIViewController {
                 self.viewControllers[.Upper] = newViewController
             }
             if let _ = nextLowerVC {
-                nextCenterVC?.tableView.contentInset.bottom = 64
-                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 64
+                nextCenterVC?.tableView.contentInset.bottom = Const.BottomTotalSpace
+                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = Const.BottomTotalSpace
             } else {
                 nextCenterVC?.tableView.contentInset.bottom = 0
                 nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 0
@@ -296,8 +329,8 @@ public class HCPagingViewController: UIViewController {
             self.setNeedsStatusBarAppearanceUpdate()
             
 //            self.setScrollsTop()
-//            
-//            self.clearAlphaView()
+
+            self.clearAlphaView()
 //            self.clearNextHeaderView()
 //            self.clearNextTalkButton()
             
@@ -308,6 +341,8 @@ public class HCPagingViewController: UIViewController {
 
 extension HCPagingViewController: HCContentViewControllerScrollDelegate {
     public func contentViewController(viewController: HCContentViewController, scrollViewDidScroll scrollView: UIScrollView) {
+        if isPanning { return }
+        
         guard viewController == self.viewController(.Center) else { return }
         
         let offset = scrollView.contentOffset
@@ -317,23 +352,29 @@ extension HCPagingViewController: HCContentViewControllerScrollDelegate {
             guard let lowerViewController = self.viewController(.Lower) else { return }
             let delta = offset.y - (contentSize.height - scrollViewSize.height)
             lowerViewController.view.frame.origin.y = min(0, -delta)
+            let value: CGFloat = scrollView.bottomBounceSize
+            if value > Const.BottomTotalSpace {
+                let alpha = min(1, max(0, (value - Const.BottomTotalSpace) / Const.FireDistance))
+                alphaView.alpha = alpha
+            }
         } else if offset.y < 0 {
             guard
                 let upperViewController = self.viewController(.Upper),
                 let centerViewController = self.viewController(.Center)
             else { return }
             let delta = max(0, -offset.y)
+            if currentIndexPath.row > 0 {
+                let alpha = min(1, max(0, -offset.y / Const.FireDistance))
+                alphaView.alpha = alpha
+            }
             upperViewController.view.frame.origin.y = delta
             centerViewController.navigationView.frame.origin.y = delta
         } else {
-            guard
-                let lowerViewController = self.viewController(.Lower),
-                let upperViewController = self.viewController(.Upper),
-                let centerViewController = self.viewController(.Center)
-            else { return }
-            lowerViewController.view.frame.origin.y = 0
-            upperViewController.view.frame.origin.y = 0
-            centerViewController.navigationView.frame.origin.y = 0
+            viewControllers[.Lower]??.view.frame.origin.y = 0
+            viewControllers[.Upper]??.view.frame.origin.y = 0
+            viewControllers[.Center]??.navigationView.frame.origin.y = 0
+            
+            clearAlphaView()
         }
         
         if isDragging { return }
@@ -360,5 +401,57 @@ extension HCPagingViewController: HCContentViewControllerScrollDelegate {
     public func contentViewController(viewController: HCContentViewController, scrollViewDidEndDragging scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         guard viewController == self.viewController(.Center) else { return }
         isDragging = false
+    }
+    
+    public func contentViewController(viewController: HCContentViewController, handlePanGesture gesture: UIPanGestureRecognizer) {
+        guard let centerViewController = self.viewController(.Center)
+        where centerViewController == viewController && currentIndexPath.row > 0
+        else { return }
+        
+        let translation = gesture.translationInView(view)
+        let velocity = gesture.velocityInView(view)
+        let tableView = viewController.tableView
+        
+        switch gesture.state {
+        case .Began:
+            isPanning = true
+            beginningContentOffset = tableView.contentOffset
+            
+        case .Changed:
+            let position = max(0, translation.y)
+            let rudderBanding = Const.calculateRudderBanding(position, constant: 0.55, dimension: view.frame.size.height)
+            
+            let headerPosition = max(0, rudderBanding)
+            if viewController.navigationView.frame.origin.y != headerPosition {
+                viewController.navigationView.frame.origin.y = headerPosition
+            }
+            
+           let tableViewOffset = beginningContentOffset.y - max(0, rudderBanding)
+            tableView.setContentOffset(CGPoint(x: 0, y: tableViewOffset), animated: false)
+            
+            self.viewController(.Upper)?.view.frame.origin.y = headerPosition
+            
+            alphaView.alpha = min(1, (rudderBanding / Const.FireDistance))
+            
+        case .Cancelled, .Ended:
+            if velocity.y  > 0 && translation.y > Const.FireDistance && currentIndexPath.row > 0 {
+                isPanning = false
+                let rudderBanding = Const.calculateRudderBanding(max(0, translation.y), constant: 0.55, dimension: view.frame.size.height)
+                moveToPrevious(tableView, offset: CGPoint(x: 0, y: -rudderBanding))
+            } else {
+                UIView.animateWithDuration(0.25, animations: {
+                    viewController.navigationView.frame.origin.y = 0
+                    self.viewController(.Upper)?.view.frame.origin.y = 0
+                    tableView.setContentOffset(self.beginningContentOffset, animated: false)
+                    self.alphaView.alpha = 0
+                }) { finished in
+                    self.beginningContentOffset = .zero
+                    self.isPanning = false
+                }
+            }
+            
+        case .Failed, .Possible:
+            break
+        }
     }
 }

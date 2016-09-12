@@ -12,6 +12,7 @@ public protocol HCContentViewControllerScrollDelegate: class {
     func contentViewController(viewController: HCContentViewController, scrollViewWillBeginDragging scrollView: UIScrollView)
     func contentViewController(viewController: HCContentViewController, scrollViewDidScroll scrollView: UIScrollView)
     func contentViewController(viewController: HCContentViewController, scrollViewDidEndDragging scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    func contentViewController(viewController: HCContentViewController, handlePanGesture gesture: UIPanGestureRecognizer)
 }
 
 public class HCContentViewController: UIViewController, HCViewContentable {
@@ -37,6 +38,9 @@ public class HCContentViewController: UIViewController, HCViewContentable {
         addViews()
         tableView.delegate = self
         view.addSubview(cellImageView)
+        
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(HCContentViewController.handleNavigatoinContainerViewPanGesture(_:)))
+        navigatoinContainerView.addGestureRecognizer(panGestureRecognizer)
     }
 
     override public func didReceiveMemoryWarning() {
@@ -46,6 +50,10 @@ public class HCContentViewController: UIViewController, HCViewContentable {
     
     public func navigationView(navigationView: HCNavigationView, didTapLeftButton button: UIButton) {
         navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func handleNavigatoinContainerViewPanGesture(gesture: UIPanGestureRecognizer) {
+        scrollDelegate?.contentViewController(self, handlePanGesture: gesture)
     }
 }
 
