@@ -23,7 +23,7 @@ extension HCViewControllable where Self: UIViewController {
             navigatoinContainerView.Top,
             navigatoinContainerView.Right,
             navigatoinContainerView.Left,
-            navigatoinContainerView.Height |=| HCNavigationView.Height
+            navigatoinContainerView.Height |==| HCNavigationView.Height
         )
         
         navigatoinContainerView.addLayoutSubview(navigationView, andConstraints:

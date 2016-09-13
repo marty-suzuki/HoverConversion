@@ -140,7 +140,7 @@ public class HCPagingViewController: UIViewController {
     private func setupViewController(indexPath indexPath: NSIndexPath, position: HCPagingPosition) {
         if indexPath.row < 0 || indexPath.section < 0 { return }
         guard
-            var vc = dataSource?.pagingViewController(self, viewControllerFor: indexPath)
+            let vc = dataSource?.pagingViewController(self, viewControllerFor: indexPath)
         else { return }
         addViewController(vc, to: position)
     }
