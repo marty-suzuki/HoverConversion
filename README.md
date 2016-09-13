@@ -27,6 +27,65 @@ it, simply add the following line to your Podfile:
 pod "HoverConversion"
 ```
 
+## Usage
+
+If you install from cocoapods, You have to write `import HoverConversion`.
+
+#### Storyboard or Xib
+
+![](./Images/storyboard.png)
+
+Set custom class of `UINavigationController` to `HCNavigationController`. In addition, set module to `HoverConversion`.
+And set `HCRootViewController` as `navigationController`'s first viewController.
+
+#### Code
+
+Set `HCNavigationController` as `self.window.rootViewController`.
+And set `HCRootViewController` as `navigationController`'s first viewController.
+
+#### HCPagingViewController
+
+If you want to show vertical contents, please use `HCPagingViewController`.
+
+```swift
+let vc = HCPagingViewController(indexPath: indexPath)
+vc.dataSource = self
+navigationController?.pushViewController(vc, animated: true)
+```
+
+#### HCContentViewController
+
+A content included in `HCPagingViewController` is `HCContentViewController`.  
+Return `HCContentViewController` (or subclass)  with this delegate method.
+
+```swift
+extension ViewController: HCPagingViewControllerDataSource {
+    func pagingViewController(viewController: HCPagingViewController, viewControllerFor indexPath: NSIndexPath) -> HCContentViewController? {
+        guard 0 <= indexPath.row && indexPath.row < twitterManager.users.count else { return nil }
+        let vc = UserTimelineViewController()
+        vc.user = twitterManager.users[indexPath.row]
+        return vc
+    }
+}
+```
+
+#### HCNextHeaderView
+
+![](./Images/next_header.png)
+
+Return `HCNextHeaderView` (or subclass)  with this delegate method.
+
+```swift
+extension ViewController: HCPagingViewControllerDataSource {
+    func pagingViewController(viewController: HCPagingViewController, nextHeaderViewFor indexPath: NSIndexPath) -> HCNextHeaderView? {
+        guard 0 <= indexPath.row && indexPath.row < twitterManager.users.count else { return nil }
+        let view = NextHeaderView()
+        view.user = twitterManager.users[indexPath.row]
+        return view
+    }
+}
+```
+
 ## Requirements
 
 - Xcode 7.3 or greater
