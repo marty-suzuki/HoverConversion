@@ -15,6 +15,7 @@ HoverConversion realized vertical paging with UITableView. UIViewController will
 - [x] Seamless transitioning
 - [x] Transitioning with navigationView pan gesture
 - [x] Selected cell that related to UIViewController is highlighting
+- [x] Support Swift2.3
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 

@@ -8,6 +8,6 @@ pod 'HoverConversion', :path => '../'
 pod 'Fabric'
 pod 'TwitterKit'
 pod 'TwitterCore'
-pod 'TouchVisualizer', '~>1.4.0'
+# pod 'TouchVisualizer', '~>1.4.0'
 end
 

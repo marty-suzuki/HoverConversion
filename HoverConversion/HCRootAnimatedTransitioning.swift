@@ -29,13 +29,13 @@ class HCRootAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioni
     @objc func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         guard
             let toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey),
-            let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey),
-            let containerView = transitionContext.containerView()
+            let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
         else {
             transitionContext.completeTransition(true)
             return
         }
         
+        let containerView = transitionContext.containerView()
         containerView.backgroundColor = .blackColor()
         alphaView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         alphaView.frame = containerView.bounds

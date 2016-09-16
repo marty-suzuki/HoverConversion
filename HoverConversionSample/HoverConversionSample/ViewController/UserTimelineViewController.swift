@@ -68,7 +68,7 @@ class UserTimelineViewController: HCContentViewController {
                 self?.tweets = sortedTweets + storedTweets
                 self?.tableView.reloadData()
                 if let tweets = self?.tweets {
-                    let indexPath = NSIndexPath(forRow: tweets.count - 1, inSection: 0)
+                    let indexPath = NSIndexPath(forRow: tweets.count - 2, inSection: 0)
                     self?.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: false)
                 }
             case .Failure(let error):

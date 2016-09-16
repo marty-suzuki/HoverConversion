@@ -27,13 +27,13 @@ enum TWTRHTTPMethod: String {
 
 extension TWTRAPIClient {
     func sendTwitterRequest<T: TWTRRequestable>(request: T, completion: (TWTRResponse<T.ResponseType>) -> ()) {
-        guard let URL = request.URL else {
+        guard let URL = request.URL, absoluteString = URL.absoluteString else {
             let error = NSError(domain: TWTRAPIErrorDomain, code: -9999, userInfo: nil)
             completion(TWTRResponse(request: nil, response: nil, data: nil, result: .Failure(error)))
             return
         }
         var error: NSError?
-        let request = URLRequestWithMethod(request.method.rawValue, URL: URL.absoluteString, parameters: request.parameters, error: &error)
+        let request = URLRequestWithMethod(request.method.rawValue, URL: absoluteString, parameters: request.parameters, error: &error)
         if let error = error {
             completion(TWTRResponse(request: request, response: nil, data: nil, result: .Failure(error)))
             return

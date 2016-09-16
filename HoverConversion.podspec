@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HoverConversion'
-  s.version          = '0.1.1'
+  s.version          = '0.2.0'
   s.summary          = 'HoverConversion realized vertical paging. UIViewController will be paging when reaching top or bottom of UITableView content.'
 
 # This description is used to generate tags and improve search results.
@@ -38,6 +38,6 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   s.frameworks = 'UIKit'
-  s.dependency 'MisterFusion'
+  s.dependency 'MisterFusion', '~> 1.4.0'
   # s.dependency 'AFNetworking', '~> 2.3'
 end
