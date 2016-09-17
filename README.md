@@ -1,9 +1,15 @@
 # HoverConversion
 
-[![CI Status](http://img.shields.io/travis/szk-atmosphere/HoverConversion.svg?style=flat)](https://travis-ci.org/szk-atmosphere/HoverConversion)
+[![Platform](http://img.shields.io/badge/platform-ios-blue.svg?style=flat
+)](https://developer.apple.com/iphone/index.action)
+[![Language](http://img.shields.io/badge/language-swift-brightgreen.svg?style=flat
+)](https://developer.apple.com/swift)
 [![Version](https://img.shields.io/cocoapods/v/HoverConversion.svg?style=flat)](http://cocoapods.org/pods/HoverConversion)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/HoverConversion.svg?style=flat)](http://cocoapods.org/pods/HoverConversion)
-[![Platform](https://img.shields.io/cocoapods/p/HoverConversion.svg?style=flat)](http://cocoapods.org/pods/HoverConversion)
+
+[ManiacDev.com](https://maniacdev.com/) referred.  
+[https://maniacdev.com/2016/09/hoverconversion-a-swift-ui-component-for-navigating-between-multiple-table-views](https://maniacdev.com/2016/09/hoverconversion-a-swift-ui-component-for-navigating-between-multiple-table-views)
 
 ![](./Images/sample1.gif) ![](./Images/sample2.gif)
 
@@ -16,6 +22,7 @@ HoverConversion realized vertical paging with UITableView. UIViewController will
 - [x] Transitioning with navigationView pan gesture
 - [x] Selected cell that related to UIViewController is highlighting
 - [x] Support Swift2.3
+- [x] Support Swift3
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 

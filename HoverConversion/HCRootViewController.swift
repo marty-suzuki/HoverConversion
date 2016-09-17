@@ -8,19 +8,19 @@
 
 import UIKit
 
-public class HCRootViewController: UIViewController, HCViewControllable {
+open class HCRootViewController: UIViewController, HCViewControllable {
 
-    public var tableView: UITableView! = UITableView()
-    public var navigatoinContainerView: UIView! = UIView()
-    public var navigationView: HCNavigationView! = HCNavigationView()
+    open var tableView: UITableView! = UITableView()
+    open var navigatoinContainerView: UIView! = UIView()
+    open var navigationView: HCNavigationView! = HCNavigationView()
     
-    public override var title: String? {
+    open override var title: String? {
         didSet {
             navigationView?.titleLabel.text = title
         }
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -29,7 +29,7 @@ public class HCRootViewController: UIViewController, HCViewControllable {
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
 
-    override public func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

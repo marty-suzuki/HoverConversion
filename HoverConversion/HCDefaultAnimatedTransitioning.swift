@@ -10,97 +10,97 @@
 import UIKit
 
 class HCDefaultAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioning {
-    private struct Const {
-        static let DefaultDuration: NSTimeInterval = 0.25
-        static let RootDuration: NSTimeInterval = 0.4
-        static let Scaling: CGFloat = 0.95
+    fileprivate struct Const {
+        static let defaultDuration: TimeInterval = 0.25
+        static let rootDuration: TimeInterval = 0.4
+        static let scaling: CGFloat = 0.95
     }
     
     let operation: UINavigationControllerOperation
-    private let alphaView = UIView()
+    fileprivate let alphaView = UIView()
     
     init(operation: UINavigationControllerOperation) {
         self.operation = operation
         super.init()
     }
     
-    @objc func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    @objc func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         guard
-            let toVC = transitionContext?.viewControllerForKey(UITransitionContextToViewControllerKey),
-            let fromVC = transitionContext?.viewControllerForKey(UITransitionContextFromViewControllerKey)
+            let toVC = transitionContext?.viewController(forKey: UITransitionContextViewControllerKey.to),
+            let fromVC = transitionContext?.viewController(forKey: UITransitionContextViewControllerKey.from)
         else {
             return 0
         }
         switch (fromVC, toVC) {
-        case (_ as HCPagingViewController, _ as HCRootViewController): return Const.RootDuration
-        case (_ as HCRootViewController, _ as HCPagingViewController): return Const.RootDuration
-        default: return Const.DefaultDuration
+        case (_ as HCPagingViewController, _ as HCRootViewController): return Const.rootDuration
+        case (_ as HCRootViewController, _ as HCPagingViewController): return Const.rootDuration
+        default: return Const.defaultDuration
         }
     }
     
     // This method can only  be a nop if the transition is interactive and not a percentDriven interactive transition.
-    @objc func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    @objc func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard
-            let toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey),
-            let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
+            let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to),
+            let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
         else {
             transitionContext.completeTransition(true)
             return
         }
         
-        let containerView = transitionContext.containerView()
-        containerView.backgroundColor = .blackColor()
+        let containerView = transitionContext.containerView
+        containerView.backgroundColor = .black
         alphaView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         alphaView.frame = containerView.bounds
         
         switch operation {
-        case .Pop: popAnimation(transitionContext, toVC: toVC, fromVC: fromVC, containerView: containerView)
-        case .Push: pushAnimation(transitionContext, toVC: toVC, fromVC: fromVC, containerView: containerView)
-        case .None: transitionContext.completeTransition(true)
+        case .pop: popAnimation(transitionContext, toVC: toVC, fromVC: fromVC, containerView: containerView)
+        case .push: pushAnimation(transitionContext, toVC: toVC, fromVC: fromVC, containerView: containerView)
+        case .none: transitionContext.completeTransition(true)
         }
     }
     
-    private func popAnimation(transitionContext: UIViewControllerContextTransitioning, toVC: UIViewController, fromVC: UIViewController, containerView: UIView) {
+    fileprivate func popAnimation(_ transitionContext: UIViewControllerContextTransitioning, toVC: UIViewController, fromVC: UIViewController, containerView: UIView) {
         containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
         containerView.insertSubview(alphaView, belowSubview: fromVC.view)
         
-        if let pagingVC = fromVC as? HCPagingViewController, rootVC = toVC as? HCRootViewController {
+        if let pagingVC = fromVC as? HCPagingViewController, let rootVC = toVC as? HCRootViewController {
             let indexPath = pagingVC.currentIndexPath
             //pagingVC.homeViewTalkContainerView.backgroundColor = .whiteColor()
-            if rootVC.tableView?.cellForRowAtIndexPath(indexPath) == nil {
+            if rootVC.tableView?.cellForRow(at: indexPath as IndexPath) == nil {
                 //rootVC.tableView?.scrollToRowAtIndexPath(indexPath, atScrollPosition: pagingVC.scrollDirection, animated: false)
             }
-            rootVC.tableView?.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+            rootVC.tableView?.selectRow(at: indexPath as IndexPath, animated: false, scrollPosition: .none)
         }
         
         alphaView.alpha = 1
         toVC.view.frame = containerView.bounds
-        toVC.view.transform = CGAffineTransformMakeScale(Const.Scaling, Const.Scaling)
+        toVC.view.transform = CGAffineTransform(scaleX: Const.scaling, y: Const.scaling)
         
-        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: .CurveLinear, animations: {
-            toVC.view.transform = CGAffineTransformIdentity
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveLinear, animations: {
+            toVC.view.transform = CGAffineTransform.identity
             fromVC.view.frame.origin.x = containerView.bounds.size.width
             self.alphaView.alpha = 0
         }) { finished in
-            let canceled = transitionContext.transitionWasCancelled()
+            let canceled = transitionContext.transitionWasCancelled
             if canceled {
                 toVC.view.removeFromSuperview()
             } else {
                 fromVC.view.removeFromSuperview()
             }
             
-            toVC.view.transform = CGAffineTransformIdentity
+            toVC.view.transform = CGAffineTransform.identity
             self.alphaView.removeFromSuperview()
             
-            if let pagingVC = fromVC as? HCPagingViewController, rootVC = toVC as? HCRootViewController {
+            if let pagingVC = fromVC as? HCPagingViewController, let rootVC = toVC as? HCRootViewController {
                 let indexPath = pagingVC.currentIndexPath
-                rootVC.tableView?.deselectRowAtIndexPath(indexPath, animated: true)
+                rootVC.tableView?.deselectRow(at: indexPath as IndexPath, animated: true)
             }
             transitionContext.completeTransition(!canceled)
         }
     }
     
-    private func pushAnimation(transitionContext: UIViewControllerContextTransitioning, toVC: UIViewController, fromVC: UIViewController, containerView: UIView) {
+    fileprivate func pushAnimation(_ transitionContext: UIViewControllerContextTransitioning, toVC: UIViewController, fromVC: UIViewController, containerView: UIView) {
         containerView.addSubview(alphaView)
         containerView.addSubview(toVC.view)
         
@@ -108,18 +108,18 @@ class HCDefaultAnimatedTransitioning: NSObject, UIViewControllerAnimatedTransiti
         toVC.view.frame.origin.x = containerView.bounds.size.width
         alphaView.alpha = 0
         
-        UIView.animateWithDuration(transitionDuration(transitionContext), delay: 0, options: .CurveLinear, animations: {
-            fromVC.view.transform = CGAffineTransformMakeScale(Const.Scaling, Const.Scaling)
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), delay: 0, options: .curveLinear, animations: {
+            fromVC.view.transform = CGAffineTransform(scaleX: Const.scaling, y: Const.scaling)
             self.alphaView.alpha = 1
             toVC.view.frame.origin.x = 0
         }) { finished in
-            let canceled = transitionContext.transitionWasCancelled()
+            let canceled = transitionContext.transitionWasCancelled
             if canceled {
                 toVC.view.removeFromSuperview()
             }
             
             self.alphaView.removeFromSuperview()
-            fromVC.view.transform = CGAffineTransformIdentity
+            fromVC.view.transform = CGAffineTransform.identity
             
             transitionContext.completeTransition(!canceled)
         }

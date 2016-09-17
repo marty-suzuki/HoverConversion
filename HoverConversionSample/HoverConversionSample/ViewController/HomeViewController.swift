@@ -18,31 +18,31 @@ class HomeViewController: HCRootViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         navigationView.backgroundColor = UIColor(red: 85 / 255, green: 172 / 255, blue: 238 / 255, alpha: 1)
-        navigationView.titleLabel.textColor = .whiteColor()
+        navigationView.titleLabel.textColor = .white
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
-        tableView.registerNib(UINib(nibName: "HomeTableViewCell", bundle: nil), forCellReuseIdentifier: "HomeTableViewCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+        tableView.register(UINib(nibName: "HomeTableViewCell", bundle: nil), forCellReuseIdentifier: "HomeTableViewCell")
         title = "Following List"
     }
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let group = dispatch_group_create()
-        dispatch_group_enter(group)
+        let group = DispatchGroup()
+        group.enter()
         twitterManager.fetchUsersTimeline {
-            dispatch_group_leave(group)
+            group.leave()
         }
-        dispatch_group_enter(group)
+        group.enter()
         twitterManager.fetchUsers {
-            dispatch_group_leave(group)
+            group.leave()
         }
-        dispatch_group_notify(group, dispatch_get_main_queue()) {
+        group.notify(queue: DispatchQueue.main) {
             self.twitterManager.sortUsers()
             self.tableView.reloadData()
         }
@@ -52,7 +52,7 @@ class HomeViewController: HCRootViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private func showPagingViewContoller(indexPath indexPath: NSIndexPath) {
+    fileprivate func showPagingViewContoller(indexPath: IndexPath) {
         let vc = HCPagingViewController(indexPath: indexPath)
         vc.dataSource = self
         navigationController?.pushViewController(vc, animated: true)
@@ -60,44 +60,44 @@ class HomeViewController: HCRootViewController {
 }
 
 extension HomeViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if twitterManager.tweets.count == twitterManager.users.count {
             return twitterManager.users.count
         }
         return 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let user = twitterManager.users[indexPath.row]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let user = twitterManager.users[(indexPath as NSIndexPath).row]
         guard let tweet = twitterManager.tweets[user.screenName]?.first else {
-            return tableView.dequeueReusableCellWithIdentifier("UITableViewCell")!
+            return tableView.dequeueReusableCell(withIdentifier: "UITableViewCell")!
         }
-        let cell = tableView.dequeueReusableCellWithIdentifier("HomeTableViewCell") as! HomeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell") as! HomeTableViewCell
         cell.userValue = (user, tweet)
         return cell
     }
 }
 
 extension HomeViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return HomeTableViewCell.Height
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
         showPagingViewContoller(indexPath: indexPath)
     }
 }
 
 extension HomeViewController: HCPagingViewControllerDataSource {
-    func pagingViewController(viewController: HCPagingViewController, viewControllerFor indexPath: NSIndexPath) -> HCContentViewController? {
+    func pagingViewController(_ viewController: HCPagingViewController, viewControllerFor indexPath: IndexPath) -> HCContentViewController? {
         guard 0 <= indexPath.row && indexPath.row < twitterManager.users.count else { return nil }
         let vc = UserTimelineViewController()
         vc.user = twitterManager.users[indexPath.row]
         return vc
     }
     
-    func pagingViewController(viewController: HCPagingViewController, nextHeaderViewFor indexPath: NSIndexPath) -> HCNextHeaderView? {
+    func pagingViewController(_ viewController: HCPagingViewController, nextHeaderViewFor indexPath: IndexPath) -> HCNextHeaderView? {
         guard 0 <= indexPath.row && indexPath.row < twitterManager.users.count else { return nil }
         let view = NextHeaderView()
         view.user = twitterManager.users[indexPath.row]

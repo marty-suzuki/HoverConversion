@@ -10,14 +10,14 @@ import Foundation
 import TwitterKit
 
 enum TWTRResult<T> {
-    case Success(T)
-    case Failure(NSError)
+    case success(T)
+    case failure(NSError)
 }
 
 struct TWTRResponse<T> {
-    let request: NSURLRequest?
-    let response: NSHTTPURLResponse?
-    let data: NSData?
+    let request: URLRequest?
+    let response: HTTPURLResponse?
+    let data: Data?
     let result: TWTRResult<T>
 }
 
@@ -26,33 +26,34 @@ enum TWTRHTTPMethod: String {
 }
 
 extension TWTRAPIClient {
-    func sendTwitterRequest<T: TWTRRequestable>(request: T, completion: (TWTRResponse<T.ResponseType>) -> ()) {
-        guard let URL = request.URL, absoluteString = URL.absoluteString else {
+    func sendTwitterRequest<T: TWTRRequestable>(_ request: T, completion: @escaping (TWTRResponse<T.ResponseType>) -> ()) {
+        guard let URL = request.URL else {
             let error = NSError(domain: TWTRAPIErrorDomain, code: -9999, userInfo: nil)
-            completion(TWTRResponse(request: nil, response: nil, data: nil, result: .Failure(error)))
+            completion(TWTRResponse(request: nil, response: nil, data: nil, result: .failure(error)))
             return
         }
+        let absoluteString = URL.absoluteString
         var error: NSError?
-        let request = URLRequestWithMethod(request.method.rawValue, URL: absoluteString, parameters: request.parameters, error: &error)
+        let request = urlRequest(withMethod: request.method.rawValue, url: absoluteString, parameters: request.parameters, error: &error)
         if let error = error {
-            completion(TWTRResponse(request: request, response: nil, data: nil, result: .Failure(error)))
+            completion(TWTRResponse(request: request, response: nil, data: nil, result: .failure(error)))
             return
         }
-        sendTwitterRequest(request) { [weak request] in
+        sendTwitterRequest(request) {
             let result: TWTRResult<T.ResponseType>
             if let error = $0.2 {
-                result = .Failure(error)
+                result = .failure(error as NSError)
             } else if let data = $0.1 {
                 switch T.decode(data) {
-                case .Success(let decodeData):
-                    result = .Success(decodeData)
-                case .Failure(let error):
-                    result = .Failure(error)
+                case .success(let decodeData):
+                    result = .success(decodeData)
+                case .failure(let error):
+                    result = .failure(error)
                 }
             } else {
-                result = .Failure(NSError(domain: TWTRAPIErrorDomain, code: -9999, userInfo: nil))
+                result = .failure(NSError(domain: TWTRAPIErrorDomain, code: -9999, userInfo: nil))
             }
-            completion(TWTRResponse(request: request, response: $0.0 as? NSHTTPURLResponse, data: $0.1, result: result))
+            completion(TWTRResponse(request: request, response: $0.0 as? HTTPURLResponse, data: $0.1, result: result))
         }
     }
 }

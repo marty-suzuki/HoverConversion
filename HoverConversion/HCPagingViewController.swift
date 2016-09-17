@@ -9,68 +9,88 @@
 import UIKit
 import MisterFusion
 
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 public enum HCPagingPosition: Int {
-    case Upper = 1, Center = 0, Lower = 2
+    case upper = 1, center = 0, lower = 2
 }
 
 public protocol HCPagingViewControllerDataSource : class {
-    func pagingViewController(viewController: HCPagingViewController, viewControllerFor indexPath: NSIndexPath) -> HCContentViewController?
-    func pagingViewController(viewController: HCPagingViewController, nextHeaderViewFor indexPath: NSIndexPath) -> HCNextHeaderView?
+    func pagingViewController(_ viewController: HCPagingViewController, viewControllerFor indexPath: IndexPath) -> HCContentViewController?
+    func pagingViewController(_ viewController: HCPagingViewController, nextHeaderViewFor indexPath: IndexPath) -> HCNextHeaderView?
 }
 
-public class HCPagingViewController: UIViewController {
-    private struct Const {
-        static let FireDistance: CGFloat = 180
-        static let BottomTotalSpace = HCNavigationView.Height
-        static let NextAnimationDuration: NSTimeInterval = 0.4
-        static let PreviousAnimationDuration: NSTimeInterval = 0.3
-        static private func calculateRudderBanding(distance: CGFloat, constant: CGFloat, dimension: CGFloat) -> CGFloat {
+open class HCPagingViewController: UIViewController {
+    fileprivate struct Const {
+        static let fireDistance: CGFloat = 180
+        static let bottomTotalSpace = HCNavigationView.height
+        static let nextAnimationDuration: TimeInterval = 0.4
+        static let previousAnimationDuration: TimeInterval = 0.3
+        static fileprivate func calculateRudderBanding(_ distance: CGFloat, constant: CGFloat, dimension: CGFloat) -> CGFloat {
             return (1 - (1 / ((distance * constant / dimension) + 1))) * dimension
         }
     }
     
-    public private(set) var viewControllers: [HCPagingPosition : HCContentViewController?] = [
-        .Upper : nil,
-        .Center : nil,
-        .Lower : nil
+    open fileprivate(set) var viewControllers: [HCPagingPosition : HCContentViewController?] = [
+        .upper : nil,
+        .center : nil,
+        .lower : nil
     ]
 
     let containerViews: [HCPagingPosition : UIView] = [
-        .Upper : UIView(),
-        .Center : UIView(),
-        .Lower : UIView()
+        .upper : UIView(),
+        .center : UIView(),
+        .lower : UIView()
     ]
     
-    private var containerViewsAdded: Bool = false
-    var currentIndexPath: NSIndexPath
-    public private(set) var isPaging: Bool = false
-    private var isDragging: Bool = false
-    private var isPanning = false
-    private var beginningContentOffset: CGPoint = .zero
-    private(set) var scrollDirection: UITableViewScrollPosition = .None
+    fileprivate var containerViewsAdded: Bool = false
+    var currentIndexPath: IndexPath
+    open fileprivate(set) var isPaging: Bool = false
+    fileprivate var isDragging: Bool = false
+    fileprivate var isPanning = false
+    fileprivate var beginningContentOffset: CGPoint = .zero
+    fileprivate(set) var scrollDirection: UITableViewScrollPosition = .none
     
-    private var _alphaView: UIView?
-    private var alphaView: UIView {
+    fileprivate var _alphaView: UIView?
+    fileprivate var alphaView: UIView {
         let alphaView: UIView
         if let _alphaView = _alphaView {
             alphaView = _alphaView
         } else {
-            alphaView = createAlphaViewAndAddSubview(containerViews[.Center])
+            alphaView = createAlphaViewAndAddSubview(containerViews[.center])
             _alphaView = alphaView
         }
         return alphaView
     }
     
-    private var nextHeaderView: HCNextHeaderView?
+    fileprivate var nextHeaderView: HCNextHeaderView?
     
-    public weak var dataSource: HCPagingViewControllerDataSource? {
+    open weak var dataSource: HCPagingViewControllerDataSource? {
         didSet {
             addContainerViews()
             setupViewControllers()
         }
     }
     
-    public init(indexPath: NSIndexPath) {
+    public init(indexPath: IndexPath) {
         self.currentIndexPath = indexPath
         super.init(nibName: nil, bundle: nil)
     }
@@ -79,7 +99,7 @@ public class HCPagingViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -87,49 +107,49 @@ public class HCPagingViewController: UIViewController {
         addContainerViews()
     }
     
-    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return viewController(.Center)?.preferredStatusBarStyle() ?? .Default
+    open override var preferredStatusBarStyle : UIStatusBarStyle {
+        return viewController(.center)?.preferredStatusBarStyle ?? .default
     }
     
-    private func createAlphaViewAndAddSubview(view: UIView?) -> UIView {
+    fileprivate func createAlphaViewAndAddSubview(_ view: UIView?) -> UIView {
         let alphaView = UIView()
         alphaView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)
         view?.addLayoutSubview(alphaView, andConstraints:
-            alphaView.Top, alphaView.Left, alphaView.Bottom, alphaView.Right
+            alphaView.top, alphaView.left, alphaView.bottom, alphaView.right
         )
-        alphaView.userInteractionEnabled = false
+        alphaView.isUserInteractionEnabled = false
         alphaView.alpha = 0
         return alphaView
     }
     
-    private func clearAlphaView() {
+    fileprivate func clearAlphaView() {
         _alphaView?.removeFromSuperview()
         _alphaView = nil
     }
     
-    private func clearNextHeaderView() {
+    fileprivate func clearNextHeaderView() {
         nextHeaderView?.removeFromSuperview()
         nextHeaderView = nil
     }
     
-    private func setScrollsTop() {
-        viewControllers.forEach { $0.1?.tableView?.scrollsToTop = $0.0 == .Center }
+    fileprivate func setScrollsTop() {
+        viewControllers.forEach { $0.1?.tableView?.scrollsToTop = $0.0 == .center }
     }
     
-    private func viewController(position: HCPagingPosition) -> HCContentViewController? {
+    fileprivate func viewController(_ position: HCPagingPosition) -> HCContentViewController? {
         guard let nullableViewController = viewControllers[position] else { return nil }
         return nullableViewController
     }
     
-    private func setupViewControllers() {
-        setupViewController(indexPath: currentIndexPath.rowPlus(-1), position: .Upper)
-        setupViewController(indexPath: currentIndexPath, position: .Center)
-        setupViewController(indexPath: currentIndexPath.rowPlus(1), position: .Lower)
+    fileprivate func setupViewControllers() {
+        setupViewController(indexPath: currentIndexPath.rowPlus(-1), position: .upper)
+        setupViewController(indexPath: currentIndexPath, position: .center)
+        setupViewController(indexPath: currentIndexPath.rowPlus(1), position: .lower)
         setScrollsTop()
-        let tableView = viewController(.Center)?.tableView
-        if let _ = viewController(.Lower) {
-            tableView?.contentInset.bottom = Const.BottomTotalSpace
-            tableView?.scrollIndicatorInsets.bottom = Const.BottomTotalSpace
+        let tableView = viewController(.center)?.tableView
+        if let _ = viewController(.lower) {
+            tableView?.contentInset.bottom = Const.bottomTotalSpace
+            tableView?.scrollIndicatorInsets.bottom = Const.bottomTotalSpace
         } else {
             tableView?.contentInset.bottom = 0
             tableView?.scrollIndicatorInsets.bottom = 0
@@ -137,107 +157,107 @@ public class HCPagingViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
     }
     
-    private func setupViewController(indexPath indexPath: NSIndexPath, position: HCPagingPosition) {
-        if indexPath.row < 0 || indexPath.section < 0 { return }
+    fileprivate func setupViewController(indexPath: IndexPath, position: HCPagingPosition) {
+        if (indexPath as NSIndexPath).row < 0 || (indexPath as NSIndexPath).section < 0 { return }
         guard
             let vc = dataSource?.pagingViewController(self, viewControllerFor: indexPath)
         else { return }
         addViewController(vc, to: position)
     }
     
-    private func addViewController(viewController: HCContentViewController, to position: HCPagingPosition) {
+    fileprivate func addViewController(_ viewController: HCContentViewController, to position: HCPagingPosition) {
         viewController.scrollDelegate = self
         addView(viewController.view, to: position)
         addChildViewController(viewController)
-        viewController.didMoveToParentViewController(self)
+        viewController.didMove(toParentViewController: self)
         viewControllers[position] = viewController
     }
     
-    private func addView(view: UIView, to position: HCPagingPosition) {
+    fileprivate func addView(_ view: UIView, to position: HCPagingPosition) {
         guard let containerView = containerViews[position] else { return }
         containerView.addLayoutSubview(view, andConstraints:
-            view.Top, view.Right, view.Left, view.Bottom
+            view.top, view.right, view.left, view.bottom
         )
     }
     
-    private func addContainerViews() {
+    fileprivate func addContainerViews() {
         if containerViewsAdded { return }
         containerViewsAdded = true
-        containerViews.sort { $0.0.rawValue < $1.0.rawValue }.forEach {
+        containerViews.sorted { $0.0.rawValue < $1.0.rawValue }.forEach {
             let misterFusion: MisterFusion
             switch $0.0 {
-            case .Upper: misterFusion = $0.1.Bottom |==| view.Top
-            case .Center: misterFusion = $0.1.Top
-            case .Lower: misterFusion = $0.1.Top |==| view.Bottom
+            case .upper: misterFusion = $0.1.bottom |==| view.top
+            case .center: misterFusion = $0.1.top
+            case .lower: misterFusion = $0.1.top |==| view.bottom
             }
             view.addLayoutSubview($0.1, andConstraints:
-                misterFusion, $0.1.Height, $0.1.Left, $0.1.Right
+                misterFusion, $0.1.height, $0.1.left, $0.1.right
             )
         }
     }
 
-    override public func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func moveToNext(scrollView: UIScrollView, offset: CGPoint) {
-        guard let _ = viewController(.Lower) where viewController(.Center)?.canPaging == true else { return }
+    func moveToNext(_ scrollView: UIScrollView, offset: CGPoint) {
+        guard let _ = viewController(.lower) , viewController(.center)?.canPaging == true else { return }
 
-        scrollDirection = .Bottom
+        scrollDirection = .bottom
         let value = offset.y - (scrollView.contentSize.height - scrollView.bounds.size.height)
-        let headerHeight = HCNavigationView.Height
+        let headerHeight = HCNavigationView.height
         
         isPaging = true
         scrollView.setContentOffset(scrollView.contentOffset, animated: false)
         
-        let relativeDuration = NSTimeInterval(0.25)
-        let lowerViewController = viewController(.Lower)
-        let centerViewController = viewController(.Center)
-        UIView.animateKeyframesWithDuration(Const.NextAnimationDuration, delay: 0, options: .CalculationModeLinear, animations: {
+        let relativeDuration = TimeInterval(0.25)
+        let lowerViewController = viewController(.lower)
+        let centerViewController = viewController(.center)
+        UIView.animateKeyframes(withDuration: Const.nextAnimationDuration, delay: 0, options: UIViewKeyframeAnimationOptions(), animations: {
             
-            UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 1.0 - relativeDuration) {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1.0 - relativeDuration) {
                 lowerViewController?.view.frame.origin.y = -self.view.bounds.size.height + headerHeight
                 centerViewController?.view.frame.origin.y = -self.view.bounds.size.height + value + headerHeight
                 centerViewController?.navigationView?.frame.origin.y = self.view.bounds.size.height - value - headerHeight
                 self.nextHeaderView?.alpha = 0
             }
             
-            UIView.addKeyframeWithRelativeStartTime(1.0 - relativeDuration, relativeDuration: relativeDuration) {
+            UIView.addKeyframe(withRelativeStartTime: 1.0 - relativeDuration, relativeDuration: relativeDuration) {
                 lowerViewController?.view.frame.origin.y = -self.view.bounds.size.height
                 centerViewController?.view.frame.origin.y = -self.view.bounds.size.height + value
             }
         }) { _ in
-            let upperViewController = self.viewController(.Upper)
+            let upperViewController = self.viewController(.upper)
             upperViewController?.view.removeFromSuperview()
             centerViewController?.view.removeFromSuperview()
             lowerViewController?.view.removeFromSuperview()
             
             if let lowerView = lowerViewController?.view {
-                self.addView(lowerView, to: .Center)
+                self.addView(lowerView, to: .center)
             }
             
             if let centerView = centerViewController?.view {
-                self.addView(centerView, to: .Upper)
+                self.addView(centerView, to: .upper)
             }
             
             centerViewController?.scrollDelegate = nil
             
-            upperViewController?.willMoveToParentViewController(self)
+            upperViewController?.willMove(toParentViewController: self)
             upperViewController?.removeFromParentViewController()
             
             let nextCenterVC = lowerViewController
             let nextUpperVC = centerViewController
-            self.viewControllers[.Center] = nextCenterVC
-            self.viewControllers[.Upper] = nextUpperVC
-            self.viewControllers[.Lower] = nil
+            self.viewControllers[.center] = nextCenterVC
+            self.viewControllers[.upper] = nextUpperVC
+            self.viewControllers[.lower] = nil
             
             self.currentIndexPath = self.currentIndexPath.rowPlus(1)
             if let newViewController = self.dataSource?.pagingViewController(self, viewControllerFor: self.currentIndexPath.rowPlus(1)) {
-                self.addViewController(newViewController, to: .Lower)
-                self.viewControllers[.Lower] = newViewController
-                nextCenterVC?.tableView.contentInset.bottom = Const.BottomTotalSpace
-                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = Const.BottomTotalSpace
+                self.addViewController(newViewController, to: .lower)
+                self.viewControllers[.lower] = newViewController
+                nextCenterVC?.tableView.contentInset.bottom = Const.bottomTotalSpace
+                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = Const.bottomTotalSpace
             } else {
                 nextCenterVC?.tableView.contentInset.bottom = 0
                 nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 0
@@ -264,52 +284,52 @@ public class HCPagingViewController: UIViewController {
         }
     }
     
-    func moveToPrevious(scrollView: UIScrollView, offset: CGPoint) {
-        guard let _ = viewController(.Upper) where viewController(.Center)?.canPaging == true else { return }
+    func moveToPrevious(_ scrollView: UIScrollView, offset: CGPoint) {
+        guard let _ = viewController(.upper) , viewController(.center)?.canPaging == true else { return }
 
-        scrollDirection = .Top
+        scrollDirection = .top
         isPaging = true
         
         scrollView.setContentOffset(scrollView.contentOffset, animated: false)
         
-        let upperViewController = viewController(.Upper)
-        let centerViewController = viewController(.Center)
-        UIView.animateWithDuration(Const.PreviousAnimationDuration, delay: 0, options: .CurveLinear, animations: {
+        let upperViewController = viewController(.upper)
+        let centerViewController = viewController(.center)
+        UIView.animate(withDuration: Const.previousAnimationDuration, delay: 0, options: .curveLinear, animations: {
             upperViewController?.view.frame.origin.y = self.view.bounds.size.height
             centerViewController?.view.frame.origin.y = self.view.bounds.size.height + offset.y
         }) { finished in
-            let lowerViewController = self.viewController(.Lower)
+            let lowerViewController = self.viewController(.lower)
             upperViewController?.view.removeFromSuperview()
             centerViewController?.view.removeFromSuperview()
             lowerViewController?.view.removeFromSuperview()
             
             if let upperView = upperViewController?.view {
-                self.addView(upperView, to: .Center)
+                self.addView(upperView, to: .center)
             }
             
             if let centerView = centerViewController?.view {
-                self.addView(centerView, to: .Lower)
+                self.addView(centerView, to: .lower)
             }
             
             centerViewController?.scrollDelegate = nil
             
-            lowerViewController?.willMoveToParentViewController(self)
+            lowerViewController?.willMove(toParentViewController: self)
             lowerViewController?.removeFromParentViewController()
             
             let nextCenterVC = upperViewController
             let nextLowerVC = centerViewController
-            self.viewControllers[.Center] = nextCenterVC
-            self.viewControllers[.Lower] = nextLowerVC
-            self.viewControllers[.Upper] = nil
+            self.viewControllers[.center] = nextCenterVC
+            self.viewControllers[.lower] = nextLowerVC
+            self.viewControllers[.upper] = nil
             
             self.currentIndexPath = self.currentIndexPath.rowPlus(-1)
             if let newViewController = self.dataSource?.pagingViewController(self, viewControllerFor: self.currentIndexPath.rowPlus(-1)) {
-                self.addViewController(newViewController, to: .Upper)
-                self.viewControllers[.Upper] = newViewController
+                self.addViewController(newViewController, to: .upper)
+                self.viewControllers[.upper] = newViewController
             }
             if let _ = nextLowerVC {
-                nextCenterVC?.tableView.contentInset.bottom = Const.BottomTotalSpace
-                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = Const.BottomTotalSpace
+                nextCenterVC?.tableView.contentInset.bottom = Const.bottomTotalSpace
+                nextCenterVC?.tableView.scrollIndicatorInsets.bottom = Const.bottomTotalSpace
             } else {
                 nextCenterVC?.tableView.contentInset.bottom = 0
                 nextCenterVC?.tableView.scrollIndicatorInsets.bottom = 0
@@ -329,49 +349,49 @@ public class HCPagingViewController: UIViewController {
 }
 
 extension HCPagingViewController: HCContentViewControllerScrollDelegate {
-    public func contentViewController(viewController: HCContentViewController, scrollViewDidScroll scrollView: UIScrollView) {
+    public func contentViewController(_ viewController: HCContentViewController, scrollViewDidScroll scrollView: UIScrollView) {
         if isPanning { return }
         
-        guard viewController == self.viewController(.Center) else { return }
+        guard viewController == self.viewController(.center) else { return }
         
         let offset = scrollView.contentOffset
         let contentSize = scrollView.contentSize
         let scrollViewSize = scrollView.bounds.size
         if contentSize.height - scrollViewSize.height <= offset.y {
-            guard let lowerViewController = self.viewController(.Lower) else { return }
+            guard let lowerViewController = self.viewController(.lower) else { return }
             let delta = offset.y - (contentSize.height - scrollViewSize.height)
             lowerViewController.view.frame.origin.y = min(0, -delta)
             let value: CGFloat = scrollView.bottomBounceSize
-            if value > Const.BottomTotalSpace {
-                let alpha = min(1, max(0, (value - Const.BottomTotalSpace) / Const.FireDistance))
+            if value > Const.bottomTotalSpace {
+                let alpha = min(1, max(0, (value - Const.bottomTotalSpace) / Const.fireDistance))
                 alphaView.alpha = alpha
             }
             
             if let _ = self.nextHeaderView {
-            } else if let view = self.viewController(.Lower)?.view,
+            } else if let view = self.viewController(.lower)?.view,
                       let nhv = dataSource?.pagingViewController(self, nextHeaderViewFor: currentIndexPath.rowPlus(1)) {
                 view.addLayoutSubview(nhv, andConstraints:
-                    nhv.Top, nhv.Right, nhv.Left, nhv.Height |==| HCNavigationView.Height
+                    nhv.top, nhv.right, nhv.left, nhv.height |==| HCNavigationView.height
                 )
                 self.nextHeaderView = nhv
             }
         } else if offset.y < 0 {
             guard
-                let upperViewController = self.viewController(.Upper),
-                let centerViewController = self.viewController(.Center)
+                let upperViewController = self.viewController(.upper),
+                let centerViewController = self.viewController(.center)
             else { return }
             let delta = max(0, -offset.y)
-            if currentIndexPath.row > 0 {
-                let alpha = min(1, max(0, -offset.y / Const.FireDistance))
+            if (currentIndexPath as NSIndexPath).row > 0 {
+                let alpha = min(1, max(0, -offset.y / Const.fireDistance))
                 alphaView.alpha = alpha
             }
             clearNextHeaderView()
             upperViewController.view.frame.origin.y = delta
             centerViewController.navigationView.frame.origin.y = delta
         } else {
-            viewControllers[.Lower]??.view.frame.origin.y = 0
-            viewControllers[.Upper]??.view.frame.origin.y = 0
-            viewControllers[.Center]??.navigationView.frame.origin.y = 0
+            viewControllers[.lower]??.view.frame.origin.y = 0
+            viewControllers[.upper]??.view.frame.origin.y = 0
+            viewControllers[.center]??.navigationView.frame.origin.y = 0
             
             clearAlphaView()
             clearNextHeaderView()
@@ -379,45 +399,45 @@ extension HCPagingViewController: HCContentViewControllerScrollDelegate {
         
         if isDragging { return }
         if scrollView.contentSize.height > scrollView.bounds.size.height {
-            if offset.y < -Const.FireDistance {
+            if offset.y < -Const.fireDistance {
                 moveToPrevious(scrollView, offset: offset)
-            } else if offset.y > (scrollView.contentSize.height + Const.FireDistance) - scrollView.bounds.size.height {
+            } else if offset.y > (scrollView.contentSize.height + Const.fireDistance) - scrollView.bounds.size.height {
                 moveToNext(scrollView, offset: offset)
             }
         } else {
-            if offset.y < -Const.FireDistance {
+            if offset.y < -Const.fireDistance {
                 moveToPrevious(scrollView, offset: offset)
-            } else if offset.y > Const.FireDistance {
+            } else if offset.y > Const.fireDistance {
                 moveToNext(scrollView, offset: CGPoint(x: offset.x, y: offset.y + (scrollView.contentSize.height - scrollView.bounds.size.height)))
             }
         }
     }
     
-    public func contentViewController(viewController: HCContentViewController, scrollViewWillBeginDragging scrollView: UIScrollView) {
-        guard viewController == self.viewController(.Center) else { return }
+    public func contentViewController(_ viewController: HCContentViewController, scrollViewWillBeginDragging scrollView: UIScrollView) {
+        guard viewController == self.viewController(.center) else { return }
         isDragging = true
     }
     
-    public func contentViewController(viewController: HCContentViewController, scrollViewDidEndDragging scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        guard viewController == self.viewController(.Center) else { return }
+    public func contentViewController(_ viewController: HCContentViewController, scrollViewDidEndDragging scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard viewController == self.viewController(.center) else { return }
         isDragging = false
     }
     
-    public func contentViewController(viewController: HCContentViewController, handlePanGesture gesture: UIPanGestureRecognizer) {
-        guard let centerViewController = self.viewController(.Center)
-        where centerViewController == viewController && currentIndexPath.row > 0 && viewController.canPaging
+    public func contentViewController(_ viewController: HCContentViewController, handlePanGesture gesture: UIPanGestureRecognizer) {
+        guard let centerViewController = self.viewController(.center)
+        , centerViewController == viewController && (currentIndexPath as NSIndexPath).row > 0 && viewController.canPaging
         else { return }
         
-        let translation = gesture.translationInView(view)
-        let velocity = gesture.velocityInView(view)
+        let translation = gesture.translation(in: view)
+        let velocity = gesture.velocity(in: view)
         let tableView = viewController.tableView
         
         switch gesture.state {
-        case .Began:
+        case .began:
             isPanning = true
-            beginningContentOffset = tableView.contentOffset
+            beginningContentOffset = (tableView?.contentOffset)!
             
-        case .Changed:
+        case .changed:
             let position = max(0, translation.y)
             let rudderBanding = Const.calculateRudderBanding(position, constant: 0.55, dimension: view.frame.size.height)
             
@@ -427,30 +447,30 @@ extension HCPagingViewController: HCContentViewControllerScrollDelegate {
             }
             
            let tableViewOffset = beginningContentOffset.y - max(0, rudderBanding)
-            tableView.setContentOffset(CGPoint(x: 0, y: tableViewOffset), animated: false)
+            tableView?.setContentOffset(CGPoint(x: 0, y: tableViewOffset), animated: false)
             
-            self.viewController(.Upper)?.view.frame.origin.y = headerPosition
+            self.viewController(.upper)?.view.frame.origin.y = headerPosition
             
-            alphaView.alpha = min(1, (rudderBanding / Const.FireDistance))
+            alphaView.alpha = min(1, (rudderBanding / Const.fireDistance))
             
-        case .Cancelled, .Ended:
-            if velocity.y  > 0 && translation.y > Const.FireDistance && currentIndexPath.row > 0 {
+        case .cancelled, .ended:
+            if velocity.y  > 0 && translation.y > Const.fireDistance && (currentIndexPath as NSIndexPath).row > 0 {
                 isPanning = false
                 let rudderBanding = Const.calculateRudderBanding(max(0, translation.y), constant: 0.55, dimension: view.frame.size.height)
-                moveToPrevious(tableView, offset: CGPoint(x: 0, y: -rudderBanding))
+                moveToPrevious(tableView!, offset: CGPoint(x: 0, y: -rudderBanding))
             } else {
-                UIView.animateWithDuration(0.25, animations: {
+                UIView.animate(withDuration: 0.25, animations: {
                     viewController.navigationView.frame.origin.y = 0
-                    self.viewController(.Upper)?.view.frame.origin.y = 0
-                    tableView.setContentOffset(self.beginningContentOffset, animated: false)
+                    self.viewController(.upper)?.view.frame.origin.y = 0
+                    tableView?.setContentOffset(self.beginningContentOffset, animated: false)
                     self.alphaView.alpha = 0
-                }) { finished in
+                }, completion: { finished in
                     self.beginningContentOffset = .zero
                     self.isPanning = false
-                }
+                }) 
             }
             
-        case .Failed, .Possible:
+        case .failed, .possible:
             break
         }
     }

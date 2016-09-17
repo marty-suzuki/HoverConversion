@@ -9,9 +9,9 @@
 import UIKit
 
 extension UITableViewCell {
-    func screenshot(scale: CGFloat = UIScreen.mainScreen().scale) -> UIImage? {
+    func screenshot(_ scale: CGFloat = UIScreen.main.scale) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, scale)
-        drawViewHierarchyInRect(self.bounds, afterScreenUpdates: true)
+        drawHierarchy(in: self.bounds, afterScreenUpdates: true)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image

@@ -10,14 +10,14 @@ import UIKit
 import MisterFusion
 
 public protocol HCNavigationViewDelegate: class {
-    func navigationView(navigationView: HCNavigationView, didTapLeftButton button: UIButton)
-    func navigationView(navigationView: HCNavigationView, didTapRightButton button: UIButton)
+    func navigationView(_ navigationView: HCNavigationView, didTapLeftButton button: UIButton)
+    func navigationView(_ navigationView: HCNavigationView, didTapRightButton button: UIButton)
 }
 
-public class HCNavigationView: UIView {
-    public struct ButtonPosition: OptionSetType {
-        static let Right = ButtonPosition(rawValue: 1 << 0)
-        static let Left = ButtonPosition(rawValue: 1 << 1)
+open class HCNavigationView: UIView {
+    public struct ButtonPosition: OptionSet {
+        static let right = ButtonPosition(rawValue: 1 << 0)
+        static let left = ButtonPosition(rawValue: 1 << 1)
         
         public let rawValue: UInt
         public init(rawValue: UInt) {
@@ -25,16 +25,16 @@ public class HCNavigationView: UIView {
         }
     }
     
-    public static let Height: CGFloat = 64
+    open static let height: CGFloat = 64
     
-    public var leftButton: UIButton?
-    public let titleLabel: UILabel = {
+    open var leftButton: UIButton?
+    open let titleLabel: UILabel = {
         let label = UILabel(frame: .zero)
-        label.textAlignment = .Center
-        label.font = UIFont.boldSystemFontOfSize(16)
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
-    public var rightButton: UIButton?
+    open var rightButton: UIButton?
     
     weak var delegate: HCNavigationViewDelegate?
     
@@ -44,52 +44,52 @@ public class HCNavigationView: UIView {
     
     public init(buttonPosition: ButtonPosition) {
         super.init(frame: .zero)
-        if buttonPosition.contains(.Left) {
-            let leftButton = UIButton(type: .Custom)
+        if buttonPosition.contains(.left) {
+            let leftButton = UIButton(type: .custom)
             addLayoutSubview(leftButton, andConstraints:
-                leftButton.Left,
-                leftButton.Bottom,
-                leftButton.Width |==| leftButton.Height,
-                leftButton.Height |==| 44
+                leftButton.left,
+                leftButton.bottom,
+                leftButton.width |==| leftButton.height,
+                leftButton.height |==| 44
             )
-            leftButton.setTitle("‹", forState: .Normal)
-            leftButton.titleLabel?.font = .systemFontOfSize(40)
-            leftButton.addTarget(self, action: #selector(HCNavigationView.didTouchDown(_:)), forControlEvents: .TouchDown)
-            leftButton.addTarget(self, action: #selector(HCNavigationView.didTouchDragExit(_:)), forControlEvents: .TouchDragExit)
-            leftButton.addTarget(self, action: #selector(HCNavigationView.didTouchDragEnter(_:)), forControlEvents: .TouchDragEnter)
-            leftButton.addTarget(self, action: #selector(HCNavigationView.didTouchUpInside(_:)), forControlEvents: .TouchUpInside)
+            leftButton.setTitle("‹", for: UIControlState())
+            leftButton.titleLabel?.font = .systemFont(ofSize: 40)
+            leftButton.addTarget(self, action: #selector(HCNavigationView.didTouchDown(_:)), for: .touchDown)
+            leftButton.addTarget(self, action: #selector(HCNavigationView.didTouchDragExit(_:)), for: .touchDragExit)
+            leftButton.addTarget(self, action: #selector(HCNavigationView.didTouchDragEnter(_:)), for: .touchDragEnter)
+            leftButton.addTarget(self, action: #selector(HCNavigationView.didTouchUpInside(_:)), for: .touchUpInside)
             self.leftButton = leftButton
         }
-        if buttonPosition.contains(.Right) {
-            let rightButton = UIButton(type: .Custom)
+        if buttonPosition.contains(.right) {
+            let rightButton = UIButton(type: .custom)
             addLayoutSubview(rightButton, andConstraints:
-                rightButton.Right,
-                rightButton.Bottom,
-                rightButton.Width |==| rightButton.Height,
-                rightButton.Height |==| 44
+                rightButton.right,
+                rightButton.bottom,
+                rightButton.width |==| rightButton.height,
+                rightButton.height |==| 44
             )
-            rightButton.addTarget(self, action: #selector(HCNavigationView.didTouchDown(_:)), forControlEvents: .TouchDown)
-            rightButton.addTarget(self, action: #selector(HCNavigationView.didTouchDragExit(_:)), forControlEvents: .TouchDragExit)
-            rightButton.addTarget(self, action: #selector(HCNavigationView.didTouchDragEnter(_:)), forControlEvents: .TouchDragEnter)
-            rightButton.addTarget(self, action: #selector(HCNavigationView.didTouchUpInside(_:)), forControlEvents: .TouchUpInside)
+            rightButton.addTarget(self, action: #selector(HCNavigationView.didTouchDown(_:)), for: .touchDown)
+            rightButton.addTarget(self, action: #selector(HCNavigationView.didTouchDragExit(_:)), for: .touchDragExit)
+            rightButton.addTarget(self, action: #selector(HCNavigationView.didTouchDragEnter(_:)), for: .touchDragEnter)
+            rightButton.addTarget(self, action: #selector(HCNavigationView.didTouchUpInside(_:)), for: .touchUpInside)
             self.rightButton = rightButton
         }
         
         var constraints: [MisterFusion] = []
         if let leftButton = leftButton {
-            constraints += [leftButton.Right |==| titleLabel.Left]
+            constraints += [leftButton.right |==| titleLabel.left]
         } else {
-            constraints += [titleLabel.Left |+| 44]
+            constraints += [titleLabel.left |+| 44]
         }
         
         if let rightButton = rightButton {
-            constraints += [rightButton.Left |==| titleLabel.Right]
+            constraints += [rightButton.left |==| titleLabel.right]
         } else {
-            constraints += [titleLabel.Right |-| 44]
+            constraints += [titleLabel.right |-| 44]
         }
         constraints += [
-            titleLabel.Height |==| 44,
-            titleLabel.Bottom
+            titleLabel.height |==| 44,
+            titleLabel.bottom
         ]
         addLayoutSubview(titleLabel, andConstraints: constraints)
     }
@@ -98,7 +98,7 @@ public class HCNavigationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func didTouchUpInside(sender: UIButton) {
+    func didTouchUpInside(_ sender: UIButton) {
         sender.alpha = 1
         if sender == leftButton {
             delegate?.navigationView(self, didTapLeftButton: sender)
@@ -107,15 +107,15 @@ public class HCNavigationView: UIView {
         }
     }
     
-    func didTouchDown(sender: UIButton) {
+    func didTouchDown(_ sender: UIButton) {
         sender.alpha = 0.5
     }
     
-    func didTouchDragExit(sender: UIButton) {
+    func didTouchDragExit(_ sender: UIButton) {
         sender.alpha = 0.5
     }
     
-    func didTouchDragEnter(sender: UIButton) {
+    func didTouchDragEnter(_ sender: UIButton) {
         sender.alpha = 1
     }
 }

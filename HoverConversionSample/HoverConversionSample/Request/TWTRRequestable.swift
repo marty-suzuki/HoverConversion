@@ -13,32 +13,32 @@ protocol TWTRRequestable {
     associatedtype ResponseType
     associatedtype ParseResultType
     var method: TWTRHTTPMethod { get }
-    var baseURL: NSURL? { get }
+    var baseURL: Foundation.URL? { get }
     var path: String { get }
-    var URL: NSURL? { get }
-    var parameters: [NSObject : AnyObject]? { get }
-    static func parseData(data: NSData) -> TWTRResult<ParseResultType>
-    static func decode(data: NSData) -> TWTRResult<ResponseType>
+    var URL: Foundation.URL? { get }
+    var parameters: [AnyHashable: Any]? { get }
+    static func parseData(_ data: Data) -> TWTRResult<ParseResultType>
+    static func decode(_ data: Data) -> TWTRResult<ResponseType>
 }
 
 extension TWTRRequestable {
-    var baseURL: NSURL? {
-        return NSURL(string: "https://api.twitter.com")
+    var baseURL: Foundation.URL? {
+        return Foundation.URL(string: "https://api.twitter.com")
     }
     
-    var URL: NSURL? {
-        return NSURL(string: path, relativeToURL: baseURL)
+    var URL: Foundation.URL? {
+        return Foundation.URL(string: path, relativeTo: baseURL)
     }
     
-    static func parseData(data: NSData) -> TWTRResult<ParseResultType> {
+    static func parseData(_ data: Data) -> TWTRResult<ParseResultType> {
         do {
-            let anyObject = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            let anyObject = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
             guard let object = anyObject as? ParseResultType else {
-                return .Failure(NSError(domain: TWTRAPIErrorDomain, code: -9999, userInfo: nil))
+                return .failure(NSError(domain: TWTRAPIErrorDomain, code: -9999, userInfo: nil))
             }
-            return .Success(object)
+            return .success(object)
         } catch let error as NSError {
-            return .Failure(error)
+            return .failure(error)
         }
     }
 }

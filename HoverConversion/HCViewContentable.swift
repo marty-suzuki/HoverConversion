@@ -20,30 +20,30 @@ extension HCViewControllable where Self: UIViewController {
     public func addViews() {
         navigationView.delegate = self
         view.addLayoutSubview(navigatoinContainerView, andConstraints:
-            navigatoinContainerView.Top,
-            navigatoinContainerView.Right,
-            navigatoinContainerView.Left,
-            navigatoinContainerView.Height |==| HCNavigationView.Height
+            navigatoinContainerView.top,
+            navigatoinContainerView.right,
+            navigatoinContainerView.left,
+            navigatoinContainerView.height |==| HCNavigationView.height
         )
         
         navigatoinContainerView.addLayoutSubview(navigationView, andConstraints:
-            navigationView.Top,
-            navigationView.Right,
-            navigationView.Left,
-            navigationView.Bottom
+            navigationView.top,
+            navigationView.right,
+            navigationView.left,
+            navigationView.bottom
         )
         
         view.addLayoutSubview(tableView, andConstraints:
-            tableView.Top |==| navigatoinContainerView.Bottom,
-            tableView.Right,
-            tableView.Left,
-            tableView.Bottom
+            tableView.top |==| navigatoinContainerView.bottom,
+            tableView.right,
+            tableView.left,
+            tableView.bottom
         )
-        view.bringSubviewToFront(navigatoinContainerView)
+        view.bringSubview(toFront: navigatoinContainerView)
     }
     
-    public func navigationView(navigationView: HCNavigationView, didTapLeftButton button: UIButton) {}
-    public func navigationView(navigationView: HCNavigationView, didTapRightButton button: UIButton) {}
+    public func navigationView(_ navigationView: HCNavigationView, didTapLeftButton button: UIButton) {}
+    public func navigationView(_ navigationView: HCNavigationView, didTapRightButton button: UIButton) {}
 }
 
 public protocol HCViewContentable: HCViewControllable {

@@ -19,8 +19,8 @@ struct StatusesUserTimelineRequest: TWTRGetRequestable {
     let maxId: String?
     let count: Int?
     
-    var parameters: [NSObject : AnyObject]? {
-        var parameters: [NSObject : AnyObject] = [
+    var parameters: [AnyHashable: Any]? {
+        var parameters: [AnyHashable: Any] = [
             "screen_name" : screenName
         ]
         if let maxId = maxId {
@@ -32,12 +32,12 @@ struct StatusesUserTimelineRequest: TWTRGetRequestable {
         return parameters
     }
     
-    static func decode(data: NSData) -> TWTRResult<ResponseType> {
+    static func decode(_ data: Data) -> TWTRResult<ResponseType> {
         switch UsersLookUpRequest.parseData(data) {
-        case .Success(let parsedData):
-            return .Success(parsedData.flatMap { TWTRTweet(JSONDictionary: $0) })
-        case .Failure(let error):
-            return .Failure(error)
+        case .success(let parsedData):
+            return .success(parsedData.flatMap { TWTRTweet(jsonDictionary: $0) })
+        case .failure(let error):
+            return .failure(error)
         }
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 import TwitterKit
 
 class TwitterManager {
-    private let screenNames: [String] = [
+    fileprivate let screenNames: [String] = [
         "tim_cook",
         "SwiftLang",
         "BacktotheFuture",
@@ -18,10 +18,10 @@ class TwitterManager {
         "marty_suzuki"
     ]
     
-    private(set) var tweets: [String : [TWTRTweet]] = [:]
-    private(set) var users: [TWTRUser] = []
+    fileprivate(set) var tweets: [String : [TWTRTweet]] = [:]
+    fileprivate(set) var users: [TWTRUser] = []
     
-    private lazy var client = TWTRAPIClient()
+    fileprivate lazy var client = TWTRAPIClient()
     
     func sortUsers() {
         let result = users.flatMap { user -> (TWTRUser, TWTRTweet)? in
@@ -30,48 +30,48 @@ class TwitterManager {
             }
             return (user, tweet)
         }
-        let sortedResult = result.sort { $0.0.1.createdAt.timeIntervalSince1970 > $0.1.1.createdAt.timeIntervalSince1970 }
+        let sortedResult = result.sorted { $0.0.1.createdAt.timeIntervalSince1970 > $0.1.1.createdAt.timeIntervalSince1970 }
         users = sortedResult.flatMap { $0.0 }
     }
     
-    func fetchUsersTimeline(completion: (() -> ())) {
-        let group = dispatch_group_create()
+    func fetchUsersTimeline(_ completion: @escaping (() -> ())) {
+        let group = DispatchGroup()
         screenNames.forEach {
-            dispatch_group_enter(group)
+            group.enter()
             fetchUserTimeline(screenName: $0) {
-                dispatch_group_leave(group)
+                group.leave()
             }
         }
-        dispatch_group_notify(group, dispatch_get_main_queue()) {
+        group.notify(queue: DispatchQueue.main) {
             completion()
         }
     }
     
-    func fetchUserTimeline(screenName screenName: String, completion: (() -> ())) {
+    func fetchUserTimeline(screenName: String, completion: @escaping (() -> ())) {
         let request = StatusesUserTimelineRequest(screenName: screenName, maxId: nil, count: 1)
         client.sendTwitterRequest(request) { [weak self] in
             switch $0.result {
-            case .Success(let tweets):
+            case .success(let tweets):
                 guard let userTweets = self?.tweets[screenName] else {
                     self?.tweets[screenName] = tweets
                     completion()
                     return
                 }
-                self?.tweets[screenName] = Array([userTweets, tweets].flatten())
-            case .Failure(let error):
+                self?.tweets[screenName] = Array([userTweets, tweets].joined())
+            case .failure(let error):
                 print(error)
             }
             completion()
         }
     }
     
-    func fetchUsers(completion: (() -> ())) {
+    func fetchUsers(_ completion: @escaping (() -> ())) {
         let request = UsersLookUpRequest(screenNames: screenNames)
         client.sendTwitterRequest(request) { [weak self] in
             switch $0.result {
-            case .Success(let users):
+            case .success(let users):
                 self?.users = users
-            case .Failure(let error):
+            case .failure(let error):
                 print(error)
             }
             completion()

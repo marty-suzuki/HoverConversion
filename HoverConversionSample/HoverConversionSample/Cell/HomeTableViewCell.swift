@@ -9,7 +9,7 @@
 import UIKit
 import TwitterKit
 
-class HomeTableViewCell: UITableViewCell {
+class HomeTableViewCell: UITableViewCell, IconImageViewLoadable {
     static let Height: CGFloat = 80
     
     @IBOutlet weak var iconImageView: UIImageView!
@@ -22,14 +22,8 @@ class HomeTableViewCell: UITableViewCell {
         didSet {
             guard let value = userValue else { return }
             let user = value.0
-            if let url = NSURL(string: user.profileImageLargeURL) {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-                    guard let data = NSData(contentsOfURL: url) else { return }
-                    dispatch_async(dispatch_get_main_queue()) {
-                        guard let image = UIImage(data: data) else { return }
-                        self.iconImageView.image = image
-                    }
-                }
+            if let url = URL(string: user.profileImageLargeURL) {
+                loadImage(url)
             }
             userNameLabel.text = user.name
             screenNameLabel.text = "@" + user.screenName
@@ -44,11 +38,11 @@ class HomeTableViewCell: UITableViewCell {
         // Initialization code
         iconImageView.layer.cornerRadius = iconImageView.bounds.size.height / 2
         iconImageView.layer.borderWidth = 1
-        iconImageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        iconImageView.layer.borderColor = UIColor.lightGray.cgColor
         iconImageView.layer.masksToBounds = true
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

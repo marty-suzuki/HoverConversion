@@ -8,4 +8,4 @@
 
 import UIKit
 
-public class HCNextHeaderView: UIView {}
+open class HCNextHeaderView: UIView {}

@@ -9,29 +9,29 @@
 import UIKit
 
 public protocol HCContentViewControllerScrollDelegate: class {
-    func contentViewController(viewController: HCContentViewController, scrollViewWillBeginDragging scrollView: UIScrollView)
-    func contentViewController(viewController: HCContentViewController, scrollViewDidScroll scrollView: UIScrollView)
-    func contentViewController(viewController: HCContentViewController, scrollViewDidEndDragging scrollView: UIScrollView, willDecelerate decelerate: Bool)
-    func contentViewController(viewController: HCContentViewController, handlePanGesture gesture: UIPanGestureRecognizer)
+    func contentViewController(_ viewController: HCContentViewController, scrollViewWillBeginDragging scrollView: UIScrollView)
+    func contentViewController(_ viewController: HCContentViewController, scrollViewDidScroll scrollView: UIScrollView)
+    func contentViewController(_ viewController: HCContentViewController, scrollViewDidEndDragging scrollView: UIScrollView, willDecelerate decelerate: Bool)
+    func contentViewController(_ viewController: HCContentViewController, handlePanGesture gesture: UIPanGestureRecognizer)
 }
 
-public class HCContentViewController: UIViewController, HCViewContentable {
+open class HCContentViewController: UIViewController, HCViewContentable {
     
-    public var tableView: UITableView! = UITableView()
-    public var navigatoinContainerView: UIView! = UIView()
-    public var navigationView: HCNavigationView! = HCNavigationView(buttonPosition: .Left)
+    open var tableView: UITableView! = UITableView()
+    open var navigatoinContainerView: UIView! = UIView()
+    open var navigationView: HCNavigationView! = HCNavigationView(buttonPosition: .left)
     let cellImageView = UIImageView(frame: .zero)
     
-    public weak var scrollDelegate: HCContentViewControllerScrollDelegate?
-    public var canPaging: Bool = true
+    open weak var scrollDelegate: HCContentViewControllerScrollDelegate?
+    open var canPaging: Bool = true
     
-    public override var title: String? {
+    open override var title: String? {
         didSet {
             navigationView?.titleLabel.text = title
         }
     }
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
@@ -44,30 +44,30 @@ public class HCContentViewController: UIViewController, HCViewContentable {
         navigatoinContainerView.addGestureRecognizer(panGestureRecognizer)
     }
 
-    override public func didReceiveMemoryWarning() {
+    override open func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    public func navigationView(navigationView: HCNavigationView, didTapLeftButton button: UIButton) {
-        navigationController?.popViewControllerAnimated(true)
+    open func navigationView(_ navigationView: HCNavigationView, didTapLeftButton button: UIButton) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
-    func handleNavigatoinContainerViewPanGesture(gesture: UIPanGestureRecognizer) {
+    func handleNavigatoinContainerViewPanGesture(_ gesture: UIPanGestureRecognizer) {
         scrollDelegate?.contentViewController(self, handlePanGesture: gesture)
     }
 }
 
 extension HCContentViewController: UITableViewDelegate {
-    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         scrollDelegate?.contentViewController(self, scrollViewWillBeginDragging: scrollView)
     }
     
-    public func scrollViewDidScroll(scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollDelegate?.contentViewController(self, scrollViewDidScroll: scrollView)
     }
     
-    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         scrollDelegate?.contentViewController(self, scrollViewDidEndDragging: scrollView, willDecelerate: decelerate)
     }
 }

@@ -17,21 +17,21 @@ struct UsersLookUpRequest: TWTRGetRequestable {
     
     let screenNames: [String]
     
-    var parameters: [NSObject : AnyObject]? {
-        let screenNameValue: String = screenNames.joinWithSeparator(",")
-        let parameters: [NSObject : AnyObject] = [
+    var parameters: [AnyHashable: Any]? {
+        let screenNameValue: String = screenNames.joined(separator: ",")
+        let parameters: [AnyHashable: Any] = [
             "screen_name" : screenNameValue,
             "include_entities" : "true"
         ]
         return parameters
     }
     
-    static func decode(data: NSData) -> TWTRResult<ResponseType> {
+    static func decode(_ data: Data) -> TWTRResult<ResponseType> {
         switch UsersLookUpRequest.parseData(data) {
-        case .Success(let parsedData):
-            return .Success(parsedData.flatMap { TWTRUser(JSONDictionary: $0) })
-        case .Failure(let error):
-            return .Failure(error)
+        case .success(let parsedData):
+            return .success(parsedData.flatMap { TWTRUser(jsonDictionary: $0) })
+        case .failure(let error):
+            return .failure(error)
         }
     }
 }

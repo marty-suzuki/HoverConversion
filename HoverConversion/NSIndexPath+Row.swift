@@ -9,8 +9,8 @@
 
 import Foundation
 
-extension NSIndexPath {
-    func rowPlus(value: Int) -> NSIndexPath {
-        return NSIndexPath(forRow: row + value, inSection: section)
+extension IndexPath {
+    func rowPlus(_ value: Int) -> IndexPath {
+        return IndexPath(row: row + value, section: section)
     }
 }

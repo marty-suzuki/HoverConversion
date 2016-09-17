@@ -8,43 +8,43 @@
 
 import UIKit
 
-public class HCNavigationController: UINavigationController {
-    private struct Const {
-        private static let QueueLabel = "jp.marty-suzuki.HoverConversion.SynchronizationQueue"
-        static let SynchronizationQueue = dispatch_queue_create(QueueLabel, DISPATCH_QUEUE_SERIAL)
-        static func performBlock(block: () -> ()) {
-            dispatch_async(SynchronizationQueue) {
-                dispatch_sync(dispatch_get_main_queue(), block)
+open class HCNavigationController: UINavigationController {
+    fileprivate struct Const {
+        fileprivate static let queueLabel = "jp.marty-suzuki.HoverConversion.SynchronizationQueue"
+        static let synchronizationQueue = DispatchQueue(label: queueLabel, attributes: [])
+        static func performBlock(_ block: @escaping () -> ()) {
+            synchronizationQueue.async {
+                DispatchQueue.main.sync(execute: block)
             }
         }
     }
         
     enum SwipeType {
-        case Edge, Pan, None
+        case edge, pan, none
         var threshold: CGFloat {
             switch self {
-            case .Edge: return 0.3
-            case .Pan: return 0.01
-            case .None: return 0
+            case .edge: return 0.3
+            case .pan: return 0.01
+            case .none: return 0
             }
         }
     }
     
-    private let interactiveTransition = UIPercentDrivenInteractiveTransition()
+    fileprivate let interactiveTransition = UIPercentDrivenInteractiveTransition()
     let interactiveEdgePanGestureRecognizer = UIScreenEdgePanGestureRecognizer()
     let interactivePanGestureRecognizer = UIPanGestureRecognizer()
     
-    private var isPaning = false
+    fileprivate var isPaning = false
     
     
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         delegate = self
-        interactivePopGestureRecognizer?.enabled = false
+        interactivePopGestureRecognizer?.isEnabled = false
         
-        interactiveEdgePanGestureRecognizer.edges = .Left
+        interactiveEdgePanGestureRecognizer.edges = .left
         interactiveEdgePanGestureRecognizer.addTarget(self, action: #selector(HCNavigationController.handleInteractiveEdgePanGesture(_:)))
         interactiveEdgePanGestureRecognizer.delegate = self
         view.addGestureRecognizer(interactiveEdgePanGestureRecognizer)
@@ -54,45 +54,45 @@ public class HCNavigationController: UINavigationController {
         view.addGestureRecognizer(interactivePanGestureRecognizer)
     }
     
-    func interactiveEdgePanGestureRecognizerMakesToFail(gesture gesture: UIGestureRecognizer) {
-        gesture.requireGestureRecognizerToFail(interactiveEdgePanGestureRecognizer)
+    func interactiveEdgePanGestureRecognizerMakesToFail(gesture: UIGestureRecognizer) {
+        gesture.require(toFail: interactiveEdgePanGestureRecognizer)
     }
     
-    func interactivePanGestureRecognizerMakesToFail(gesture gesture: UIGestureRecognizer) {
-        gesture.requireGestureRecognizerToFail(interactivePanGestureRecognizer)
+    func interactivePanGestureRecognizerMakesToFail(gesture: UIGestureRecognizer) {
+        gesture.require(toFail: interactivePanGestureRecognizer)
     }
     
-    func handleInteractiveEdgePanGesture(edgePanGestureRecognizer: UIScreenEdgePanGestureRecognizer) {
-        handlePanGesture(edgePanGestureRecognizer, swipeType: .Edge)
+    func handleInteractiveEdgePanGesture(_ edgePanGestureRecognizer: UIScreenEdgePanGestureRecognizer) {
+        handlePanGesture(edgePanGestureRecognizer, swipeType: .edge)
     }
     
-    func handleInteractivePanGesture(panGestureRecognizer: UIPanGestureRecognizer) {
-        handlePanGesture(panGestureRecognizer, swipeType: .Pan)
+    func handleInteractivePanGesture(_ panGestureRecognizer: UIPanGestureRecognizer) {
+        handlePanGesture(panGestureRecognizer, swipeType: .pan)
     }
     
-    private func handlePanGesture(gesture: UIPanGestureRecognizer, swipeType: SwipeType) {
-        let translation = gesture.translationInView(view)
-        let velocity = gesture.velocityInView(view)
+    fileprivate func handlePanGesture(_ gesture: UIPanGestureRecognizer, swipeType: SwipeType) {
+        let translation = gesture.translation(in: view)
+        let velocity = gesture.velocity(in: view)
         let percentage = min(1, max(0, translation.x / view.bounds.size.width))
         
         switch gesture.state {
-        case .Began:
+        case .began:
             Const.performBlock {
                 if self.viewControllers.count < 2 { return }
                 self.isPaning = true
-                self.popViewControllerAnimated(true)
+                self.popViewController(animated: true)
             }
-        case .Changed:
+        case .changed:
             Const.performBlock {
-                self.interactiveTransition.updateInteractiveTransition(percentage)
+                self.interactiveTransition.update(percentage)
             }
-        case .Ended, .Failed, .Possible, .Cancelled:
+        case .ended, .failed, .possible, .cancelled:
             Const.performBlock {
                 self.isPaning = false
                 if 0 < velocity.x && swipeType.threshold < percentage {
-                    self.interactiveTransition.finishInteractiveTransition()
+                    self.interactiveTransition.finish()
                 } else {
-                    self.interactiveTransition.cancelInteractiveTransition()
+                    self.interactiveTransition.cancel()
                 }
             }
         }
@@ -100,11 +100,11 @@ public class HCNavigationController: UINavigationController {
 }
 
 extension HCNavigationController: UINavigationControllerDelegate {
-    public func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return isPaning ? interactiveTransition : nil
     }
     
-    public func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         //TODO: initial frame
         switch (fromVC, toVC, isPaning) {
         case (_ as HCRootViewController, _ as HCPagingViewController, _):
@@ -118,16 +118,16 @@ extension HCNavigationController: UINavigationControllerDelegate {
 }
 
 extension HCNavigationController: UIGestureRecognizerDelegate {
-    public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer where
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer ,
                gestureRecognizer === interactivePanGestureRecognizer &&
-               gestureRecognizer.velocityInView(navigationController?.view).x < 0 {
+               gestureRecognizer.velocity(in: navigationController?.view).x < 0 {
             return false
         }
         return true
     }
     
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer === interactivePanGestureRecognizer &&
            otherGestureRecognizer === interactiveEdgePanGestureRecognizer {
             return true
