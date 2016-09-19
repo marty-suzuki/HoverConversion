@@ -94,6 +94,18 @@ extension ViewController: HCPagingViewControllerDataSource {
 }
 ```
 
+#### Stop transitioning
+
+If you want to load more contents from server and want to stop transitioning, you can use `canPaging` in `HCContentViewController`.
+
+```swift
+//Stop transitioning to previous ViewController
+canPaging[.prev] = false //Default true
+
+//Stop transitioning to next ViewController
+canPaging[.next] = false //Default true
+```
+
 ## Requirements
 
 - Xcode 7.3 or greater

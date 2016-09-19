@@ -15,6 +15,26 @@ public protocol HCContentViewControllerScrollDelegate: class {
     func contentViewController(_ viewController: HCContentViewController, handlePanGesture gesture: UIPanGestureRecognizer)
 }
 
+public struct PagableHandler {
+    public enum Direction {
+        case prev, next
+    }
+    
+    private var values: [Direction : Bool] = [
+        .prev : true,
+        .next : true
+    ]
+    
+    public subscript(direction: Direction) -> Bool {
+        get {
+            return values[direction] ?? false
+        }
+        set {
+            values[direction] = newValue
+        }
+    }
+}
+
 open class HCContentViewController: UIViewController, HCViewContentable {
     
     open var tableView: UITableView! = UITableView()
@@ -23,7 +43,7 @@ open class HCContentViewController: UIViewController, HCViewContentable {
     let cellImageView = UIImageView(frame: .zero)
     
     open weak var scrollDelegate: HCContentViewControllerScrollDelegate?
-    open var canPaging: Bool = true
+    open var canPaging: PagableHandler = PagableHandler()
     
     open override var title: String? {
         didSet {
