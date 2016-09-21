@@ -422,7 +422,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 178E9201DDD007E86236711A /* Pods-HoverConversionSample.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = HoverConversionSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -438,7 +438,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BCBB46B066D4D58B7568C17F /* Pods-HoverConversionSample.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = HoverConversionSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
